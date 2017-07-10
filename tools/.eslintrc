@@ -1,0 +1,15 @@
+{
+  "extends": ["standard", "standard-react"],
+  "env": {
+    "mocha": true
+  },
+  "globals": {
+    "shallow": true,
+    "expect": true,
+    "td": true,
+    "chance": true
+  },
+  "rules": {
+    "comma-dangle": ["error", "always-multiline"]
+  }
+}
