@@ -9,13 +9,14 @@ TODO
   - [done] config mocha
   - [done] config stylelint
   - [done] use eslint instead
-- remove all unnecessary files
 - TaskForm
-  - write its specs
-  - pass its specs
-  - style it
+  - [done] write its specs
+  - [done] pass its specs
+  - [done] style it
   - lint js and css
 - add & test other components
+  - testing react-redux, redux
+- final design/theming
 - optimization
   - remove unused stylesheets
   - code splitting
@@ -42,4 +43,5 @@ TODO
   - delete older micromanage.me versions
   - resolve unmet dependencies in npm
   - remove unused packages
+  - remove unused modules
   - update README.md

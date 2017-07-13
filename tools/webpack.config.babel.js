@@ -27,6 +27,7 @@ export default {
   /* Input/output */
   context: resolve(__dirname, '../app'),
   entry: [
+    // 'babel-polyfill',
     'react-hot-loader/patch',
     './main', // App's main entry point
   ],
