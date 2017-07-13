@@ -14,8 +14,16 @@ TODO
   - [done] pass its specs
   - [done] style it
   - lint js and css
+- urgent studies
+  - learnings
+    - use proptypes for props received from HOCs
+    - decorators
+  - evaluate the tests of current code, especially on HOC/decorator-relation aspect
+  - evaluate the function composition of current code
+  - fix the propType lint errors
 - add & test other components
-  - urgent studies
+  - redux architecture
+  - task lists
 - final design/theming
 - optimization
   - remove unused stylesheets

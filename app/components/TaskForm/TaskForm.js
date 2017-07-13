@@ -15,6 +15,14 @@ class TaskForm extends React.Component {
     handleDismiss: PropTypes.func,
     handleDelete: PropTypes.func,
     handleSubmit: PropTypes.func,
+
+    /* PropTypes for AntD form decorato */
+    form: PropTypes.shape({
+      getFieldsValue: PropTypes.func.isRequired,
+      getFieldsError: PropTypes.func.isRequired,
+      validateFields: PropTypes.func.isRequired,
+      getFieldDecorator: PropTypes.func.isRequired,
+    }).isRequired,
   }
 
   static defaultProps = {
