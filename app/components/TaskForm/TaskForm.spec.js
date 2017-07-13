@@ -27,12 +27,12 @@ describe('<TaskForm />', () => {
     expect(taskForm).to.be.present()
   })
 
-  /* =============================================
-  =            The Form (Inside HOC)            =
-  ============================================= */
+  /* ===============================
+  =            The Form            =
+  =============================== */
 
   // Get to the renderer's actual root component
-  // by diving into AntD's decoration layers
+  // by diving past the AntD's decoration layers
   const findPureForm = (wrpr) => wrpr.dive().dive()
 
   it('the render an AntD Form', () => {
@@ -63,7 +63,7 @@ describe('<TaskForm />', () => {
         expect(taskNameField).to.have.prop('type', 'text')
       })
 
-      context('when form is dirty and empty', () => {
+      context('when field value is changed and left empty', () => {
         it('should invalidate', () => {
           const taskForm = shallow(<TaskForm />)
           const getFieldError = () => taskForm.prop('form').getFieldError('taskName')
@@ -140,7 +140,7 @@ describe('<TaskForm />', () => {
         expect(isDefaultCorrect).to.equal(true)
       })
 
-      context('when form is dirty and empty', () => {
+      context('when field value is changed and left empty', () => {
         it('should not invalidate', () => {
           const taskForm = shallow(<TaskForm />)
           const getFieldError = () => taskForm.prop('form').getFieldError('taskName')
@@ -218,7 +218,7 @@ describe('<TaskForm />', () => {
         expect(isDefaultCorrect).to.equal(true)
       })
 
-      context('when form is dirty and empty', () => {
+      context('when field value is changed and left empty', () => {
         it('should not invalidate', () => {
           const taskForm = shallow(<TaskForm />)
           const getFieldError = () => taskForm.prop('form').getFieldError('taskName')
@@ -288,7 +288,7 @@ describe('<TaskForm />', () => {
         expect(submitBtn).to.match(Button)
       })
 
-      context('when form is clean', () => {
+      context('when form is not touched', () => {
         context('when form is empty', () => {
           it('should be disabled', () => {
             const submitBtn = findSubmitBtn(shallow(<TaskForm />))
@@ -296,7 +296,7 @@ describe('<TaskForm />', () => {
           })
         })
 
-        context('form is valid and has initial values', () => {
+        context('when form is valid and has initial values', () => {
           it('should be enabled', () => {
             const submitBtn = findSubmitBtn(shallow(
               <TaskForm initialValues={{ taskName: rnd.word() }} />
@@ -306,8 +306,8 @@ describe('<TaskForm />', () => {
         })
       })
 
-      context('when form is dirty', () => {
-        context('form is valid', () => {
+      context('when form is touched', () => {
+        context('when form is valid', () => {
           it('should be enabled', () => {
             const taskForm = shallow(<TaskForm />)
             const getSubmitBtn = () => findSubmitBtn(taskForm)
@@ -317,7 +317,7 @@ describe('<TaskForm />', () => {
           })
         })
 
-        context('form is invalid', () => {
+        context('when form is invalid', () => {
           it('should be disabled', () => {
             const taskForm = shallow(<TaskForm />)
             const getSubmitBtn = () => findSubmitBtn(taskForm)
@@ -412,55 +412,57 @@ describe('<TaskForm />', () => {
     =            Delete Button            =
     ===================================== */
 
-    const findDeleteBtn = wrpr => findPureForm(wrpr).find('[name="delete"]')
+    describe('the delete button', () => {
+      const findDeleteBtn = wrpr => findPureForm(wrpr).find('[name="delete"]')
 
-    context('when form has no initial value', () => {
-      it('should not render a delete <Button />', () => {
-        const deleteBtn = findDeleteBtn(shallow(<TaskForm />))
+      context('when form has no initial value', () => {
+        it('should not render a delete <Button />', () => {
+          const deleteBtn = findDeleteBtn(shallow(<TaskForm />))
 
-        expect(deleteBtn).to.have.lengthOf(0)
-      })
-    })
-
-    context('when form has initial value', () => {
-      it('should render a delete <Button />', () => {
-        const deleteBtn = findDeleteBtn(shallow(
-          <TaskForm initialValues={{ taskName: rnd.word() }} />
-        ))
-
-        expect(deleteBtn).to.have.lengthOf(1)
+          expect(deleteBtn).to.have.lengthOf(0)
+        })
       })
 
-      describe('the rendered delete button', () => {
-        it('should an Antd <Button />', () => {
+      context('when form has initial value', () => {
+        it('should render a delete <Button />', () => {
           const deleteBtn = findDeleteBtn(shallow(
             <TaskForm initialValues={{ taskName: rnd.word() }} />
           ))
 
-          expect(deleteBtn).to.match(Button)
+          expect(deleteBtn).to.have.lengthOf(1)
         })
 
-        context('when pressed', () => {
-          it('should call the passed delete handler', () => {
-            const handleDelete = td.function()
+        describe('the rendered delete button', () => {
+          it('should an Antd <Button />', () => {
             const deleteBtn = findDeleteBtn(shallow(
-              <TaskForm
-                initialValues={{ taskName: rnd.word() }}
-                handleDelete={handleDelete}
-                />
+              <TaskForm initialValues={{ taskName: rnd.word() }} />
             ))
 
-            td.verify(handleDelete(), { times: 0, ignoreExtraArgs: true })
-            deleteBtn.prop('onClick')()
-            td.verify(handleDelete(), { times: 1, ignoreExtraArgs: true })
+            expect(deleteBtn).to.match(Button)
+          })
+
+          context('when pressed', () => {
+            it('should call the passed delete handler', () => {
+              const handleDelete = td.function()
+              const deleteBtn = findDeleteBtn(shallow(
+                <TaskForm
+                  initialValues={{ taskName: rnd.word() }}
+                  handleDelete={handleDelete}
+                  />
+              ))
+
+              td.verify(handleDelete(), { times: 0, ignoreExtraArgs: true })
+              deleteBtn.prop('onClick')()
+              td.verify(handleDelete(), { times: 1, ignoreExtraArgs: true })
+            })
           })
         })
       })
     })
 
-    /* =========================================
-    =             Other Scenarios             =
-    ========================================= */
+    /* ===================================================
+    =             Other Scenarios (The Form)             =
+    =================================================== */
 
     context('when submitted', () => {
       it('should validate the form', () => {
