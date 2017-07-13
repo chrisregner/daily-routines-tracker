@@ -178,8 +178,7 @@ class TaskForm extends React.Component {
   }
 }
 
-const AntDFormedTaskForm = Form.create()(TaskForm)
-AntDFormedTaskForm.displayName = 'Form(TaskForm)'
+const DecoratedTaskForm = Form.create()(TaskForm)
+DecoratedTaskForm.displayName = 'AntDForm(TaskForm)'
 
-export default AntDFormedTaskForm
-export { TaskForm as PureTaskForm }
+export default DecoratedTaskForm

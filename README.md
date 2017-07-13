@@ -49,6 +49,10 @@ TODO
     - apply
   - search and apply other important types of test
 - misc
+  - file Ant Design issues
+    - decorated componet's display name isn't preserved
+    - error when explicitly adding name property to class that are decorated
+    - possibly unecessarily doubled layer when decorated with form creator
   - delete older micromanage.me versions
   - resolve unmet dependencies in npm
   - remove unused packages
