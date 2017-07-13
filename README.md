@@ -49,6 +49,7 @@ TODO
     - apply
   - search and apply other important types of test
 - misc
+  - maybe rethink of the name
   - file Ant Design issues
     - decorated componet's display name isn't preserved
     - error when explicitly adding name property to class that are decorated
