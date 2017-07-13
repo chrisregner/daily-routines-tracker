@@ -1,5 +1,6 @@
 {
   "extends": ["standard", "standard-react"],
+  "parser": "babel-eslint",
   "env": {
     "mocha": true
   },
@@ -10,6 +11,7 @@
     "chance": true
   },
   "rules": {
-    "comma-dangle": ["error", "always-multiline"]
+    "comma-dangle": ["error", "always-multiline"],
+    "curly": ["error", "multi"]
   }
 }

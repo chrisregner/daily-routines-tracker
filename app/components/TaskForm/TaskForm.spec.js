@@ -13,7 +13,6 @@ chai.use(chaiEnzyme())
 const rnd = new Chance()
 
 describe('<TaskForm />', () => {
-
   before(() => {
     // Temporarily silence the async-validator's logs
     td.replace(console, 'warn')
@@ -28,9 +27,9 @@ describe('<TaskForm />', () => {
     expect(taskForm).to.be.present()
   })
 
-  /*=============================================
+  /* =============================================
   =            The Form (Inside HOC)            =
-  =============================================*/
+  ============================================= */
 
   // Get to the renderer's actual root component
   // by diving into AntD's decoration layers
@@ -42,10 +41,9 @@ describe('<TaskForm />', () => {
   })
 
   describe('the rendered form', () => {
-
-    /*=======================================
+    /* =======================================
     =            Task Name Field            =
-    =======================================*/
+    ======================================= */
 
     const findTaskNameField = wrpr => findPureForm(wrpr).find('[name="taskName"]')
 
@@ -71,9 +69,9 @@ describe('<TaskForm />', () => {
           const getFieldError = () => taskForm.prop('form').getFieldError('taskName')
           const taskNameField = findTaskNameField(taskForm)
 
-          taskNameField.prop('onChange')({ target: { value: rnd.word() }})
+          taskNameField.prop('onChange')({ target: { value: rnd.word() } })
           expect(getFieldError()).to.equal(undefined)
-          taskNameField.prop('onChange')({ target: { value: '' }})
+          taskNameField.prop('onChange')({ target: { value: '' } })
           expect(getFieldError()).to.have.lengthOf(1)
         })
       })
@@ -95,7 +93,7 @@ describe('<TaskForm />', () => {
           )
           const getTaskNameField = () => findTaskNameField(taskForm)
 
-          getTaskNameField().prop('onChange')({ target: { value: newVal }})
+          getTaskNameField().prop('onChange')({ target: { value: newVal } })
           expect(getTaskNameField()).to.have.prop('value', newVal)
         })
       })
@@ -111,15 +109,15 @@ describe('<TaskForm />', () => {
           const taskForm = shallow(<TaskForm />)
           const getTaskNameField = () => findTaskNameField(taskForm)
 
-          getTaskNameField().prop('onChange')({ target: { value: newVal }})
+          getTaskNameField().prop('onChange')({ target: { value: newVal } })
           expect(getTaskNameField()).to.have.prop('value', newVal)
         })
       })
     })
 
-    /*======================================
+    /* ======================================
     =            Duration Field            =
-    ======================================*/
+    ====================================== */
 
     const findDurationField = wrpr => findPureForm(wrpr).find('[name="duration"]')
 
@@ -171,7 +169,7 @@ describe('<TaskForm />', () => {
           newVal.add(rnd.integer({ min: 1, max: 1000 }), 'seconds')
           const taskForm = shallow(<TaskForm initialValues={{ duration: initialVal }} />)
           const getDurationField = () => findDurationField(taskForm)
-          getDurationField().prop('onChange')({ target: { value: newVal }})
+          getDurationField().prop('onChange')({ target: { value: newVal } })
           const isCurrentValCorrect = getDurationField().prop('value').isSame(newVal)
           expect(isCurrentValCorrect).to.equal(true)
         })
@@ -188,16 +186,16 @@ describe('<TaskForm />', () => {
           newVal.add(rnd.integer({ min: 1, max: 1000 }), 'seconds')
           const taskForm = shallow(<TaskForm />)
           const getDurationField = () => findDurationField(taskForm)
-          getDurationField().prop('onChange')({ target: { value: newVal }})
+          getDurationField().prop('onChange')({ target: { value: newVal } })
           const isCurrentValCorrect = getDurationField().prop('value').isSame(newVal)
           expect(isCurrentValCorrect).to.equal(true)
         })
       })
     })
 
-    /*======================================
+    /* ======================================
     =            Reminder Field            =
-    ======================================*/
+    ====================================== */
 
     const findReminderField = wrpr => findPureForm(wrpr).find('[name="reminder"]')
 
@@ -249,7 +247,7 @@ describe('<TaskForm />', () => {
           newVal.add(rnd.integer({ min: 1, max: 1000 }), 'seconds')
           const taskForm = shallow(<TaskForm initialValues={{ reminder: initialVal }} />)
           const getReminderField = () => findReminderField(taskForm)
-          getReminderField().prop('onChange')({ target: { value: newVal }})
+          getReminderField().prop('onChange')({ target: { value: newVal } })
           const isCurrentValCorrect = getReminderField().prop('value').isSame(newVal)
           expect(isCurrentValCorrect).to.equal(true)
         })
@@ -266,16 +264,16 @@ describe('<TaskForm />', () => {
           newVal.add(rnd.integer({ min: 1, max: 1000 }), 'seconds')
           const taskForm = shallow(<TaskForm />)
           const getReminderField = () => findReminderField(taskForm)
-          getReminderField().prop('onChange')({ target: { value: newVal }})
+          getReminderField().prop('onChange')({ target: { value: newVal } })
           const isCurrentValCorrect = getReminderField().prop('value').isSame(newVal)
           expect(isCurrentValCorrect).to.equal(true)
         })
       })
     })
 
-    /*=====================================
+    /* =====================================
     =            Submit Button            =
-    =====================================*/
+    ===================================== */
 
     const findSubmitBtn = wrpr => findPureForm(wrpr).find('[name="submit"]')
 
@@ -301,7 +299,7 @@ describe('<TaskForm />', () => {
         context('form is valid and has initial values', () => {
           it('should be enabled', () => {
             const submitBtn = findSubmitBtn(shallow(
-              <TaskForm initialValues={{ taskName: rnd.word() }}/>
+              <TaskForm initialValues={{ taskName: rnd.word() }} />
             ))
             expect(submitBtn).to.have.prop('disabled', false)
           })
@@ -334,7 +332,7 @@ describe('<TaskForm />', () => {
       context('form has initial value', () => {
         it('should have \'Update Task\' as text', () => {
           const submitBtn = findSubmitBtn(shallow(
-            <TaskForm initialValues={{ taskName: rnd.word() }}/>
+            <TaskForm initialValues={{ taskName: rnd.word() }} />
           ))
           expect(submitBtn).to.contain('Update Task')
         })
@@ -348,9 +346,9 @@ describe('<TaskForm />', () => {
       })
     })
 
-    /*======================================
+    /* ======================================
     =            Dismiss Button            =
-    ======================================*/
+    ====================================== */
 
     const findDismissBtn = wrpr => findPureForm(wrpr).find('[name="dismiss"]')
 
@@ -379,9 +377,9 @@ describe('<TaskForm />', () => {
       })
     })
 
-    /*========================================
+    /* ========================================
     =            'Go Back' Button            =
-    ========================================*/
+    ======================================== */
 
     const findGoBackBtn = wrpr => findPureForm(wrpr).find('[name="goBack"]')
 
@@ -410,9 +408,9 @@ describe('<TaskForm />', () => {
       })
     })
 
-    /*=====================================
+    /* =====================================
     =            Delete Button            =
-    =====================================*/
+    ===================================== */
 
     const findDeleteBtn = wrpr => findPureForm(wrpr).find('[name="delete"]')
 
@@ -460,9 +458,9 @@ describe('<TaskForm />', () => {
       })
     })
 
-    /*=========================================
+    /* =========================================
     =             Other Scenarios             =
-    =========================================*/
+    ========================================= */
 
     context('when submitted', () => {
       it('should validate the form', () => {
@@ -504,7 +502,7 @@ describe('<TaskForm />', () => {
           taskForm.prop('form').setFieldsValue(formValues)
           td.verify(handleSubmit(), { times: 0, ignoreExtraArgs: true })
           pureTaskForm.prop('onSubmit')({ preventDefault: () => {} })
-          td.verify(handleSubmit(formValues), { times: 1, })
+          td.verify(handleSubmit(formValues), { times: 1 })
         })
       })
 

@@ -1,9 +1,5 @@
+/* eslint-disable node/no-deprecated-api */
 import { JSDOM } from 'jsdom'
-import chai, { expect } from 'chai'
-import { shallow, mount } from 'enzyme'
-import chaiEnzyme from 'chai-enzyme'
-import td from 'testdouble'
-import Chance from 'chance'
 
 /* Setup virtual DOM */
 
@@ -27,7 +23,7 @@ copyProps(window, global)
 
 process.env.NODE_ENV = 'test'
 
-function noop() {
+function noop () {
   return null
 }
 

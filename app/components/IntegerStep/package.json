@@ -1,6 +1,0 @@
-{
-  "name:": "IntegerStep",
-  "version": "0.0.0",
-  "private": true,
-  "main": "./IntegerStep.js"
-}

@@ -8,7 +8,7 @@ const StyledDiv = styled.div`
 `
 
 class App extends React.Component {
-  render = () => <StyledDiv className="pa3">
+  render = () => <StyledDiv className='pa3'>
     <TaskForm />
   </StyledDiv>
 }

@@ -1,6 +1,5 @@
 import loadRc from 'rc-config-loader'
 import { resolve } from 'path'
-import concat from 'lodash/concat'
 
 let babelPlugins
 const babelConfig = loadRc('babel', {
@@ -11,17 +10,14 @@ if (babelConfig.plugins) {
   babelConfig.plugins.unshift('react-hot-loader/babel')
 
   babelPlugins = babelConfig.plugins
-} else {
+} else
   babelPlugins = ['react-hot-loader']
-}
 
 const babelConfigForDev = Object.assign({}, babelConfig, {
   babelrc: false,
   plugins: babelPlugins,
   presets: babelConfig.presets.map(preset => (preset === 'env' ? ['env', { modules: false }] : preset)),
 })
-
-console.log(JSON.stringify(babelConfigForDev))
 
 export default {
   /* Input/output */
@@ -71,7 +67,7 @@ export default {
           },
         ],
       },
-      /* TODO: find out if css modules are still necessary*/
+      /* TODO: find out if css modules are still necessary */
       {
         test: /^((?!\.mod).)*css$/, // non CSS-module stylesheets
         use: [

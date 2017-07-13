@@ -15,7 +15,7 @@ TODO
   - [done] style it
   - lint js and css
 - add & test other components
-  - testing react-redux, redux
+  - urgent studies
 - final design/theming
 - optimization
   - remove unused stylesheets
