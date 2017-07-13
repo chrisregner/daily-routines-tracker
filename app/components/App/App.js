@@ -1,7 +1,7 @@
 import React from 'react'
 import styled from 'styled-components'
 
-import TaskForm from 'components/TaskForm'
+import RoutineForm from 'components/RoutineForm'
 
 const StyledDiv = styled.div`
   min-width: 310px;
@@ -9,7 +9,7 @@ const StyledDiv = styled.div`
 
 class App extends React.Component {
   render = () => <StyledDiv className='pa3'>
-    <TaskForm
+    <RoutineForm
       handleSubmit={() => {}}
       handleDismiss={() => {}}
     />

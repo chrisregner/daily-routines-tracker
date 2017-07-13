@@ -5,10 +5,10 @@ import moment from 'moment'
 
 import { Form, Icon, Input, Button, TimePicker } from 'antd'
 
-class TaskForm extends React.Component {
+class RoutineForm extends React.Component {
   static propTypes = {
     initialValues: PropTypes.shape({
-      taskForm: PropTypes.string,
+      routineForm: PropTypes.string,
       duration: MomentProp.momentObj,
       reminder: MomentProp.momentObj,
     }),
@@ -53,21 +53,21 @@ class TaskForm extends React.Component {
     })
   }
 
-  renderTaskNameField = () => {
+  renderRoutineNameField = () => {
     const {
       initialValues: initValues,
       form: { getFieldDecorator },
     } = this.props
 
-    return <Form.Item className='ma0' label='Task Name' colon={false}>
-      {getFieldDecorator('taskName', {
-        rules: [{ required: true, message: 'Please put the task’s name!' }],
-        initialValue: initValues.taskName,
+    return <Form.Item className='ma0' label='Routine Name' colon={false}>
+      {getFieldDecorator('routineName', {
+        rules: [{ required: true, message: 'Please put the routine’s name!' }],
+        initialValue: initValues.routineName,
       })(
         <Input
           prefix={<Icon type='pushpin-o' />}
-          placeholder='Task name'
-          name='taskName'
+          placeholder='Routine name'
+          name='routineName'
         />
       )}
     </Form.Item>
@@ -151,7 +151,7 @@ class TaskForm extends React.Component {
         </div>
 
         <div className='mb2'>
-          {this.renderTaskNameField()}
+          {this.renderRoutineNameField()}
         </div>
 
         <div className='cf'>
@@ -170,7 +170,7 @@ class TaskForm extends React.Component {
             htmlType='submit'
             type='primary'
           >
-            {hasInitValues ? 'Update Task' : 'Add New Task'}
+            {hasInitValues ? 'Update Routine' : 'Add New Routine'}
           </Button>
         </Form.Item>
       </Form>
@@ -178,7 +178,7 @@ class TaskForm extends React.Component {
   }
 }
 
-const DecoratedTaskForm = Form.create()(TaskForm)
-DecoratedTaskForm.displayName = 'AntDForm(TaskForm)'
+const DecoratedRoutineForm = Form.create()(RoutineForm)
+DecoratedRoutineForm.displayName = 'AntDForm(RoutineForm)'
 
-export default DecoratedTaskForm
+export default DecoratedRoutineForm

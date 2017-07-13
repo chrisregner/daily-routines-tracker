@@ -1,4 +1,4 @@
-Daily Task Tracker
+Daily Routine Tracker
 ========================================
 
 TODO
@@ -9,7 +9,7 @@ TODO
   - [done] config mocha
   - [done] config stylelint
   - [done] use eslint instead
-- TaskForm
+- RoutineForm
   - [done] write its specs
   - [done] pass its specs
   - [done] style it
@@ -24,7 +24,7 @@ TODO
 - add & test other components
   - research testing redux/react-redux
   - add the redux architecture
-  - task lists
+  - routine lists
 - final design/theming
 - optimization
   - remove unused stylesheets
