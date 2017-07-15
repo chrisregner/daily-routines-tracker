@@ -1,3 +1,0 @@
-export const ADD_ROUTINE = 'ADD_ROUTINE'
-export const UPDATE_ROUTINE = 'UPDATE_ROUTINE'
-export const DELETE_ROUTINE = 'DELETE_ROUTINE'
