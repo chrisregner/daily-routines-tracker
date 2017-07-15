@@ -4,26 +4,19 @@ Daily Routine Tracker
 TODO
 ----------------------------------------
 
-- setup project
-  - [done] config webpack just to make things work
-  - [done] config mocha
-  - [done] config stylelint
-  - [done] use eslint instead
-- RoutineForm
-  - [done] write its specs
-  - [done] pass its specs
-  - [done] style it
-  - lint js and css
-- [done] after studies
-  - learnings
-    - use proptypes for props received from HOCs
-    - decorators
-  - [done] fix the propType lint errors
-  - [done] evaluate the function composition of current code
-  - [done] evaluate the tests of current code, especially on HOC/decorator-relation aspect
+- chores
+  - [done] routineForm proptype errors
+  - [done] research writing integration specs
+- research
+  - [done] redux app architecture
+  - [?done] research testing redux/react-redux
+- [done] chores
+  - purge chance.js in all specs
+    - think how time should work
+  - rename test files to .unit.js
 - add & test other components
-  - research testing redux/react-redux
   - add the redux architecture
+  - write integration tests
   - routine lists
 - final design/theming
 - optimization
@@ -59,3 +52,24 @@ TODO
   - remove unused packages
   - remove unused modules
   - update README.md
+
+Done
+----------------------------------------
+
+- setup project
+  - [done] config webpack just to make things work
+  - [done] config mocha
+  - [done] config stylelint
+  - [done] use eslint instead
+- RoutineForm
+  - [done] write its specs
+  - [done] pass its specs
+  - [done] style it
+  - lint js and css
+- [done] after studies
+  - learnings
+    - use proptypes for props received from HOCs
+    - decorators
+  - [done] fix the propType lint errors
+  - [done] evaluate the function composition of current code
+  - [done] evaluate the tests of current code, especially on HOC/decorator-relation aspect
