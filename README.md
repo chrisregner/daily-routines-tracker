@@ -15,11 +15,12 @@ TODO
     - think how time should work
   - rename test files to .unit.js
 - add & test other components
-  - add the redux architecture
-  - write integration tests
-  - routine lists
+  - [done] review current code
+  - add the redux
 - final design/theming
+  - add page transitions for mobile
 - optimization
+  - do something about flash of loading fonts
   - remove unused stylesheets
   - code splitting
   - caching

@@ -38,7 +38,9 @@ export default {
     alias: {
       components: resolve(__dirname, '../app/components'),
       containers: resolve(__dirname, '../app/containers'),
+      pages: resolve(__dirname, '../app/pages'),
       utils: resolve(__dirname, '../app/utils'),
+      duck: resolve(__dirname, '../app/duck'),
     },
   },
 

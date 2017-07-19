@@ -1,0 +1,6 @@
+{
+  "name:": "RoutineItem",
+  "version": "0.0.0",
+  "private": true,
+  "main": "./RoutineItem.js"
+}

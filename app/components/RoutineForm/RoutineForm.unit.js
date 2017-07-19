@@ -4,6 +4,7 @@ import chaiEnzyme from 'chai-enzyme'
 import td from 'testdouble'
 import { shallow } from 'enzyme'
 import moment from 'moment'
+import { Link } from 'react-router-dom'
 
 import { Form, Input, TimePicker, Button } from 'antd'
 import RoutineForm from './RoutineForm'
@@ -24,7 +25,7 @@ describe('<RoutineForm />', () => {
       handleDismiss: () => {},
       handleSubmit: () => {},
     },
-    props
+    props,
   )
 
   it('should render', () => {
@@ -217,7 +218,7 @@ describe('<RoutineForm />', () => {
 
       it('should have a default open value of 00:00 am', () => {
         const reminderField = findReminderField(shallow(<RoutineForm {...getRequiredProps()} />))
-        const expectedDefault = moment('00:00 am', 'HH:mm a')
+        const expectedDefault = moment('00:00 am', 'h:mm a')
         const actualDefault = reminderField.prop('defaultOpenValue')
         const isDefaultCorrect = actualDefault.isSame(expectedDefault)
         expect(isDefaultCorrect).to.equal(true)
@@ -229,7 +230,7 @@ describe('<RoutineForm />', () => {
           const getFieldError = () => routineForm.prop('form').getFieldError('routineName')
           const reminderField = findReminderField(routineForm)
 
-          reminderField.prop('onChange')(moment('12:30:30', 'HH:mm:ss'))
+          reminderField.prop('onChange')(moment('12:30 am', 'h:mm a'))
           expect(getFieldError()).to.equal(undefined)
           reminderField.prop('onChange')(null)
           expect(getFieldError()).to.equal(undefined)
@@ -238,7 +239,7 @@ describe('<RoutineForm />', () => {
 
       context('when initial value is set', () => {
         it('should apply the initial value', () => {
-          const initialVal = moment('12:30:30', 'HH:mm:ss')
+          const initialVal = moment('12:30 am', 'h:mm a')
           const reminderField = findReminderField(shallow(
             <RoutineForm {...getRequiredProps({ initialValues: { reminder: initialVal } })} />
           ))
@@ -247,7 +248,7 @@ describe('<RoutineForm />', () => {
         })
 
         it('should still let its value be changed', () => {
-          const initialVal = moment('12:30:30', 'HH:mm:ss')
+          const initialVal = moment('12:30 am', 'h:mm a')
           const changedVal = moment('18:45:45', 'HH:mm:ss')
           const routineForm = shallow(
             <RoutineForm {...getRequiredProps({ initialValues: { reminder: initialVal } })} />
@@ -266,7 +267,7 @@ describe('<RoutineForm />', () => {
         })
 
         it('should still let its value be changed', () => {
-          const changedVal = moment('12:30:30', 'HH:mm:ss')
+          const changedVal = moment('12:30 am', 'h:mm a')
           const routineForm = shallow(<RoutineForm {...getRequiredProps()} />)
           const getReminderField = () => findReminderField(routineForm)
           getReminderField().prop('onChange')({ target: { value: changedVal } })
@@ -351,70 +352,14 @@ describe('<RoutineForm />', () => {
       })
     })
 
-    /* ======================================
-    =            Dismiss Button            =
-    ====================================== */
-
-    const findDismissBtn = wrpr => findPureForm(wrpr).find('[name="dismiss"]')
-
-    it('should render a dismiss button', () => {
-      const dismissBtn = findDismissBtn(shallow(<RoutineForm {...getRequiredProps()} />))
-      expect(dismissBtn).to.have.lengthOf(1)
-    })
-
-    describe('the rendered dismiss button', () => {
-      it('should be an AntD <Button />', () => {
-        const dismissBtn = findDismissBtn(shallow(<RoutineForm {...getRequiredProps()} />))
-        expect(dismissBtn).to.match(Button)
-      })
-
-      context('when pressed', () => {
-        it('should call the passed dismiss handler', () => {
-          const handleDismiss = td.function()
-          const dismissBtn = findDismissBtn(shallow(
-            <RoutineForm {...getRequiredProps({
-              handleDismiss
-            })} />
-          ))
-
-          td.verify(handleDismiss(), { times: 0, ignoreExtraArgs: true })
-          dismissBtn.prop('onClick')()
-          td.verify(handleDismiss(), { times: 1, ignoreExtraArgs: true })
-        })
-      })
-    })
-
     /* ========================================
-    =            'Go Back' Button            =
+    =            'Go Back' Link            =
     ======================================== */
 
-    const findGoBackBtn = wrpr => findPureForm(wrpr).find('[name="goBack"]')
-
-    it('should render a \'go back\' button', () => {
-      const goBackBtn = findGoBackBtn(shallow(<RoutineForm {...getRequiredProps()} />))
-      expect(goBackBtn).to.have.lengthOf(1)
-    })
-
-    describe('the rendered \'go back\' button', () => {
-      it('should be an AntD <Button />', () => {
-        const goBackBtn = findGoBackBtn(shallow(<RoutineForm {...getRequiredProps()} />))
-        expect(goBackBtn).to.match(Button)
-      })
-
-      context('when pressed', () => {
-        it('should call the passed \'go back\' handler', () => {
-          const handleDismiss = td.function()
-          const goBackBtn = findGoBackBtn(shallow(
-            <RoutineForm {...getRequiredProps({
-              handleDismiss
-            })} />
-          ))
-
-          td.verify(handleDismiss(), { times: 0, ignoreExtraArgs: true })
-          goBackBtn.prop('onClick')()
-          td.verify(handleDismiss(), { times: 1, ignoreExtraArgs: true })
-        })
-      })
+    it('should render a \'go back\' Link that points to Routines List', () => {
+      const wrapper = findPureForm(shallow(<RoutineForm {...getRequiredProps()} />))
+      const goBackLink = wrapper.findWhere(wrpr => wrpr.is(Link) && wrpr.prop('to') === '/')
+      expect(goBackLink).to.have.lengthOf(1)
     })
 
     /* =====================================
@@ -497,7 +442,7 @@ describe('<RoutineForm />', () => {
           const formValues = {
             routineName: 'New Routine Name',
             duration: moment('12:30:30', 'HH:mm:ss'),
-            reminder: moment('6:15 am', 'H:mm a'),
+            reminder: moment('12:30 am', 'h:mm a'),
           }
 
           routineForm.prop('form').setFieldsValue(formValues)

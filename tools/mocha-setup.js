@@ -35,3 +35,9 @@ require.extensions['.svg'] = noop
 require.extensions['.jpg'] = noop
 require.extensions['.jpeg'] = noop
 require.extensions['.gif'] = noop
+
+/**
+ * Temporary fix for chai
+ * https://github.com/chaijs/type-detect/pull/91
+ */
+global.HTMLElement = window.HTMLElement

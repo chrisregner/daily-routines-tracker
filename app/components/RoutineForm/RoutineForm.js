@@ -2,6 +2,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import MomentProp from 'react-moment-proptypes'
 import moment from 'moment'
+import { Link } from 'react-router-dom'
 
 import { Form, Icon, Input, Button, TimePicker } from 'antd'
 
@@ -12,7 +13,6 @@ class RoutineForm extends React.Component {
       duration: MomentProp.momentObj,
       reminder: MomentProp.momentObj,
     }),
-    handleDismiss: PropTypes.func.isRequired,
     handleSubmit: PropTypes.func.isRequired,
     handleDelete: PropTypes.func,
 
@@ -104,9 +104,9 @@ class RoutineForm extends React.Component {
         initialValue: initValues.reminder,
       })(
         <TimePicker
-          format='HH:mm a'
-          defaultOpenValue={moment('00:00 am', 'HH:mm a')}
-          placeholder='hh:mm a'
+          format='h:mm a'
+          defaultOpenValue={moment('00:00 am', 'h:mm a')}
+          placeholder='h:mm a'
           name='reminder'
         />
       )}
@@ -116,38 +116,26 @@ class RoutineForm extends React.Component {
   render = () => {
     const {
       initialValues,
-      handleDismiss,
       handleDelete,
     } = this.props
     const hasInitValues = Object.keys(initialValues).length > 0
 
     return (
       <Form onSubmit={this.handleSubmit}>
-        <div className='mb3 cf'>
-          <Button
-            name='goBack'
-            onClick={handleDismiss}
-            className='fl'
-            icon='arrow-left'
-          />
+        <div className='mb3 cf f4'>
+          <Link to='/' className='dib fl lh-title'><Icon type="arrow-left" /></Link>
 
-          <div className='fr'>
-            {
-              hasInitValues &&
+          {
+            hasInitValues &&
+            <div className='fr'>
               <Button
                 name='delete'
                 onClick={handleDelete}
                 type='danger'
                 icon='delete'
               />
-            }
-            <Button
-              name='dismiss'
-              onClick={handleDismiss}
-              className='ml2'
-              icon='close'
-            />
-          </div>
+            </div>
+          }
         </div>
 
         <div className='mb2'>
