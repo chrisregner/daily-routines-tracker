@@ -44,7 +44,7 @@ describe('routines', () => {
     expect(noOfDiffThatIsOnlyId).to.equal(expectedNoOfIdAdded)
   })
 
-  it('can handle ADD_Routine', () => {
+  it('can handle ADD_ROUTINE', () => {
     const testAddingOneRoutineToTwo = () => {
       const payload = {
         routineName: 'Do something new',
@@ -54,16 +54,16 @@ describe('routines', () => {
 
       const initialState = [
         {
-          id: 1,
+          id: '1',
           routineName: 'Do something',
           duration: moment('11:11:11', 'HH:mm:ss'),
           reminder: moment('1:11 am', 'h:mm a'),
         },
         {
-          id: 2,
+          id: '2',
           routineName: 'Do another thing',
           duration: moment('22:22:22', 'HH:mm:ss'),
-          reminder: moment('22:22 am', 'h:mm a'),
+          reminder: moment('2:22 am', 'h:mm a'),
         },
       ]
 
@@ -109,5 +109,75 @@ describe('routines', () => {
 
     testAddingOneRoutineToTwo()
     testAddingOneRoutineToZero()
+  })
+
+  it('can handle EDIT_ROUTINE', () => {
+    const testEditingOneRoutineOutOfThree = () => {
+      const payload = {
+        id: '3',
+        routineName: 'Do one last thing differently',
+        duration: moment('04:44:44', 'HH:mm:ss'),
+        reminder: moment('4:44 am', 'h:mm a'),
+      }
+
+      const initialState = [
+        {
+          id: '1',
+          routineName: 'Do something',
+          duration: moment('11:11:11', 'HH:mm:ss'),
+          reminder: moment('1:11 am', 'h:mm a'),
+        },
+        {
+          id: '2',
+          routineName: 'Do another thing',
+          duration: moment('22:22:22', 'HH:mm:ss'),
+          reminder: moment('2:22 am', 'h:mm a'),
+        },
+        {
+          id: '3',
+          routineName: 'Do one last thing',
+          duration: moment('03:33:33', 'HH:mm:ss'),
+          reminder: moment('03:33 am', 'h:mm a'),
+        },
+      ]
+
+      const action = {
+        type: actionTypes.EDIT_ROUTINE,
+        payload,
+      }
+
+      const expectedState = initialState.map(routineObj => (
+        routineObj.id === payload.id ? payload : routineObj
+      ))
+
+      const actualState  = reducers.routines(initialState, action)
+
+      expect(actualState).to.deep.equal(expectedState)
+    }
+
+    const testEditingOneRoutineOutOfZero = () => {
+      const payload = {
+        id: '3',
+        routineName: 'Do nothing differently',
+        duration: moment('04:44:44', 'HH:mm:ss'),
+        reminder: moment('4:44 am', 'h:mm a'),
+      }
+
+      const initialState = []
+
+      const action = {
+        type: actionTypes.EDIT_ROUTINE,
+        payload,
+      }
+
+      const expectedState = []
+
+      const actualState  = reducers.routines(initialState, action)
+
+      expect(actualState).to.deep.equal(expectedState)
+    }
+
+    testEditingOneRoutineOutOfThree()
+    testEditingOneRoutineOutOfZero()
   })
 })

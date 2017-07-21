@@ -1,6 +1,5 @@
 import React from 'react'
-import chai, { expect } from 'chai'
-import chaiEnzyme from 'chai-enzyme'
+import { expect } from 'chai'
 import { shallow } from 'enzyme'
 import { BrowserRouter } from 'react-router-dom'
 import moment from 'moment'
@@ -10,7 +9,6 @@ import without from 'lodash/without'
 import RoutineList from './RoutineList'
 import RoutineItem from './subcomponents/RoutineItem'
 
-chai.use(chaiEnzyme())
 
 describe('<RoutineList />', () => {
   const getRequiredProps = props => props

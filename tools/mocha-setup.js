@@ -1,5 +1,8 @@
 /* eslint-disable node/no-deprecated-api */
 import { JSDOM } from 'jsdom'
+import chai from 'chai'
+import chaiEnzyme from 'chai-enzyme'
+
 
 /* Setup virtual DOM */
 
@@ -19,6 +22,7 @@ global.navigator = { userAgent: 'node.js' }
 
 copyProps(window, global)
 
+
 /* Override non-JS requires cause Node.js can't and shouldn't understand them */
 
 process.env.NODE_ENV = 'test'
@@ -36,8 +40,14 @@ require.extensions['.jpg'] = noop
 require.extensions['.jpeg'] = noop
 require.extensions['.gif'] = noop
 
+
 /**
  * Temporary fix for chai
  * https://github.com/chaijs/type-detect/pull/91
  */
 global.HTMLElement = window.HTMLElement
+
+
+/* Setup Chai-Enzyme */
+
+chai.use(chaiEnzyme())

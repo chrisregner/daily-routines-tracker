@@ -15,6 +15,7 @@ class RoutineForm extends React.Component {
     }),
     handleSubmit: PropTypes.func.isRequired,
     handleDelete: PropTypes.func,
+    notFound: PropTypes.bool,
 
     /* PropTypes from AntD form decorator */
     form: PropTypes.shape({
@@ -46,9 +47,13 @@ class RoutineForm extends React.Component {
     const {
       handleSubmit,
       form: { validateFields },
+      initialValues,
     } = this.props
 
     validateFields((err, values) => {
+      if (initialValues && initialValues.id)
+        values.id = initialValues.id
+
       if (!err) handleSubmit(values)
     })
   }
@@ -104,6 +109,7 @@ class RoutineForm extends React.Component {
         initialValue: initValues.reminder,
       })(
         <TimePicker
+          use12Hours
           format='h:mm a'
           defaultOpenValue={moment('00:00 am', 'h:mm a')}
           placeholder='h:mm a'
@@ -117,52 +123,65 @@ class RoutineForm extends React.Component {
     const {
       initialValues,
       handleDelete,
+      notFound,
     } = this.props
     const hasInitValues = Object.keys(initialValues).length > 0
 
-    return (
-      <Form onSubmit={this.handleSubmit}>
-        <div className='mb3 cf f4'>
-          <Link to='/' className='dib fl lh-title'><Icon type="arrow-left" /></Link>
+    if (notFound)
+      return (
+        <div>
+          <div className='mb6 f4 lh-title'>
+            <Link to='/'><Icon type="arrow-left" /></Link>
+          </div>
+          <div className='f3 lh-copy'>
+            Sorry, the routine you requested is not found.
+          </div>
+        </div>
+      )
+    else
+      return (
+        <Form onSubmit={this.handleSubmit}>
+          <div className='flex items-center mb3 cf f4 lh-title'>
+            <Link to='/' className='self-grow-1 dib fl'><Icon type="arrow-left" /></Link>
 
-          {
-            hasInitValues &&
-            <div className='fr'>
-              <Button
-                name='delete'
-                onClick={handleDelete}
-                type='danger'
-                icon='delete'
-              />
+            {
+              hasInitValues &&
+              <div className='fr'>
+                <Button
+                  name='delete'
+                  onClick={handleDelete}
+                  type='danger'
+                  icon='delete'
+                />
+              </div>
+            }
+          </div>
+
+          <div className='mb2'>
+            {this.renderRoutineNameField()}
+          </div>
+
+          <div className='cf'>
+            <div className='fl mb2 w-50'>
+              {this.renderDurationField()}
             </div>
-          }
-        </div>
-
-        <div className='mb2'>
-          {this.renderRoutineNameField()}
-        </div>
-
-        <div className='cf'>
-          <div className='fl mb2 w-50'>
-            {this.renderDurationField()}
+            <div className='fl mb2 w-50'>
+              {this.renderReminderField()}
+            </div>
           </div>
-          <div className='fl mb2 w-50'>
-            {this.renderReminderField()}
-          </div>
-        </div>
 
-        <Form.Item className='mt4'>
-          <Button
-            name='submit'
-            disabled={this.shouldDisableSubmit()}
-            htmlType='submit'
-            type='primary'
-          >
-            {hasInitValues ? 'Update Routine' : 'Add New Routine'}
-          </Button>
-        </Form.Item>
-      </Form>
-    )
+          <Form.Item className='mt4'>
+            <Button
+              name='submit'
+              disabled={this.shouldDisableSubmit()}
+              htmlType='submit'
+              type='primary'
+            >
+              {hasInitValues ? 'Update Routine' : 'Add New Routine'}
+            </Button>
+          </Form.Item>
+        </Form>
+      )
   }
 }
 

@@ -25,12 +25,16 @@ const routines = (state = initialRoutinesState, action) => {
         merge({ id: id.generate() }, action.payload),
         ...state,
       ]
+    case actionTypes.EDIT_ROUTINE:
+      return state.map(routineObj => (
+        routineObj.id === action.payload.id ? action.payload : routineObj
+      ))
     default:
       return state
   }
 }
 
-const dailyRoutinesTracker = combineReducers({ routines })
+const rootReducer = combineReducers({ routines })
 
-export default dailyRoutinesTracker
+export default rootReducer
 export { routines }

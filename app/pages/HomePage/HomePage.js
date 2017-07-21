@@ -4,16 +4,14 @@ import { Icon } from 'antd'
 
 import PopulatedRoutineList from 'containers/PopulatedRoutineList'
 
-const Home = () => (<div>
-  <div className='cf f3'>
-    <div className='fl'>
-      <h1 className='mh0 mt0 mb3 f3 dark-gray normal lh-title'>{'Daily Routine Tracker'}</h1>
-    </div>
-    <div className='fr lh-title'>
+const HomePage = () => (<div>
+  <div className='flex items-center mb3 f3'>
+    <h1 className='self-grow-1 ma0 f4 dark-gray normal ttu lh-title'>{'Daily Routine Tracker'}</h1>
+    <div className='lh-title'>
       <Link to='routines/new'><Icon type="plus" /></Link>
     </div>
   </div>
   <PopulatedRoutineList />
 </div>)
 
-export default Home
+export default HomePage

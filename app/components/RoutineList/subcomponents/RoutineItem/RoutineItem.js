@@ -6,8 +6,8 @@ import styled from 'styled-components'
 import { Icon, Row, Col } from 'antd'
 
 let StyledLi, StyledDivForTime
-const RoutineItem = ({ routineName, duration, reminder }) => (<StyledLi className='b--my-light-gray'>
-  <Link to='' className='flex items-center db h-100 dark-gray f4 lh-title'>
+const RoutineItem = ({ id, routineName, duration, reminder }) => (<StyledLi className='b--my-light-gray'>
+  <Link to={`/routines/${id}`} className='flex items-center db h-100 dark-gray f4 lh-title'>
     <Icon type='check-circle-o' className='mr2' />
     <div className='self-grow-1 pr2 pv1 truncate'>
       {routineName}

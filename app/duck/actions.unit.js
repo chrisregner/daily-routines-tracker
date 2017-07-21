@@ -18,4 +18,19 @@ describe('RoutineForm actions', () => {
       payload
     })
   })
+
+  it('can create an action to edit a routine', () => {
+    const payload = {
+      id: '123',
+      routineName: 'Routine Name',
+      duration: moment('12:30:30', 'HH:mm:ss'),
+      reminder: moment('12:30:30', 'H:mm a'),
+    }
+    const result = actions.editRoutine(payload)
+
+    expect(result).to.deep.equal({
+      type: actionTypes.EDIT_ROUTINE,
+      payload
+    })
+  })
 })

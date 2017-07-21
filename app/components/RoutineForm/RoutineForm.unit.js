@@ -1,6 +1,5 @@
 import React from 'react'
-import chai, { expect } from 'chai'
-import chaiEnzyme from 'chai-enzyme'
+import { expect } from 'chai'
 import td from 'testdouble'
 import { shallow } from 'enzyme'
 import moment from 'moment'
@@ -8,6 +7,8 @@ import { Link } from 'react-router-dom'
 
 import { Form, Input, TimePicker, Button } from 'antd'
 import RoutineForm from './RoutineForm'
+
+
 
 describe('<RoutineForm />', () => {
   before(() => {
@@ -39,11 +40,11 @@ describe('<RoutineForm />', () => {
 
   // Get to the renderer's actual root component
   // by diving past the AntD's decoration layers
-  const findPureForm = (wrpr) => wrpr.dive().dive()
+  const diveThruAntDHOC = (wrpr) => wrpr.dive().dive()
 
   it('the render an AntD Form', () => {
     const routineForm = shallow(<RoutineForm {...getRequiredProps()} />)
-    expect(findPureForm(routineForm)).to.match(Form)
+    expect(diveThruAntDHOC(routineForm)).to.match(Form)
   })
 
   describe('the rendered form', () => {
@@ -51,7 +52,7 @@ describe('<RoutineForm />', () => {
     =            Routine Name Field            =
     ======================================= */
 
-    const findRoutineNameField = wrpr => findPureForm(wrpr).find('[name="routineName"]')
+    const findRoutineNameField = wrpr => diveThruAntDHOC(wrpr).find('[name="routineName"]')
 
     it('should render a routineName field', () => {
       const routineNameField = findRoutineNameField(shallow(<RoutineForm {...getRequiredProps()} />))
@@ -125,7 +126,7 @@ describe('<RoutineForm />', () => {
     =            Duration Field            =
     ====================================== */
 
-    const findDurationField = wrpr => findPureForm(wrpr).find('[name="duration"]')
+    const findDurationField = wrpr => diveThruAntDHOC(wrpr).find('[name="duration"]')
 
     it('should render a duration field', () => {
       const durationField = findDurationField(shallow(<RoutineForm {...getRequiredProps()} />))
@@ -203,7 +204,7 @@ describe('<RoutineForm />', () => {
     =            Reminder Field            =
     ====================================== */
 
-    const findReminderField = wrpr => findPureForm(wrpr).find('[name="reminder"]')
+    const findReminderField = wrpr => diveThruAntDHOC(wrpr).find('[name="reminder"]')
 
     it('should render a reminder field', () => {
       const reminderField = findReminderField(shallow(<RoutineForm {...getRequiredProps()} />))
@@ -281,7 +282,7 @@ describe('<RoutineForm />', () => {
     =            Submit Button            =
     ===================================== */
 
-    const findSubmitBtn = wrpr => findPureForm(wrpr).find('[name="submit"]')
+    const findSubmitBtn = wrpr => diveThruAntDHOC(wrpr).find('[name="submit"]')
 
     it('should render a submit button', () => {
       const submitBtn = findSubmitBtn(shallow(<RoutineForm {...getRequiredProps()} />))
@@ -357,7 +358,7 @@ describe('<RoutineForm />', () => {
     ======================================== */
 
     it('should render a \'go back\' Link that points to Routines List', () => {
-      const wrapper = findPureForm(shallow(<RoutineForm {...getRequiredProps()} />))
+      const wrapper = diveThruAntDHOC(shallow(<RoutineForm {...getRequiredProps()} />))
       const goBackLink = wrapper.findWhere(wrpr => wrpr.is(Link) && wrpr.prop('to') === '/')
       expect(goBackLink).to.have.lengthOf(1)
     })
@@ -367,7 +368,7 @@ describe('<RoutineForm />', () => {
     ===================================== */
 
     describe('the delete button', () => {
-      const findDeleteBtn = wrpr => findPureForm(wrpr).find('[name="delete"]')
+      const findDeleteBtn = wrpr => diveThruAntDHOC(wrpr).find('[name="delete"]')
 
       context('when form has no initial value', () => {
         it('should not render a delete <Button />', () => {
@@ -423,7 +424,7 @@ describe('<RoutineForm />', () => {
     context('when submitted', () => {
       it('should validate the form', () => {
         const routineForm = shallow(<RoutineForm {...getRequiredProps()} />)
-        const pureRoutineForm = findPureForm(routineForm)
+        const pureRoutineForm = diveThruAntDHOC(routineForm)
         const validate = td.replace(routineForm.prop('form'), 'validateFields')
         td.verify(validate(), { times: 0, ignoreExtraArgs: true })
         pureRoutineForm.prop('onSubmit')({ preventDefault: () => {} })
@@ -431,31 +432,62 @@ describe('<RoutineForm />', () => {
       })
 
       context('when form is valid', () => {
-        it('should call the passed onSubmit handler with form values', () => {
-          const handleSubmit = td.function()
-          const routineForm = shallow(
-            <RoutineForm {...getRequiredProps({
-              handleSubmit
-            })} />
-          )
-          const pureRoutineForm = findPureForm(routineForm)
-          const formValues = {
-            routineName: 'New Routine Name',
-            duration: moment('12:30:30', 'HH:mm:ss'),
-            reminder: moment('12:30 am', 'h:mm a'),
-          }
+        context('when initialValues is provided', () => {
+          it('should call the passed onSubmit handler with form values AND the id from initialValues prop', () => {
+            const handleSubmit = td.function()
+            const initialId = '123'
+            const routineForm = shallow(
+              <RoutineForm {...getRequiredProps({
+                initialValues: {
+                  id: initialId,
+                  name: 'Initial Routine Name'
+                },
+                handleSubmit
+              })} />
+            )
+            const pureRoutineForm = diveThruAntDHOC(routineForm)
+            const formValues = {
+              routineName: 'New Routine Name',
+              duration: moment('12:30:30', 'HH:mm:ss'),
+              reminder: moment('12:30 am', 'h:mm a'),
+            }
 
-          routineForm.prop('form').setFieldsValue(formValues)
-          td.verify(handleSubmit(), { times: 0, ignoreExtraArgs: true })
-          pureRoutineForm.prop('onSubmit')({ preventDefault: () => {} })
-          td.verify(handleSubmit(formValues), { times: 1 })
+            routineForm.prop('form').setFieldsValue(formValues)
+            td.verify(handleSubmit(), { times: 0, ignoreExtraArgs: true })
+            pureRoutineForm.prop('onSubmit')({ preventDefault: () => {} })
+
+            const expectedArg = Object.assign({ id: initialId }, formValues)
+            td.verify(handleSubmit(expectedArg), { times: 1 })
+          })
+        })
+
+        context('when initialValues is not provided', () => {
+          it('should call the passed onSubmit handler with form values', () => {
+            const handleSubmit = td.function()
+            const routineForm = shallow(
+              <RoutineForm {...getRequiredProps({
+                handleSubmit
+              })} />
+            )
+            const pureRoutineForm = diveThruAntDHOC(routineForm)
+            const formValues = {
+              routineName: 'New Routine Name',
+              duration: moment('12:30:30', 'HH:mm:ss'),
+              reminder: moment('12:30 am', 'h:mm a'),
+            }
+
+            routineForm.prop('form').setFieldsValue(formValues)
+            td.verify(handleSubmit(), { times: 0, ignoreExtraArgs: true })
+            pureRoutineForm.prop('onSubmit')({ preventDefault: () => {} })
+            td.verify(handleSubmit(formValues), { times: 1 })
+          })
         })
       })
 
       context('when form is invalid', () => {
         it('should not call the passed onSubmit handler', () => {
           const handleSubmit = td.function()
-          const pureRoutineForm = findPureForm(shallow(
+          const pureRoutineForm = diveThruAntDHOC(shallow(
             <RoutineForm {...getRequiredProps({
               handleSubmit
             })} />
@@ -464,6 +496,22 @@ describe('<RoutineForm />', () => {
           td.verify(handleSubmit(), { times: 0, ignoreExtraArgs: true })
         })
       })
+    })
+  })
+
+  context('when notFound prop is set to true', () => {
+    it('should render the not found message', () => {
+      const routineForm = diveThruAntDHOC(shallow(
+        <RoutineForm {...getRequiredProps({ notFound: true })} />
+      ))
+      expect(routineForm.text()).to.contain('not found')
+    })
+
+    it('should not render the AntD form', () => {
+      const routineForm = diveThruAntDHOC(shallow(
+        <RoutineForm {...getRequiredProps({ notFound: true })} />
+      ))
+      expect(routineForm).to.not.have.descendants(Form)
     })
   })
 })

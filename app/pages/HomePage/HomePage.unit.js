@@ -1,26 +1,25 @@
 import React from 'react'
-import chai, { expect } from 'chai'
-import chaiEnzyme from 'chai-enzyme'
+import { expect } from 'chai'
 import { shallow } from 'enzyme'
 import { Link } from 'react-router-dom'
 
-import Home from './Home'
+import HomePage from './HomePage'
 import PopulatedRoutineList from 'containers/PopulatedRoutineList'
 
-describe('<Home />', () => {
+describe('<HomePage />', () => {
   it('should have <div /> as its root component', () => {
-    const wrapper = shallow(<Home />)
+    const wrapper = shallow(<HomePage />)
     expect(wrapper).to.match('div')
   })
 
   it('should render a PopulatedRoutineList', () => {
-    const wrapper = shallow(<Home />)
+    const wrapper = shallow(<HomePage />)
     expect(wrapper).to.containMatchingElement(<PopulatedRoutineList />)
     expect(wrapper).to.have.exactly(1).descendants(PopulatedRoutineList)
   })
 
   it('should render a react router Link to the page for adding new routine', () => {
-    const wrapper = shallow(<Home />)
+    const wrapper = shallow(<HomePage />)
     const wantedLinkElement = wrapper.findWhere(wrpr => (
       wrpr.is(Link)
       && wrpr.prop('to') === 'routines/new')
