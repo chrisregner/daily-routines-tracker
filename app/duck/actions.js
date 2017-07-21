@@ -1,11 +1,18 @@
 import * as actionTypes from './actionTypes'
 
-export const addRoutine = (payload) => ({
+export const addRoutine = (formData) => ({
   type: actionTypes.ADD_ROUTINE,
-  payload
+  payload: formData
 })
 
-export const editRoutine = (payload) => ({
+export const editRoutine = (formData) => ({
   type: actionTypes.EDIT_ROUTINE,
-  payload
+  payload: formData
+})
+
+export const deleteRoutine = (routineId) => ({
+  type: actionTypes.DELETE_ROUTINE,
+  payload: {
+    id: routineId
+  }
 })

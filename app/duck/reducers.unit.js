@@ -111,6 +111,106 @@ describe('routines', () => {
     testAddingOneRoutineToZero()
   })
 
+  it('can handle DELETE_ROUTINE', () => {
+    const testDeletingOneRoutineOutOfThree = () => {
+      const payload = { id: '2' }
+
+      const initialState = [
+        {
+          id: '1',
+          routineName: 'Do something',
+          duration: moment('11:11:11', 'HH:mm:ss'),
+          reminder: moment('1:11 am', 'h:mm a'),
+        },
+        {
+          id: '2',
+          routineName: 'Do another thing',
+          duration: moment('22:22:22', 'HH:mm:ss'),
+          reminder: moment('2:22 am', 'h:mm a'),
+        },
+        {
+          id: '3',
+          routineName: 'Do one last thing',
+          duration: moment('03:33:33', 'HH:mm:ss'),
+          reminder: moment('03:33 am', 'h:mm a'),
+        },
+      ]
+
+      const action = {
+        type: actionTypes.DELETE_ROUTINE,
+        payload,
+      }
+
+      const expectedState = initialState.filter(routineObj => routineObj.id !== payload.id)
+
+      const actualState  = reducers.routines(initialState, action)
+
+      expect(actualState).to.deep.equal(expectedState)
+    }
+
+    const testDeletingOneRoutineOutOfOne = () => {
+      const payload = { id: '1' }
+
+      const initialState = [{
+        id: '1',
+        routineName: 'Do something',
+        duration: moment('11:11:11', 'HH:mm:ss'),
+        reminder: moment('1:11 am', 'h:mm a'),
+      }]
+
+      const action = {
+        type: actionTypes.DELETE_ROUTINE,
+        payload,
+      }
+
+      const expectedState = []
+
+      const actualState  = reducers.routines(initialState, action)
+
+      expect(actualState).to.deep.equal(expectedState)
+    }
+
+    const testDeletingARoutineMatchingNoneOutOfThree = () => {
+      const payload = { id: '4' }
+
+      const initialState = [
+        {
+          id: '1',
+          routineName: 'Do something',
+          duration: moment('11:11:11', 'HH:mm:ss'),
+          reminder: moment('1:11 am', 'h:mm a'),
+        },
+        {
+          id: '2',
+          routineName: 'Do another thing',
+          duration: moment('22:22:22', 'HH:mm:ss'),
+          reminder: moment('2:22 am', 'h:mm a'),
+        },
+        {
+          id: '3',
+          routineName: 'Do one last thing',
+          duration: moment('03:33:33', 'HH:mm:ss'),
+          reminder: moment('03:33 am', 'h:mm a'),
+        },
+      ]
+
+      const action = {
+        type: actionTypes.DELETE_ROUTINE,
+        payload,
+      }
+
+      const expectedState = initialState
+
+      const actualState  = reducers.routines(initialState, action)
+
+      expect(actualState).to.deep.equal(expectedState)
+    }
+
+    testDeletingOneRoutineOutOfThree()
+    testDeletingOneRoutineOutOfOne()
+    testDeletingARoutineMatchingNoneOutOfThree()
+  })
+
   it('can handle EDIT_ROUTINE', () => {
     const testEditingOneRoutineOutOfThree = () => {
       const payload = {

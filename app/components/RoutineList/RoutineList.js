@@ -1,7 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import pick from 'lodash/pick'
-import without from 'lodash/without'
+import { Link } from 'react-router-dom'
 
 import RoutineItem from './subcomponents/RoutineItem'
 
@@ -12,7 +12,10 @@ const RoutineList = ({ routines }) => (<ul>
       return <RoutineItem key={routine.id} {...routine} />
     })
   ) : (
-    'There is no routine! Add one.'
+    <div className='mt6 f3 lh-copy'>
+      There is no routine! <br />
+      <Link to='/routines/new'>Add one.</Link>
+    </div>
   )}
 </ul>)
 

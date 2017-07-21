@@ -18,6 +18,13 @@ describe('<EditRoutineForm />', () => {
         it('should dispatch EDIT_ROUTINE with its arguments')
         it('should redirect to path \'/\' after calling the dispatch')
       })
+
+      it('should receive a handleDelete() prop')
+
+      describe('the passed handleDelete() prop', () => {
+        it('should dispatch DELETE_ROUTINE with its arguments')
+        it('should redirect to path \'/\' after calling the dispatch')
+      })
     })
 
     context('when route id does not match any routine', () => {

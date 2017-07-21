@@ -1,6 +1,6 @@
 import { connect } from 'react-redux'
 
-import { editRoutine, addRoutine } from 'duck/actions'
+import { editRoutine, deleteRoutine } from 'duck/actions'
 import RoutineForm from 'components/RoutineForm'
 
 const mapStateToProps = (state, ownProps) => {
@@ -15,10 +15,14 @@ const mapStateToProps = (state, ownProps) => {
 
 const mapDispatchToProps = (dispatch, ownProps) => ({
   handleSubmit: (formData) => {
-    console.log(formData)
     dispatch(editRoutine(formData))
     ownProps.history.push('/')
   },
+  handleDelete: (routineId) => {
+    console.log(routineId)
+    dispatch(deleteRoutine(routineId))
+    ownProps.history.push('/')
+  }
 })
 
 const RoutineFormPage = connect(

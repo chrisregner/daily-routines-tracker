@@ -1,6 +1,6 @@
 import { connect } from 'react-redux'
 
-import { editRoutine, addRoutine } from 'duck/actions'
+import { addRoutine } from 'duck/actions'
 import RoutineForm from 'components/RoutineForm'
 
 const mapDispatchToProps = (dispatch, ownProps) => ({

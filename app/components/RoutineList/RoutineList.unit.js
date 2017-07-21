@@ -15,7 +15,7 @@ describe('<RoutineList />', () => {
 
   it('should render with <ul /> as its root componenet', () => {
     const wrapper = shallow(<RoutineList {...getRequiredProps()} />)
-    expect(wrapper).to.have.tagName('ul')
+    expect(wrapper.is('ul')).to.equal(true)
   })
 
   context('when routines prop is passed', () => {

@@ -3,8 +3,11 @@ import PropTypes from 'prop-types'
 import MomentProp from 'react-moment-proptypes'
 import moment from 'moment'
 import { Link } from 'react-router-dom'
+import styled from 'styled-components'
 
 import { Form, Icon, Input, Button, TimePicker } from 'antd'
+
+let s // styled components will be defined in this variable
 
 class RoutineForm extends React.Component {
   static propTypes = {
@@ -28,7 +31,6 @@ class RoutineForm extends React.Component {
 
   static defaultProps = {
     initialValues: {},
-    handleDelete: () => {},
   }
 
   shouldDisableSubmit = () => {
@@ -56,6 +58,16 @@ class RoutineForm extends React.Component {
 
       if (!err) handleSubmit(values)
     })
+  }
+
+  handleDelete = () => {
+    const {
+      handleDelete,
+      initialValues,
+    } = this.props
+
+    if (handleDelete && typeof handleDelete === 'function')
+      handleDelete(initialValues.id)
   }
 
   renderRoutineNameField = () => {
@@ -122,7 +134,6 @@ class RoutineForm extends React.Component {
   render = () => {
     const {
       initialValues,
-      handleDelete,
       notFound,
     } = this.props
     const hasInitValues = Object.keys(initialValues).length > 0
@@ -141,15 +152,17 @@ class RoutineForm extends React.Component {
     else
       return (
         <Form onSubmit={this.handleSubmit}>
-          <div className='flex items-center mb3 cf f4 lh-title'>
+          <div className='relative flex items-center mb3 cf f4 lh-title'>
             <Link to='/' className='self-grow-1 dib fl'><Icon type="arrow-left" /></Link>
-
+            <s.CenteredH2 className='ma0 f4 ttu lh-title'>
+              {hasInitValues ? 'Edit Task' : 'Add New Task'}
+            </s.CenteredH2>
             {
               hasInitValues &&
               <div className='fr'>
                 <Button
                   name='delete'
-                  onClick={handleDelete}
+                  onClick={this.handleDelete}
                   type='danger'
                   icon='delete'
                 />
@@ -183,6 +196,15 @@ class RoutineForm extends React.Component {
         </Form>
       )
   }
+}
+
+s = {
+  CenteredH2: styled.div`
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+  `
 }
 
 const DecoratedRoutineForm = Form.create()(RoutineForm)

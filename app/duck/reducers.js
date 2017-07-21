@@ -29,6 +29,8 @@ const routines = (state = initialRoutinesState, action) => {
       return state.map(routineObj => (
         routineObj.id === action.payload.id ? action.payload : routineObj
       ))
+    case actionTypes.DELETE_ROUTINE:
+      return state.filter(routineObj => routineObj.id !== action.payload.id)
     default:
       return state
   }

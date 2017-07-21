@@ -23,7 +23,6 @@ describe('<RoutineForm />', () => {
   const getRequiredProps = (props) => Object.assign(
     {},
     {
-      handleDismiss: () => {},
       handleSubmit: () => {},
     },
     props,
@@ -397,12 +396,16 @@ describe('<RoutineForm />', () => {
           })
 
           context('when pressed', () => {
-            it('should call the passed delete handler', () => {
+            it('should call the passed delete handler with the passed initialValues\'s id', () => {
+              const passedId = '123'
               const handleDelete = td.function()
               const deleteBtn = findDeleteBtn(shallow(
                 <RoutineForm
                   {...getRequiredProps({
-                    initialValues: { routineName: 'Initial Routine Name' },
+                    initialValues: {
+                      id: passedId,
+                      routineName: 'Initial Routine Name',
+                    },
                     handleDelete: handleDelete,
                   })}
                 />
@@ -410,7 +413,7 @@ describe('<RoutineForm />', () => {
 
               td.verify(handleDelete(), { times: 0, ignoreExtraArgs: true })
               deleteBtn.prop('onClick')()
-              td.verify(handleDelete(), { times: 1, ignoreExtraArgs: true })
+              td.verify(handleDelete(passedId), { times: 1})
             })
           })
         })
@@ -512,6 +515,31 @@ describe('<RoutineForm />', () => {
         <RoutineForm {...getRequiredProps({ notFound: true })} />
       ))
       expect(routineForm).to.not.have.descendants(Form)
+    })
+  })
+
+  context('when initialValues prop is provided', () => {
+    it('should have \'Edit Task\' as header', () => {
+      const expectedHeaderText = 'Edit Task'
+      const routineForm = diveThruAntDHOC(shallow(
+        <RoutineForm {...getRequiredProps({ initialValues: {
+          id: '123',
+          routineName: 'Initial Routine Name',
+        } })} />
+      ))
+
+      expect(routineForm).to.contain(expectedHeaderText)
+    })
+  })
+
+  context('when initialValues prop is not provided', () => {
+    it('should have \'Add New Task\' as header', () => {
+      const expectedHeaderText = 'Add New Task'
+      const routineForm = diveThruAntDHOC(shallow(
+        <RoutineForm {...getRequiredProps()} />
+      ))
+
+      expect(routineForm).to.contain(expectedHeaderText)
     })
   })
 })
