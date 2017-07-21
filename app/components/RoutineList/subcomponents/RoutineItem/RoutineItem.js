@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 import { Link } from 'react-router-dom'
 import moment from 'moment'
 import styled from 'styled-components'
-import { Icon, Row, Col } from 'antd'
+import { Icon } from 'antd'
 
 let StyledLi, StyledDivForTime
 const RoutineItem = ({ id, routineName, duration, reminder }) => (<StyledLi className='b--my-light-gray'>
@@ -16,14 +16,14 @@ const RoutineItem = ({ id, routineName, duration, reminder }) => (<StyledLi clas
       {
         duration &&
         <StyledDivForTime className='flex items-center'>
-          <Icon type="clock-circle-o" className='self-grow-1 tl' />
+          <Icon type='clock-circle-o' className='self-grow-1 tl' />
           <div>{duration.format(duration.creationData().format)}</div>
         </StyledDivForTime>
       }
       {
         reminder &&
         <StyledDivForTime className='flex items-center'>
-          <Icon type="bell" className='self-grow-1 tl' />
+          <Icon type='bell' className='self-grow-1 tl' />
           <div>{reminder.format(reminder.creationData().format)}</div>
         </StyledDivForTime>
       }

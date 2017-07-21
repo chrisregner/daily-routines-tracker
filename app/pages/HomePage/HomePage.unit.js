@@ -21,8 +21,8 @@ describe('<HomePage />', () => {
   it('should render a react router Link to the page for adding new routine', () => {
     const wrapper = shallow(<HomePage />)
     const wantedLinkElement = wrapper.findWhere(wrpr => (
-      wrpr.is(Link)
-      && wrpr.prop('to') === 'routines/new')
+      wrpr.is(Link) &&
+      wrpr.prop('to') === 'routines/new')
     )
     expect(wantedLinkElement).to.have.lengthOf(1)
   })

@@ -33,16 +33,12 @@ describe.skip('Daily Routine Tracker', () => {
   describe('Time Object', () => {
     describe('duration', () => {
       it('should be decrementable to show the remaining time to track')
-
-      seconds
-        it('converts moments hrs, mins, secs to secs')
+      it('converts moments hrs, mins, secs to secs')
     })
 
     describe('time', () => {
       it('should be able to be used to compare against the clock')
-
-      moment
-        it('should compare every minute')
+      it('should compare every minute')
     })
   })
 })

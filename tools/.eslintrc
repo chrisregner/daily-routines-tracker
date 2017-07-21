@@ -10,6 +10,9 @@
     "td": true,
     "chance": true
   },
+  "plugins": [
+    "react"
+  ],
   "rules": {
     "comma-dangle": ["error", "always-multiline"],
     "curly": ["error", "multi"]

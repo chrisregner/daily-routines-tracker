@@ -30,14 +30,17 @@
     "eslint-plugin-import": "^2.7.0",
     "eslint-plugin-node": "^5.1.0",
     "eslint-plugin-promise": "^3.5.0",
+    "eslint-plugin-react": "^7.1.0",
     "eslint-plugin-standard": "^3.0.1",
     "jsdom": "^11.1.0",
+    "lodash": "^4.17.4",
     "mocha": "^3.4.2",
     "moment": "^2.18.1",
     "prop-types": "^15.5.10",
     "rc-config-loader": "^2.0.0",
     "react": "^15.6.1",
     "react-dom": "^15.6.1",
+    "react-hot-loader": "next",
     "react-moment-proptypes": "^1.5.0",
     "react-redux": "^5.0.5",
     "react-router-dom": "^4.1.2",
@@ -59,9 +62,5 @@
     "lint:js": "eslint --config tools/.eslintrc **/*.js",
     "lint:css": "stylelint --config tools/.stylelintrc app/**/*.css"
   },
-  "dependencies": {
-    "eslint-plugin-react": "^7.1.0",
-    "lodash": "^4.17.4",
-    "react-hot-loader": "next"
-  }
+  "dependencies": {}
 }

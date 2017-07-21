@@ -8,8 +8,6 @@ import { Link } from 'react-router-dom'
 import { Form, Input, TimePicker, Button } from 'antd'
 import RoutineForm from './RoutineForm'
 
-
-
 describe('<RoutineForm />', () => {
   before(() => {
     // Temporarily silence the async-validator's logs
@@ -413,7 +411,7 @@ describe('<RoutineForm />', () => {
 
               td.verify(handleDelete(), { times: 0, ignoreExtraArgs: true })
               deleteBtn.prop('onClick')()
-              td.verify(handleDelete(passedId), { times: 1})
+              td.verify(handleDelete(passedId), { times: 1 })
             })
           })
         })
@@ -443,9 +441,9 @@ describe('<RoutineForm />', () => {
               <RoutineForm {...getRequiredProps({
                 initialValues: {
                   id: initialId,
-                  name: 'Initial Routine Name'
+                  name: 'Initial Routine Name',
                 },
-                handleSubmit
+                handleSubmit,
               })} />
             )
             const pureRoutineForm = diveThruAntDHOC(routineForm)
@@ -469,7 +467,7 @@ describe('<RoutineForm />', () => {
             const handleSubmit = td.function()
             const routineForm = shallow(
               <RoutineForm {...getRequiredProps({
-                handleSubmit
+                handleSubmit,
               })} />
             )
             const pureRoutineForm = diveThruAntDHOC(routineForm)
@@ -492,7 +490,7 @@ describe('<RoutineForm />', () => {
           const handleSubmit = td.function()
           const pureRoutineForm = diveThruAntDHOC(shallow(
             <RoutineForm {...getRequiredProps({
-              handleSubmit
+              handleSubmit,
             })} />
           ))
           pureRoutineForm.prop('onSubmit')({ preventDefault: () => {} })

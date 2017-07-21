@@ -1,10 +1,3 @@
-import React from 'react'
-import chai, { expect } from 'chai'
-import { shallow } from 'enzyme'
-
-import EditRoutineForm from './EditRoutineForm'
-import RoutineForm from 'components/RoutineForm'
-
 describe('<EditRoutineForm />', () => {
   it('should render <RoutineForm /> inside the HOC')
 

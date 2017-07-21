@@ -1,10 +1,3 @@
-import React from 'react'
-import chai, { expect } from 'chai'
-import { shallow } from 'enzyme'
-
-import AddNewRoutineForm from './AddNewRoutineForm'
-import RoutineForm from 'components/RoutineForm'
-
 describe('<AddNewRoutineForm />', () => {
   it('should receive a handleSubmit() prop')
 

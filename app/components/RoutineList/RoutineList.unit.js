@@ -1,14 +1,10 @@
 import React from 'react'
 import { expect } from 'chai'
 import { shallow } from 'enzyme'
-import { BrowserRouter } from 'react-router-dom'
 import moment from 'moment'
-import pick from 'lodash/pick'
-import without from 'lodash/without'
 
 import RoutineList from './RoutineList'
 import RoutineItem from './subcomponents/RoutineItem'
-
 
 describe('<RoutineList />', () => {
   const getRequiredProps = props => props
@@ -49,7 +45,7 @@ describe('<RoutineList />', () => {
             routines: [{
               id: '1',
               routineName: 'First Routine',
-            }]
+            }],
           })} />
         )
 
@@ -83,7 +79,7 @@ describe('<RoutineList />', () => {
     it('should inform user that there are no routine', () => {
       const wrapper = shallow(
         <RoutineList {...getRequiredProps({
-          routines: []
+          routines: [],
         })} />
       )
 

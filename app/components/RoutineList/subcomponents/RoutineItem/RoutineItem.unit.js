@@ -5,7 +5,6 @@ import { Link } from 'react-router-dom'
 import moment from 'moment'
 
 import RoutineItem from './RoutineItem'
-import styled from 'styled-components'
 
 describe('<RoutineItem />', () => {
   const getRequiredProps = props => Object.assign(
@@ -25,8 +24,8 @@ describe('<RoutineItem />', () => {
     const wrapper = shallow(<RoutineItem {...getRequiredProps({ id: '123' })} />)
     const wantedUrl = '/routines/123'
     const wantedElement = wrapper.findWhere((wrpr) => (
-      wrpr.is(Link)
-      && wrpr.prop('to') === wantedUrl
+      wrpr.is(Link) &&
+      wrpr.prop('to') === wantedUrl
     ))
 
     expect(wantedElement).to.have.lengthOf(1)

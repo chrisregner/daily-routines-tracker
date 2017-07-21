@@ -16,8 +16,6 @@ const initialRoutinesState = [{
   duration: moment('08:00:00', 'HH:mm:ss'),
 }]
 
-
-
 const routines = (state = initialRoutinesState, action) => {
   switch (action.type) {
     case actionTypes.ADD_ROUTINE:

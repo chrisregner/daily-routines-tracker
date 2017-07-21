@@ -22,7 +22,7 @@ const mapDispatchToProps = (dispatch, ownProps) => ({
     console.log(routineId)
     dispatch(deleteRoutine(routineId))
     ownProps.history.push('/')
-  }
+  },
 })
 
 const RoutineFormPage = connect(

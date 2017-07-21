@@ -6,7 +6,8 @@ import * as reducers from './reducers'
 import * as actionTypes from './actionTypes'
 
 const diffThatIsIdOnly = (expected, actual) => {
-  let hasNonIdDiff, noOfDiff = 0
+  let hasNonIdDiff
+  let noOfDiff = 0
   const diff = getDiff(expected, actual)
 
   diff.find((stateItem) => {
@@ -33,9 +34,9 @@ describe('routines', () => {
       duration: moment('00:15:00', 'HH:mm:ss'),
       reminder: moment('4:00 am', 'h:mm a'),
     }, {
-    routineName: 'pneumonoultramicroscopicsilicovolcanoconiosis',
-    duration: moment('08:00:00', 'HH:mm:ss'),
-  }]
+      routineName: 'pneumonoultramicroscopicsilicovolcanoconiosis',
+      duration: moment('08:00:00', 'HH:mm:ss'),
+    }]
 
     const actualState = reducers.routines(undefined, {})
     const noOfDiffThatIsOnlyId = diffThatIsIdOnly(expectedStatePart, actualState)
@@ -74,10 +75,10 @@ describe('routines', () => {
 
       const expectedState = [
         payload,
-        ...initialState
+        ...initialState,
       ]
 
-      const actualState  = reducers.routines(initialState, action)
+      const actualState = reducers.routines(initialState, action)
       const noOfDiffThatIsOnlyId = diffThatIsIdOnly(expectedState, actualState)
       const expectedNoOfIdAdded = 1
 
@@ -100,7 +101,7 @@ describe('routines', () => {
 
       const expectedState = [payload]
 
-      const actualState  = reducers.routines(initialState, action)
+      const actualState = reducers.routines(initialState, action)
       const noOfDiffThatIsOnlyId = diffThatIsIdOnly(expectedState, actualState)
       const expectedNoOfIdAdded = 1
 
@@ -143,7 +144,7 @@ describe('routines', () => {
 
       const expectedState = initialState.filter(routineObj => routineObj.id !== payload.id)
 
-      const actualState  = reducers.routines(initialState, action)
+      const actualState = reducers.routines(initialState, action)
 
       expect(actualState).to.deep.equal(expectedState)
     }
@@ -165,7 +166,7 @@ describe('routines', () => {
 
       const expectedState = []
 
-      const actualState  = reducers.routines(initialState, action)
+      const actualState = reducers.routines(initialState, action)
 
       expect(actualState).to.deep.equal(expectedState)
     }
@@ -201,7 +202,7 @@ describe('routines', () => {
 
       const expectedState = initialState
 
-      const actualState  = reducers.routines(initialState, action)
+      const actualState = reducers.routines(initialState, action)
 
       expect(actualState).to.deep.equal(expectedState)
     }
@@ -250,7 +251,7 @@ describe('routines', () => {
         routineObj.id === payload.id ? payload : routineObj
       ))
 
-      const actualState  = reducers.routines(initialState, action)
+      const actualState = reducers.routines(initialState, action)
 
       expect(actualState).to.deep.equal(expectedState)
     }
@@ -272,7 +273,7 @@ describe('routines', () => {
 
       const expectedState = []
 
-      const actualState  = reducers.routines(initialState, action)
+      const actualState = reducers.routines(initialState, action)
 
       expect(actualState).to.deep.equal(expectedState)
     }

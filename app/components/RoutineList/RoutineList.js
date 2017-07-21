@@ -1,6 +1,5 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import pick from 'lodash/pick'
 import { Link } from 'react-router-dom'
 
 import RoutineItem from './subcomponents/RoutineItem'
@@ -22,7 +21,7 @@ const RoutineList = ({ routines }) => (<ul>
 RoutineList.propTypes = {
   routines: PropTypes.arrayOf(
     PropTypes.shape(RoutineItem.propTypes)
-  )
+  ),
 }
 
 // const RoutineList = (props) => { console.log(props); return null }

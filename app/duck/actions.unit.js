@@ -42,7 +42,7 @@ describe('RoutineForm actions', () => {
       type: actionTypes.DELETE_ROUTINE,
       payload: {
         id: passedId,
-      }
+      },
     })
   })
 })
