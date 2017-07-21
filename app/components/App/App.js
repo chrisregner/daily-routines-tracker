@@ -3,6 +3,7 @@ import styled from 'styled-components'
 import {
   BrowserRouter as Router,
   Route,
+  Switch,
 } from 'react-router-dom'
 
 import HomePage from 'pages/HomePage'
@@ -13,13 +14,11 @@ let StyledDiv
 
 const App = () => (<Router>
   <StyledDiv className='pa3'>
-    <Route exact path='/' component={HomePage} />
-    <Route path='/routines/:id' render={(routerProps) => {
-      if (routerProps.match.params.id === 'new')
-        return <AddNewRoutineForm {...routerProps} />
-      else
-        return <EditRoutineForm {...routerProps} />
-    }} />
+    <Switch>
+      <Route exact path='/' component={HomePage} />
+      <Route path='/routines/new' component={AddNewRoutineForm} />
+      <Route path='/routines/:id' component={EditRoutineForm} />
+    </Switch>
   </StyledDiv>
 </Router>)
 

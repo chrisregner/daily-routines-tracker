@@ -12,16 +12,7 @@ describe('<App />', () => {
 
   describe('its subcomponents/routes', () => {
     it('should have the \'Home page\' route')
-    it('should have the \'Routine Form\' route')
-
-    describe('the \'Routine Form\' route', () => {
-      context('when id route param is \'new\'', () => {
-        it('should use the <AddNewRoutineForm /> component with React Router\'s props')
-      })
-
-      context('when id route param is not \'new\'', () => {
-        it('should use the <EditRoutineForm /> component with React Router\'s props')
-      })
-    })
+    it('should have the \'Add New Routine\' route')
+    it('should have the \'Edit Routine\' route')
   })
 })
