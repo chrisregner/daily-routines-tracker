@@ -212,8 +212,8 @@ describe('routines', () => {
     testDeletingARoutineMatchingNoneOutOfThree()
   })
 
-  it('can handle EDIT_ROUTINE', () => {
-    const testEditingOneRoutineOutOfThree = () => {
+  describe('handling EDIT_ROUTINE', () => {
+    it('should be able to overwrite routeName, duration, and reminder with new values', () => {
       const payload = {
         id: '3',
         routineName: 'Do one last thing differently',
@@ -254,31 +254,134 @@ describe('routines', () => {
       const actualState = reducers.routines(initialState, action)
 
       expect(actualState).to.deep.equal(expectedState)
-    }
+    })
 
-    const testEditingOneRoutineOutOfZero = () => {
+    it('should not delete existing properties if not explicitly set to falsey values (i.e. when payload doesn\'t specify anything about these properties)', () => {
       const payload = {
         id: '3',
-        routineName: 'Do nothing differently',
-        duration: moment('04:44:44', 'HH:mm:ss'),
-        reminder: moment('4:44 am', 'h:mm a'),
+        routineName: 'This routine should keep the duration and reminder as is',
       }
 
-      const initialState = []
+      const initialState = [
+        {
+          id: '1',
+          routineName: 'Do something',
+          duration: moment('11:11:11', 'HH:mm:ss'),
+          reminder: moment('1:11 am', 'h:mm a'),
+        },
+        {
+          id: '2',
+          routineName: 'Do another thing',
+          duration: moment('22:22:22', 'HH:mm:ss'),
+          reminder: moment('2:22 am', 'h:mm a'),
+        },
+        {
+          id: '3',
+          routineName: 'Do one last thing',
+          duration: moment('03:33:33', 'HH:mm:ss'),
+          reminder: moment('03:33 am', 'h:mm a'),
+        },
+      ]
 
       const action = {
         type: actionTypes.EDIT_ROUTINE,
         payload,
       }
 
-      const expectedState = []
+      const expectedState = initialState.map(routineObj => (
+        routineObj.id === payload.id
+        ? Object.assign({}, routineObj, payload)
+        : routineObj
+      ))
+
+      const actualState = reducers.routines(initialState, action)
+
+      expect(actualState).to.deep.equal(expectedState)
+    })
+  })
+
+  it('can handle START_TRACKER', () => {
+    const testStartingAUntrackedTracker = () => {
+      const targetRoutineId = '2'
+      const initialState = [
+        {
+          id: '1',
+          routineName: 'Do something',
+          duration: moment('11:11:11', 'HH:mm:ss'),
+          reminder: moment('1:11 am', 'h:mm a'),
+        },
+        {
+          id: '2',
+          routineName: 'Do another thing',
+          duration: moment('22:22:22', 'HH:mm:ss'),
+          reminder: moment('2:22 am', 'h:mm a'),
+        },
+        {
+          id: '3',
+          routineName: 'Do one last thing',
+          duration: moment('03:33:33', 'HH:mm:ss'),
+          reminder: moment('03:33 am', 'h:mm a'),
+        },
+      ]
+
+      const action = {
+        type: actionTypes.START_TRACKER,
+        payload: {
+          id: targetRoutineId,
+        },
+      }
+
+      const expectedState = initialState.map(routineObj => (
+        routineObj.id === targetRoutineId
+        ? Object.assign({}, routineObj, { isTracked: true })
+        : routineObj
+      ))
 
       const actualState = reducers.routines(initialState, action)
 
       expect(actualState).to.deep.equal(expectedState)
     }
 
-    testEditingOneRoutineOutOfThree()
-    testEditingOneRoutineOutOfZero()
+    const testStartingATrackedTracker = () => {
+      const targetRoutineId = '2'
+      const initialState = [
+        {
+          id: '1',
+          routineName: 'Do something',
+          duration: moment('11:11:11', 'HH:mm:ss'),
+          reminder: moment('1:11 am', 'h:mm a'),
+          isTracked: true,
+        },
+        {
+          id: '2',
+          routineName: 'Do another thing',
+          duration: moment('22:22:22', 'HH:mm:ss'),
+          reminder: moment('2:22 am', 'h:mm a'),
+          isTracked: true,
+        },
+        {
+          id: '3',
+          routineName: 'Do one last thing',
+          duration: moment('03:33:33', 'HH:mm:ss'),
+          reminder: moment('03:33 am', 'h:mm a'),
+        },
+      ]
+
+      const action = {
+        type: actionTypes.START_TRACKER,
+        payload: {
+          id: targetRoutineId,
+        },
+      }
+
+      const expectedState = initialState
+
+      const actualState = reducers.routines(initialState, action)
+
+      expect(actualState).to.deep.equal(expectedState)
+    }
+
+    testStartingAUntrackedTracker()
+    testStartingATrackedTracker()
   })
 })

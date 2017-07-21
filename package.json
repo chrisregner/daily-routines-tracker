@@ -34,6 +34,7 @@
     "eslint-plugin-standard": "^3.0.1",
     "jsdom": "^11.1.0",
     "lodash": "^4.17.4",
+    "lolex": "^2.1.1",
     "mocha": "^3.4.2",
     "moment": "^2.18.1",
     "prop-types": "^15.5.10",

@@ -3,20 +3,22 @@ describe.skip('Daily Routine Tracker', () => {
   describe('Adding a Routine')
   describe('Editing a Routine')
   describe('Deleting a Routine')
-  describe('Reorder the routines')
-
-  // Marking the Routines
-  describe('Marking the routine completed')
-  describe('Marking the routine incomplete')
 
   // Duration and Tracker
   describe('Starting a tracker')
   describe('Stopping a tracker')
   describe('Resuming a tracker')
   describe('Showing of duration that tracker still needs to track')
+  describe('Stopping a tracker when finished')
+
+  // Duration and Tracker (part II)
   describe('Marking the routine completed when tracker is finished')
   describe('Resetting of a tracker manually')
   describe('Resetting of trackers every start of day')
+
+  // Marking the Routines
+  describe('Marking the routine completed')
+  describe('Marking the routine incomplete')
 
   // Reminder
   describe('Ringing of reminder alarms')
@@ -28,6 +30,9 @@ describe.skip('Daily Routine Tracker', () => {
   // Data export/import
   describe('Exporting of daily routine set')
   describe('Importing of daily routine set')
+
+  // Managing the Routines (part II)
+  describe('Reorder the routines')
 
   // REMOVE THIS:
   describe('Time Object', () => {

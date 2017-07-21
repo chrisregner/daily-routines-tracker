@@ -45,4 +45,16 @@ describe('RoutineForm actions', () => {
       },
     })
   })
+
+  it('can create an action to start tracking a routine', () => {
+    const passedId = '123'
+    const result = actions.startTracker(passedId)
+
+    expect(result).to.deep.equal({
+      type: actionTypes.START_TRACKER,
+      payload: {
+        id: passedId,
+      },
+    })
+  })
 })

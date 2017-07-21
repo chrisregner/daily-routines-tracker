@@ -5,10 +5,14 @@ import { Link } from 'react-router-dom'
 import RoutineItem from './subcomponents/RoutineItem'
 
 // TODO: turn 'Add one' text into a link
-const RoutineList = ({ routines }) => (<ul>
+const RoutineList = ({ routines, handleStartTracker, handleEditRoutine }) => (<ul>
   {(routines && routines.length) ? (
     routines.map(routine => {
-      return <RoutineItem key={routine.id} {...routine} />
+      return <RoutineItem
+        key={routine.id}
+        handleEditRoutine={handleEditRoutine}
+        {...routine}
+      />
     })
   ) : (
     <div className='mt6 f3 lh-copy'>
@@ -22,6 +26,7 @@ RoutineList.propTypes = {
   routines: PropTypes.arrayOf(
     PropTypes.shape(RoutineItem.propTypes)
   ),
+  handleEditRoutine: PropTypes.func.isRequired,
 }
 
 // const RoutineList = (props) => { console.log(props); return null }

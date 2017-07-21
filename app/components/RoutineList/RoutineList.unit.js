@@ -7,7 +7,10 @@ import RoutineList from './RoutineList'
 import RoutineItem from './subcomponents/RoutineItem'
 
 describe('<RoutineList />', () => {
-  const getRequiredProps = props => props
+  const getRequiredProps = props => Object.assign({
+    handleStartTracker: () => {},
+    handleEditRoutine: () => {},
+  }, props)
 
   it('should render with <ul /> as its root componenet', () => {
     const wrapper = shallow(<RoutineList {...getRequiredProps()} />)
@@ -57,7 +60,7 @@ describe('<RoutineList />', () => {
     })
 
     describe('each rendered routine', () => {
-      it('should receive the routine data as props, except the id which is renamed to key', () => {
+      it('should receive the routine data as props', () => {
         const routineData = {
           id: '1',
           routineName: 'First Routine',
@@ -71,6 +74,40 @@ describe('<RoutineList />', () => {
         )
 
         expect(wrapper.find(RoutineItem)).to.have.props(routineData)
+      })
+
+      /* it('should receive the handleStartTracker() prop which is prop of <RoutineList /> itself', () => {
+        const handleStartTracker = () => {}
+        const wrapper = shallow(
+          <RoutineList {...getRequiredProps({
+            routines: [{
+              id: '1',
+              routineName: 'First Routine',
+              duration: moment('12:34:56', 'HH:mm:ss'),
+              reminder: moment('12:34 a', 'h:mm a'),
+            }],
+            handleStartTracker
+          })} />
+        )
+
+        expect(wrapper.find(RoutineItem)).to.have.props({ handleStartTracker })
+      }) */
+
+      it('should receive the handleEditRoutine() prop which is prop of <RoutineList /> itself', () => {
+        const handleEditRoutine = () => {}
+        const wrapper = shallow(
+          <RoutineList {...getRequiredProps({
+            routines: [{
+              id: '1',
+              routineName: 'First Routine',
+              duration: moment('12:34:56', 'HH:mm:ss'),
+              reminder: moment('12:34 a', 'h:mm a'),
+            }],
+            handleEditRoutine
+          })} />
+        )
+
+        expect(wrapper.find(RoutineItem)).to.have.props({ handleEditRoutine })
       })
     })
   })

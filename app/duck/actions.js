@@ -16,3 +16,10 @@ export const deleteRoutine = (routineId) => ({
     id: routineId,
   },
 })
+
+export const startTracker = (routineId) => ({
+  type: actionTypes.START_TRACKER,
+  payload: {
+    id: routineId,
+  },
+})

@@ -20,6 +20,8 @@ TODO
 - final design/theming
   - add page transitions for mobile
 - optimization
+  - override browser back and forward button to use history object
+  - warn when attempting to refresh/back/forward in instances that may delete the state
   - do something about flash of loading fonts
   - remove unused stylesheets
   - code splitting

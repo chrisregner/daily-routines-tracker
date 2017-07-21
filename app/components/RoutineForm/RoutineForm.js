@@ -154,7 +154,7 @@ class RoutineForm extends React.Component {
         <Form onSubmit={this.handleSubmit}>
           <div className='relative flex items-center mb3 cf f4 lh-title'>
             <Link to='/' className='self-grow-1 dib fl'><Icon type='arrow-left' /></Link>
-            <s.CenteredH2 className='ma0 f4 ttu lh-title'>
+            <s.CenteredH2 className='ma0 f5 ttu lh-title'>
               {hasInitValues ? 'Edit Task' : 'Add New Task'}
             </s.CenteredH2>
             {
