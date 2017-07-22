@@ -7,6 +7,10 @@ const mapStateToProps = state => ({
   routines: state.routines,
 })
 
-const PopulatedRoutineList = connect(mapStateToProps)(RoutineList)
+const mapDispatchToProps = dispatch => ({
+  handleStartTracker: (routineId) => { dispatch(startTracker(routineId)) }
+})
+
+const PopulatedRoutineList = connect(mapStateToProps, mapDispatchToProps)(RoutineList)
 
 export default PopulatedRoutineList

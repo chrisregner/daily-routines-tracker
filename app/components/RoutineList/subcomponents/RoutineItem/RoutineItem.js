@@ -13,25 +13,25 @@ class RoutineItem extends React.Component {
     routineName: PropTypes.string.isRequired,
     duration: PropTypes.instanceOf(moment),
     reminder: PropTypes.instanceOf(moment),
+    handleStartTracker: PropTypes.func,
+
+    // props from React Router
     history: PropTypes.shape({
       push: PropTypes.func.isRequired,
     }).isRequired,
-  }
-
-  state = {
-    duration: this.props.duration,
   }
 
   handleStartTracker = (e) => {
     e.preventDefault()
     e.stopPropagation()
 
-    //
+    const { handleStartTracker, id } = this.props
+
+    handleStartTracker(id)
   }
 
   render = () => {
-    const { id, routineName, reminder, history } = this.props
-    const { duration } = this.state
+    const { id, routineName, reminder, history, duration } = this.props
 
     return <s.Li className='b--my-light-gray'>
       <div

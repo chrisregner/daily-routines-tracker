@@ -10,3 +10,8 @@ describe('COMPONENT: App', () => {
     expect(wrapper).to.be.present()
   })
 })
+
+describe('pending', () => {
+  it('each routine should persist the initial duration in routineForm and state')
+  it('routineItem should show stop button if that routine is tracking')
+})

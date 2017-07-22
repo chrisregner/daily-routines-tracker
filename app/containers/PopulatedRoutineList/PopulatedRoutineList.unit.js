@@ -7,9 +7,10 @@ import configureMockStore  from 'redux-mock-store'
 import merge from 'lodash/merge'
 
 import RoutineList from 'components/RoutineList'
-import PopulatedRoutineList from './PopulatedRoutineList'
+import { startTracker } from 'duck/actions'
 
 describe('CONTAINER: PopulatedRoutineList', () => {
+  let PopulatedRoutineList
   const getMockStore = configureMockStore()
   const createInstance = (passedProps) => {
     const initialState = { routines: [] }
@@ -28,6 +29,10 @@ describe('CONTAINER: PopulatedRoutineList', () => {
     )
       .find(PopulatedRoutineList)
   }
+
+  beforeEach(() => {
+    PopulatedRoutineList = require('./PopulatedRoutineList').default
+  })
 
   afterEach(() => { td.reset() })
 
@@ -58,6 +63,37 @@ describe('CONTAINER: PopulatedRoutineList', () => {
         { id: '456' },
         { id: '143' },
       ])
+    })
+
+    it('should receive the handleStartTracker() prop', () => {
+      const wrapper = createInstance()
+      const wrappedComponent = wrapper.dive()
+
+      expect(wrappedComponent.prop('handleStartTracker')).to.be.a('function')
+    })
+
+    describe('handleStartTracker() prop', () => {
+      it('should call dispatch() with startTracker()\'s result when called with handleStartTracker\'s first argument', () => {
+        const startTracker = td.function()
+        td.replace('duck/actions', { startTracker })
+        const startTrackerArg = '123'
+        const startTrackerRes = '456'
+        td.when(startTracker(startTrackerArg)).thenReturn(startTrackerRes)
+
+        PopulatedRoutineList = require('./PopulatedRoutineList').default
+
+        const initialState = { routines: [] }
+        const mockStore = getMockStore(initialState)
+        const dispatch = td.replace(mockStore, 'dispatch')
+
+        const wrapper = createInstance({ store: mockStore })
+        const wrappedComponent = wrapper.dive()
+        const passedArg = startTrackerArg
+
+        td.verify(dispatch(), { times: 0, ignoreExtraArgs: true })
+        wrappedComponent.prop('handleStartTracker')(startTrackerArg)
+        td.verify(dispatch(startTrackerRes), { times: 1 })
+      })
     })
   })
 })

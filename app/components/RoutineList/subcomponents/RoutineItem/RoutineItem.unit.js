@@ -17,7 +17,6 @@ describe('COMPONENT: RoutineList/RoutineItem', () => {
       history: {
         push: () => {},
       },
-      handleEditRoutine: () => {},
     },
     props,
   )
@@ -100,79 +99,25 @@ describe('COMPONENT: RoutineList/RoutineItem', () => {
       expect(wrapper).to.have.exactly(1).descendants('.toggle-tracker')
     })
 
-    /* context('when \'start tracker\' link is clicked', () => {
-      it('should call the passed handleEditRoutine() with the correct argument', () => {
-        const handleEditRoutine = td.function()
+    context('when \'start tracker\' link is clicked', () => {
+      it('should call the passed handleStartTracker() with routine id', () => {
+        const handleStartTracker = td.function()
         const passedId = '123'
         const wrapper = shallow(<RoutineItem {...getRequiredProps({
           id: passedId,
           routineName: 'The Routine',
           duration: moment('12:34:56', 'HH:mm:ss'),
-          handleEditRoutine,
+          handleStartTracker,
         })} />)
         const trackerLink = wrapper.find('.toggle-tracker')
         const fakeEv = { preventDefault: () => {}, stopPropagation: () => {} }
-        const expectedArg = {
-          id: passedId,
-          isTracked: true,
-        }
 
-        td.verify(handleEditRoutine(), { times: 0, ignoreExtraArgs: 0 })
+        const expectedArg = passedId
+
+        td.verify(handleStartTracker(), { times: 0, ignoreExtraArgs: 0 })
         trackerLink.prop('onClick')(fakeEv)
-        td.verify(handleEditRoutine(expectedArg), { times: 1 })
+        td.verify(handleStartTracker(expectedArg), { times: 1 })
       })
-
-      it('should start decreasing the shown duration every second', () => {
-        const wrapper = shallow(<RoutineItem {...getRequiredProps({
-          id: '123',
-          routineName: 'The Routine',
-          duration: moment('12:30:30', 'HH:mm:ss'),
-        })} />)
-        const trackerLink = wrapper.find('.toggle-tracker')
-        const fakeEv = { preventDefault: () => {}, stopPropagation: () => {} }
-        const getDuration = () => wrapper.find('.duration').text()
-
-        trackerLink.prop('onClick')(fakeEv)
-        expect(getDuration()).to.equal('12:30:30')
-        tick('00:00:15')
-        expect(getDuration()).to.equal('12:30:15')
-        tick('01:30:15')
-        expect(getDuration()).to.equal('11:00:00')
-      })
-    }) */
+    })
   })
-
-  /* context('when unmounted (while tracker is running)', () => {
-    context('when isTracked prop is set to true', () => {
-      it('should call the handleEditRoutine() prop with the correct argument', () => {
-        // continue here
-        // FIXME: lolex seems to makes testing slow
-        const handleEditRoutine = td.function()
-        const passedId = '123'
-        const wrapper = shallow(<RoutineItem {...getRequiredProps({
-          id: passedId,
-          routineName: 'The Routine',
-          duration: moment('12:34:56', 'HH:mm:ss'),
-          handleEditRoutine,
-        })} />)
-        const expectedArg = {
-          id: passedId,
-          trackerDisruptionTime: new Date(),
-        }
-
-
-        td.verify(handleEditRoutine(), { times: 0, ignoreExtraArgs: 0 })
-        wrapper.unmount()
-        td.verify(handleEditRoutine(expectedArg), { times: 1 })
-      })
-    })
-
-    context('when isTracked prop is not set to true', () => {
-      it('should not call the editRoutine()')
-    })
-  }) */
-
-  /* context('when mounted, routine data has trackerDisruptionTime, and the routine data\'s isTracked is set to true', () => {
-    it('should continue the tracker with the time difference between present and trackerDisruptionTime in consideration')
-  }) */
 })

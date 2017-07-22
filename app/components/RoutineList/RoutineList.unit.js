@@ -11,6 +11,7 @@ describe('COMPONENT: RoutineList', () => {
   const getRequiredProps = props => Object.assign({
     handleStartTracker: () => {},
     handleEditRoutine: () => {},
+    routines: [],
   }, props)
 
   it('should render with <ul /> as its root componenet', () => {
@@ -77,7 +78,7 @@ describe('COMPONENT: RoutineList', () => {
         expect(wrapper.find(RoutineItem)).to.have.props(routineData)
       })
 
-      /* it('should receive the handleStartTracker() prop which is prop of <RoutineList /> itself', () => {
+       it('should receive the handleStartTracker() prop which is prop of <RoutineList /> itself', () => {
         const handleStartTracker = () => {}
         const wrapper = shallow(
           <RoutineList {...getRequiredProps({
@@ -92,7 +93,7 @@ describe('COMPONENT: RoutineList', () => {
         )
 
         expect(wrapper.find(RoutineItem)).to.have.props({ handleStartTracker })
-      }) */
+      })
 
       /* it('should receive the handleEditRoutine() prop which is prop of <RoutineList /> itself', () => {
         const handleEditRoutine = () => {}

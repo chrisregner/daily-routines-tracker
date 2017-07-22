@@ -5,6 +5,8 @@ import { combineReducers } from 'redux'
 
 import * as actionTypes from './actionTypes'
 
+moment('00:15:00', 'HH:mm:ss')
+
 const initialRoutinesState = [{
   id: id.generate(),
   routineName: 'Jog',

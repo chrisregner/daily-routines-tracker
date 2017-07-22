@@ -10,11 +10,38 @@ const diffThatIsIdOnly = (expected, actual) => {
   let noOfDiff = 0
   const diff = getDiff(expected, actual)
 
-  diff.find((stateItem) => {
-    if (stateItem.path[1] === 'id') {
+  diff.find((statePartDiff) => {
+    if (statePartDiff.path[1] === 'id') {
       noOfDiff++
 
       return
+    }
+
+    const { lhs, rhs } = statePartDiff
+
+    /**
+     * For some reason, the first time the test scripts are run after
+     * entering the command in console, pairs of Moment objects (one from
+     * expected param, another from actual param) are different by date. This
+     * issue doesn't persist through re-runs (when test scripts are watched and
+     * a file is changed).
+     *
+     * To resolve that issue, we'll specifically re-compare the duration Moment
+     * objects as a whole whenever they differ, and then treat them as equal if
+     * the case is just the one described above.
+     */
+    if (
+      statePartDiff.path[1] === 'duration'
+      || statePartDiff.path[1] === 'reminder'
+    ) {
+      const path = statePartDiff.path
+      const momentOne = expected[path[0]][path[1]]
+      const momentTwo = actual[path[0]][path[1]]
+      const momentOneFormatted = momentOne.format(momentOne.creationData().format)
+      const momentTwoFormatted = momentTwo.format(momentTwo.creationData().format)
+
+      if (momentOneFormatted === momentTwoFormatted)
+        return
     }
 
     hasNonIdDiff = true
@@ -22,12 +49,14 @@ const diffThatIsIdOnly = (expected, actual) => {
     return true
   })
 
-  if (hasNonIdDiff) return false
-
-  return noOfDiff
+  return hasNonIdDiff ? false : noOfDiff
 }
 
 describe('REDUX: reducer#routines', () => {
+  before(() => {
+    moment()
+  })
+
   /*===================================================================
   =            Actions for routines' basic CRUD operations            =
   ===================================================================*/
@@ -44,9 +73,9 @@ describe('REDUX: reducer#routines', () => {
 
     const actualState = reducers.routines(undefined, {})
     const noOfDiffThatIsOnlyId = diffThatIsIdOnly(expectedStatePart, actualState)
-    const expectedNoOfIdAdded = 2
+    const expectedNoOfDiff = 2
 
-    expect(noOfDiffThatIsOnlyId).to.equal(expectedNoOfIdAdded)
+    expect(noOfDiffThatIsOnlyId).to.equal(expectedNoOfDiff)
   })
 
   it('can handle ADD_ROUTINE', () => {
