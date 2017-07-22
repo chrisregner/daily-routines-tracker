@@ -23,22 +23,63 @@ const routines = (state = initialRoutinesState, { type, payload }) => {
         merge({ id: id.generate() }, payload),
         ...state,
       ]
+
     case actionTypes.EDIT_ROUTINE:
       return state.map(routineObj => (
         routineObj.id === payload.id
         ? Object.assign({}, routineObj, payload)
         : routineObj
       ))
+
     case actionTypes.DELETE_ROUTINE:
       return state.filter(routineObj => routineObj.id !== payload.id)
-    /* case actionTypes.START_TRACKER:
-      return state.map(routineObj => (
-        routineObj.id === payload.id && !routineObj.isTracked
-        ? Object.assign({}, routineObj, {
-          isTracked: true,
-        })
-        : routineObj
-      )) */
+
+    case actionTypes.START_TRACKER:
+      return state.map(routineObj => {
+        if (routineObj.id === payload.id) {
+          if (!routineObj.isTracking)
+            return Object.assign(
+              {},
+              routineObj,
+              { isTracking: true }
+            )
+        } else if (routineObj.isTracking) {
+          return Object.assign(
+            {},
+            routineObj,
+            { isTracking: false }
+          )
+        } else {
+          return routineObj
+        }
+      })
+
+    case actionTypes.TICK_TRACKER:
+      return state.map(routineObj => {
+        if (routineObj.isTracking)
+          return Object.assign(
+            {},
+            routineObj,
+            {
+              duration: moment(routineObj.duration).subtract('100', 'milliseconds')
+            }
+          )
+        else
+          return routineObj
+      })
+
+    case actionTypes.STOP_TRACKER:
+      return state.map(routineObj => {
+        if (routineObj.isTracking)
+          return Object.assign(
+            {},
+            routineObj,
+            { isTracking: false }
+          )
+        else
+          return routineObj
+      })
+
     default:
       return state
   }

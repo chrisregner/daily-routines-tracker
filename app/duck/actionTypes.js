@@ -1,4 +1,6 @@
 export const ADD_ROUTINE = 'ADD_ROUTINE'
 export const EDIT_ROUTINE = 'EDIT_ROUTINE'
 export const DELETE_ROUTINE = 'DELETE_ROUTINE'
+export const TICK_TRACKER = 'TICK_TRACKER'
 export const START_TRACKER = 'START_TRACKER'
+export const STOP_TRACKER = 'STOP_TRACKER'
