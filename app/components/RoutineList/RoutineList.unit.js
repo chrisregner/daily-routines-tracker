@@ -1,3 +1,4 @@
+
 import React from 'react'
 import { expect } from 'chai'
 import { shallow } from 'enzyme'
@@ -93,7 +94,7 @@ describe('COMPONENT: RoutineList', () => {
         expect(wrapper.find(RoutineItem)).to.have.props({ handleStartTracker })
       }) */
 
-      it('should receive the handleEditRoutine() prop which is prop of <RoutineList /> itself', () => {
+      /* it('should receive the handleEditRoutine() prop which is prop of <RoutineList /> itself', () => {
         const handleEditRoutine = () => {}
         const wrapper = shallow(
           <RoutineList {...getRequiredProps({
@@ -108,7 +109,7 @@ describe('COMPONENT: RoutineList', () => {
         )
 
         expect(wrapper.find(RoutineItem)).to.have.props({ handleEditRoutine })
-      })
+      }) */
     })
   })
 

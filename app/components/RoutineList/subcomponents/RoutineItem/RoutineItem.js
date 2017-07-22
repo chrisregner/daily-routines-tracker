@@ -13,7 +13,6 @@ class RoutineItem extends React.Component {
     routineName: PropTypes.string.isRequired,
     duration: PropTypes.instanceOf(moment),
     reminder: PropTypes.instanceOf(moment),
-    handleEditRoutine: PropTypes.func.isRequired,
     history: PropTypes.shape({
       push: PropTypes.func.isRequired,
     }).isRequired,
@@ -23,24 +22,11 @@ class RoutineItem extends React.Component {
     duration: this.props.duration,
   }
 
-  componentWillUnmount = () => {
-    const { id, isTracked, handleEditRoutine } = this.props
-
-    // continue here
-  }
-
   handleStartTracker = (e) => {
     e.preventDefault()
     e.stopPropagation()
 
-    const { handleEditRoutine, id } = this.props
-
-    handleEditRoutine({ id, isTracked: true })
-    setInterval(() => {
-      this.setState({
-        duration: moment(this.state.duration).subtract(1, 'second')
-      })
-    }, 1000)
+    //
   }
 
   render = () => {

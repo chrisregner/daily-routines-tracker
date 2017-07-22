@@ -10,7 +10,6 @@ const RoutineList = ({ routines, handleStartTracker, handleEditRoutine }) => (<u
     routines.map(routine => {
       return <RoutineItem
         key={routine.id}
-        handleEditRoutine={handleEditRoutine}
         {...routine}
       />
     })
@@ -26,9 +25,6 @@ RoutineList.propTypes = {
   routines: PropTypes.arrayOf(
     PropTypes.shape(RoutineItem.propTypes)
   ),
-  handleEditRoutine: PropTypes.func.isRequired,
 }
-
-// const RoutineList = (props) => { console.log(props); return null }
 
 export default RoutineList

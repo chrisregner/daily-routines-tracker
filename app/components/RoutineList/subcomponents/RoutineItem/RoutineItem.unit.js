@@ -100,7 +100,7 @@ describe('COMPONENT: RoutineList/RoutineItem', () => {
       expect(wrapper).to.have.exactly(1).descendants('.toggle-tracker')
     })
 
-    context('when \'start tracker\' link is clicked', () => {
+    /* context('when \'start tracker\' link is clicked', () => {
       it('should call the passed handleEditRoutine() with the correct argument', () => {
         const handleEditRoutine = td.function()
         const passedId = '123'
@@ -122,7 +122,7 @@ describe('COMPONENT: RoutineList/RoutineItem', () => {
         td.verify(handleEditRoutine(expectedArg), { times: 1 })
       })
 
-      /* it('should start decreasing the shown duration every second', () => {
+      it('should start decreasing the shown duration every second', () => {
         const wrapper = shallow(<RoutineItem {...getRequiredProps({
           id: '123',
           routineName: 'The Routine',
@@ -138,13 +138,13 @@ describe('COMPONENT: RoutineList/RoutineItem', () => {
         expect(getDuration()).to.equal('12:30:15')
         tick('01:30:15')
         expect(getDuration()).to.equal('11:00:00')
-      }) */
-    })
+      })
+    }) */
   })
 
-  context('when unmounted (while tracker is running)', () => {
+  /* context('when unmounted (while tracker is running)', () => {
     context('when isTracked prop is set to true', () => {
-      /* it('should call the handleEditRoutine() prop with the correct argument', () => {
+      it('should call the handleEditRoutine() prop with the correct argument', () => {
         // continue here
         // FIXME: lolex seems to makes testing slow
         const handleEditRoutine = td.function()
@@ -164,15 +164,15 @@ describe('COMPONENT: RoutineList/RoutineItem', () => {
         td.verify(handleEditRoutine(), { times: 0, ignoreExtraArgs: 0 })
         wrapper.unmount()
         td.verify(handleEditRoutine(expectedArg), { times: 1 })
-      }) */
+      })
     })
 
     context('when isTracked prop is not set to true', () => {
       it('should not call the editRoutine()')
     })
-  })
+  }) */
 
-  context('when mounted, routine data has trackerDisruptionTime, and the routine data\'s isTracked is set to true', () => {
+  /* context('when mounted, routine data has trackerDisruptionTime, and the routine data\'s isTracked is set to true', () => {
     it('should continue the tracker with the time difference between present and trackerDisruptionTime in consideration')
-  })
+  }) */
 })
