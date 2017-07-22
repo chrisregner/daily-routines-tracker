@@ -10,9 +10,9 @@ const mapDispatchToProps = (dispatch, ownProps) => ({
   },
 })
 
-const RoutineFormPage = connect(
+const AddNewRoutineForm = connect(
   undefined,
   mapDispatchToProps
 )(RoutineForm)
 
-export default RoutineFormPage
+export default AddNewRoutineForm

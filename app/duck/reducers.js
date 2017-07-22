@@ -31,14 +31,14 @@ const routines = (state = initialRoutinesState, { type, payload }) => {
       ))
     case actionTypes.DELETE_ROUTINE:
       return state.filter(routineObj => routineObj.id !== payload.id)
-    case actionTypes.START_TRACKER:
+    /* case actionTypes.START_TRACKER:
       return state.map(routineObj => (
         routineObj.id === payload.id && !routineObj.isTracked
         ? Object.assign({}, routineObj, {
           isTracked: true,
         })
         : routineObj
-      ))
+      )) */
     default:
       return state
   }

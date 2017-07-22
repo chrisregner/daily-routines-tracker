@@ -47,6 +47,8 @@
     "react-router-dom": "^4.1.2",
     "react-test-renderer": "^15.6.1",
     "redux": "^3.7.2",
+    "redux-mock-store": "^1.2.3",
+    "redux-thunk": "^2.2.0",
     "shortid": "^2.2.8",
     "style-loader": "^0.18.2",
     "styled-components": "^2.1.1",

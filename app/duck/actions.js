@@ -23,3 +23,19 @@ export const startTracker = (routineId) => ({
     id: routineId,
   },
 })
+
+// let timer = null
+
+// const start = () => (dispatch) => {
+//   clearInterval(timer)
+//   dispatch({ type: TIMER_START })
+//   dispatch(tick())
+//   timer = setInterval(() => dispatch(tick()), 1000)
+// }
+
+// const tick = () => { type: TIMER_TICK }
+
+// const stop = () => {
+//   clearInterval(timer)
+//   return { type: TIMER_STOP }
+// }

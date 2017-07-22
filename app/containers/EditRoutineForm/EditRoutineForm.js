@@ -19,7 +19,6 @@ const mapDispatchToProps = (dispatch, ownProps) => ({
     ownProps.history.push('/')
   },
   handleDelete: (routineId) => {
-    console.log(routineId)
     dispatch(deleteRoutine(routineId))
     ownProps.history.push('/')
   },
