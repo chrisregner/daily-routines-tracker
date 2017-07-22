@@ -7,10 +7,6 @@ const mapStateToProps = state => ({
   routines: state.routines,
 })
 
-const mapDispatchToProps = dispatch => ({
-  handleEditRoutine: (id) => { dispatch(editRoutine(id)) }
-})
-
-const PopulatedRoutineList = connect(mapStateToProps, mapDispatchToProps)(RoutineList)
+const PopulatedRoutineList = connect(mapStateToProps)(RoutineList)
 
 export default PopulatedRoutineList

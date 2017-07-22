@@ -4,8 +4,8 @@ import moment from 'moment'
 import * as actions from './actions'
 import * as actionTypes from './actionTypes'
 
-describe('RoutineForm actions', () => {
-  it('can create an action to add a routine', () => {
+describe('REDUX: action creators', () => {
+  it('has action creator for adding a routine', () => {
     const formData = {
       routineName: 'Routine Name',
       duration: moment('12:30:30', 'HH:mm:ss'),
@@ -19,7 +19,7 @@ describe('RoutineForm actions', () => {
     })
   })
 
-  it('can create an action to edit a routine', () => {
+  it('has action creator for editing a routine', () => {
     const formData = {
       id: '123',
       routineName: 'Routine Name',
@@ -34,7 +34,7 @@ describe('RoutineForm actions', () => {
     })
   })
 
-  it('can create an action to delete a routine', () => {
+  it('has action creator for deleting a routine', () => {
     const passedId = '123'
     const result = actions.deleteRoutine(passedId)
 
@@ -46,7 +46,7 @@ describe('RoutineForm actions', () => {
     })
   })
 
-  it('can create an action to start tracking a routine', () => {
+  it('has action creator for starting tracking a routine', () => {
     const passedId = '123'
     const result = actions.startTracker(passedId)
 

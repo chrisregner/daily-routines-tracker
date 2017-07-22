@@ -7,7 +7,7 @@ import configureMockStore  from 'redux-mock-store'
 
 import RoutineForm from 'components/RoutineForm'
 
-describe('<AddNewRoutineForm />', () => {
+describe('CONTAINER: AddNewRoutineForm', () => {
   let AddNewRoutineForm
   const mockStore = configureMockStore()()
   const spies = {

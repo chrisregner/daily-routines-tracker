@@ -6,7 +6,7 @@ import { Link } from 'react-router-dom'
 import HomePage from './HomePage'
 import PopulatedRoutineList from 'containers/PopulatedRoutineList'
 
-describe('<HomePage />', () => {
+describe('Page: HomePage', () => {
   it('should have <div /> as its root component', () => {
     const wrapper = shallow(<HomePage />)
     expect(wrapper).to.match('div')

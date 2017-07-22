@@ -8,7 +8,7 @@ import merge from 'lodash/merge'
 
 import RoutineForm from 'components/RoutineForm'
 
-describe('<EditRoutineForm />', () => {
+describe('CONTAINER: EditRoutineForm', () => {
   let EditRoutineForm
   const getMockStore = configureMockStore()
   const createInstance = (passedProps) => {

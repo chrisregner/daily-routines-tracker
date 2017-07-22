@@ -8,7 +8,7 @@ import { Link } from 'react-router-dom'
 import { Form, Input, TimePicker, Button } from 'antd'
 import RoutineForm from './RoutineForm'
 
-describe('<RoutineForm />', () => {
+describe('COMPONENT: RoutineForm', () => {
   before(() => {
     // Temporarily silence the async-validator's logs
     td.replace(console, 'warn')

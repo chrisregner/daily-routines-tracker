@@ -8,7 +8,7 @@ import lolex from 'lolex'
 
 import { PureRoutineItem as RoutineItem } from './RoutineItem'
 
-describe('<RoutineItem />', () => {
+describe('COMPONENT: RoutineList/RoutineItem', () => {
   let clock, tick
   const getRequiredProps = props => Object.assign(
     {

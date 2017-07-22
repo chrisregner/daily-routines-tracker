@@ -27,7 +27,7 @@ const diffThatIsIdOnly = (expected, actual) => {
   return noOfDiff
 }
 
-describe('reducer#routines', () => {
+describe('REDUX: reducer#routines', () => {
   it('should return the initial state', () => {
     const expectedStatePart = [{
       routineName: 'Jog',
@@ -324,88 +324,90 @@ describe('reducer#routines', () => {
     })
   })
 
-  it.skip('can handle START_TRACKER', () => {
-    const testStartingAUntrackedTracker = () => {
-      const targetRoutineId = '2'
-      const initialState = [
-        {
-          id: '1',
-          routineName: 'Do something',
-          duration: moment('11:11:11', 'HH:mm:ss'),
-          reminder: moment('1:11 am', 'h:mm a'),
-        },
-        {
-          id: '2',
-          routineName: 'Do another thing',
-          duration: moment('22:22:22', 'HH:mm:ss'),
-          reminder: moment('2:22 am', 'h:mm a'),
-        },
-        {
-          id: '3',
-          routineName: 'Do one last thing',
-          duration: moment('03:33:33', 'HH:mm:ss'),
-          reminder: moment('03:33 am', 'h:mm a'),
-        },
-      ]
+  describe('handling START_TRACKER', () => {
+    // it.skip('can handle START_TRACKER', () => {
+    //   const testStartingAUntrackedTracker = () => {
+    //     const targetRoutineId = '2'
+    //     const initialState = [
+    //       {
+    //         id: '1',
+    //         routineName: 'Do something',
+    //         duration: moment('11:11:11', 'HH:mm:ss'),
+    //         reminder: moment('1:11 am', 'h:mm a'),
+    //       },
+    //       {
+    //         id: '2',
+    //         routineName: 'Do another thing',
+    //         duration: moment('22:22:22', 'HH:mm:ss'),
+    //         reminder: moment('2:22 am', 'h:mm a'),
+    //       },
+    //       {
+    //         id: '3',
+    //         routineName: 'Do one last thing',
+    //         duration: moment('03:33:33', 'HH:mm:ss'),
+    //         reminder: moment('03:33 am', 'h:mm a'),
+    //       },
+    //     ]
 
-      const action = {
-        type: actionTypes.START_TRACKER,
-        payload: {
-          id: targetRoutineId,
-        },
-      }
+    //     const action = {
+    //       type: actionTypes.START_TRACKER,
+    //       payload: {
+    //         id: targetRoutineId,
+    //       },
+    //     }
 
-      const expectedState = initialState.map(routineObj => (
-        routineObj.id === targetRoutineId
-        ? Object.assign({}, routineObj, { isTracked: true })
-        : routineObj
-      ))
+    //     const expectedState = initialState.map(routineObj => (
+    //       routineObj.id === targetRoutineId
+    //       ? Object.assign({}, routineObj, { isTracked: true })
+    //       : routineObj
+    //     ))
 
-      const actualState = reducers.routines(initialState, action)
+    //     const actualState = reducers.routines(initialState, action)
 
-      expect(actualState).to.deep.equal(expectedState)
-    }
+    //     expect(actualState).to.deep.equal(expectedState)
+    //   }
 
-    const testStartingATrackedTracker = () => {
-      const targetRoutineId = '2'
-      const initialState = [
-        {
-          id: '1',
-          routineName: 'Do something',
-          duration: moment('11:11:11', 'HH:mm:ss'),
-          reminder: moment('1:11 am', 'h:mm a'),
-          isTracked: true,
-        },
-        {
-          id: '2',
-          routineName: 'Do another thing',
-          duration: moment('22:22:22', 'HH:mm:ss'),
-          reminder: moment('2:22 am', 'h:mm a'),
-          isTracked: true,
-        },
-        {
-          id: '3',
-          routineName: 'Do one last thing',
-          duration: moment('03:33:33', 'HH:mm:ss'),
-          reminder: moment('03:33 am', 'h:mm a'),
-        },
-      ]
+    //   const testStartingATrackedTracker = () => {
+    //     const targetRoutineId = '2'
+    //     const initialState = [
+    //       {
+    //         id: '1',
+    //         routineName: 'Do something',
+    //         duration: moment('11:11:11', 'HH:mm:ss'),
+    //         reminder: moment('1:11 am', 'h:mm a'),
+    //         isTracked: true,
+    //       },
+    //       {
+    //         id: '2',
+    //         routineName: 'Do another thing',
+    //         duration: moment('22:22:22', 'HH:mm:ss'),
+    //         reminder: moment('2:22 am', 'h:mm a'),
+    //         isTracked: true,
+    //       },
+    //       {
+    //         id: '3',
+    //         routineName: 'Do one last thing',
+    //         duration: moment('03:33:33', 'HH:mm:ss'),
+    //         reminder: moment('03:33 am', 'h:mm a'),
+    //       },
+    //     ]
 
-      const action = {
-        type: actionTypes.START_TRACKER,
-        payload: {
-          id: targetRoutineId,
-        },
-      }
+    //     const action = {
+    //       type: actionTypes.START_TRACKER,
+    //       payload: {
+    //         id: targetRoutineId,
+    //       },
+    //     }
 
-      const expectedState = initialState
+    //     const expectedState = initialState
 
-      const actualState = reducers.routines(initialState, action)
+    //     const actualState = reducers.routines(initialState, action)
 
-      expect(actualState).to.deep.equal(expectedState)
-    }
+    //     expect(actualState).to.deep.equal(expectedState)
+    //   }
 
-    testStartingAUntrackedTracker()
-    testStartingATrackedTracker()
+    //   testStartingAUntrackedTracker()
+    //   testStartingATrackedTracker()
+    // })
   })
 })

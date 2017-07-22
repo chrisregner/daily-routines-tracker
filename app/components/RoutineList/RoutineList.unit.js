@@ -6,7 +6,7 @@ import moment from 'moment'
 import RoutineList from './RoutineList'
 import RoutineItem from './subcomponents/RoutineItem'
 
-describe('<RoutineList />', () => {
+describe('COMPONENT: RoutineList', () => {
   const getRequiredProps = props => Object.assign({
     handleStartTracker: () => {},
     handleEditRoutine: () => {},
