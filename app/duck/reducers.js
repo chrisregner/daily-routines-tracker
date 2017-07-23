@@ -10,7 +10,7 @@ moment('00:15:00', 'HH:mm:ss')
 const initialRoutinesState = [{
   id: id.generate(),
   routineName: 'Jog',
-  duration: moment('00:15:00', 'HH:mm:ss'),
+  duration: moment('00:00:03', 'HH:mm:ss'),
   reminder: moment('4:00 am', 'h:mm a'),
 }, {
   id: id.generate(),
@@ -80,6 +80,20 @@ const routines = (state = initialRoutinesState, { type, payload }) => {
             {},
             routineObj,
             { isTracking: false }
+          )
+        else
+          return routineObj
+      })
+
+    case actionTypes.RESET_TRACKER:
+      return state.map(routineObj => {
+        if (routineObj.id === payload.id)
+          return Object.assign(
+            {},
+            routineObj,
+            {
+              timeLeft: routineObj.duration.clone(),
+            }
           )
         else
           return routineObj

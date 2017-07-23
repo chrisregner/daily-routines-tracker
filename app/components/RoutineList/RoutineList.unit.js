@@ -12,6 +12,7 @@ describe('COMPONENT: RoutineList', () => {
     handleStartTracker: () => {},
     handleStopTracker: () => {},
     handleEditRoutine: () => {},
+    handleResetRoutine: () => {},
     routines: [],
   }, props)
 
@@ -79,15 +80,13 @@ describe('COMPONENT: RoutineList', () => {
         expect(wrapper.find(RoutineItem)).to.have.props(routineData)
       })
 
-       it('should receive the handleStartTracker() prop which is prop of <RoutineList /> itself', () => {
+      it('should receive the handleStartTracker() prop which is prop of <RoutineList /> itself', () => {
         const handleStartTracker = () => {}
         const wrapper = shallow(
           <RoutineList {...getRequiredProps({
             routines: [{
               id: '1',
               routineName: 'First Routine',
-              duration: moment('12:34:56', 'HH:mm:ss'),
-              reminder: moment('12:34 a', 'h:mm a'),
             }],
             handleStartTracker
           })} />
@@ -96,15 +95,13 @@ describe('COMPONENT: RoutineList', () => {
         expect(wrapper.find(RoutineItem)).to.have.props({ handleStartTracker })
       })
 
-       it('should receive the handleStopTracker() prop which is prop of <RoutineList /> itself', () => {
+      it('should receive the handleStopTracker() prop which is prop of <RoutineList /> itself', () => {
         const handleStopTracker = () => {}
         const wrapper = shallow(
           <RoutineList {...getRequiredProps({
             routines: [{
               id: '1',
               routineName: 'First Routine',
-              duration: moment('12:34:56', 'HH:mm:ss'),
-              reminder: moment('12:34 a', 'h:mm a'),
             }],
             handleStopTracker
           })} />
@@ -113,22 +110,20 @@ describe('COMPONENT: RoutineList', () => {
         expect(wrapper.find(RoutineItem)).to.have.props({ handleStopTracker })
       })
 
-      /* it('should receive the handleEditRoutine() prop which is prop of <RoutineList /> itself', () => {
-        const handleEditRoutine = () => {}
+      it('should receive the handleResetTracker() prop which is prop of <RoutineList /> itself', () => {
+        const handleResetTracker = () => {}
         const wrapper = shallow(
           <RoutineList {...getRequiredProps({
             routines: [{
               id: '1',
               routineName: 'First Routine',
-              duration: moment('12:34:56', 'HH:mm:ss'),
-              reminder: moment('12:34 a', 'h:mm a'),
             }],
-            handleEditRoutine
+            handleResetTracker
           })} />
         )
 
-        expect(wrapper.find(RoutineItem)).to.have.props({ handleEditRoutine })
-      }) */
+        expect(wrapper.find(RoutineItem)).to.have.props({ handleResetTracker })
+      })
     })
   })
 

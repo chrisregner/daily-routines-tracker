@@ -44,6 +44,7 @@ class RoutineItem extends React.Component {
     timeLeft: PropTypes.instanceOf(moment),
     handleStartTracker: requiredIfHasDuration('function'),
     handleStopTracker: requiredIfHasDuration('function'),
+    handleResetTracker: requiredIfHasDuration('function'),
 
     // props from React Router
     history: PropTypes.shape({
@@ -51,17 +52,26 @@ class RoutineItem extends React.Component {
     }).isRequired,
   }
 
-  handleToggleTracker = (e) => {
+  handleTrackerControl = (e) => {
     e.preventDefault()
     e.stopPropagation()
 
-    const { handleStartTracker, handleStopTracker, id } = this.props
+    const {
+      handleStartTracker, handleStopTracker, handleResetTracker,
+      id, isTracking
+    } = this.props
     const btnClassName = e.currentTarget.className
 
-    if (btnClassName.includes('start-tracker'))
+    if (btnClassName.includes('start-tracker')) {
       handleStartTracker(id)
-    else if (btnClassName.includes('stop-tracker'))
+    } else if (btnClassName.includes('stop-tracker')) {
       handleStopTracker()
+    } else if (btnClassName.includes('reset-tracker')) {
+      handleResetTracker(id)
+
+      if (isTracking)
+        handleStopTracker()
+    }
   }
 
   render = () => {
@@ -83,36 +93,45 @@ class RoutineItem extends React.Component {
         </div>
 
         {
-          durationToShow
-          && isTracking ? (
-            <a className='stop-tracker' onClick={this.handleToggleTracker}>
-              <Icon type='pause-circle-o' className='ml2 f3' />
-            </a>
-          ) : (
-            <a className='start-tracker' onClick={this.handleToggleTracker}>
-              <Icon type='play-circle-o' className='ml2 f3' />
-            </a>
+          durationToShow &&
+          <a className='reset-tracker' onClick={this.handleTrackerControl}>
+            <Icon type='reload' className='ml2 f3' />
+          </a>
+        }
+
+        {
+          durationToShow &&
+          (
+            isTracking ? (
+              <a className='stop-tracker' onClick={this.handleTrackerControl}>
+                <Icon type='pause-circle-o' className='ml2 f3' />
+              </a>
+            ) : (
+              <a className='start-tracker' onClick={this.handleTrackerControl}>
+                <Icon type='play-circle-o' className='ml2 f3' />
+              </a>
+            )
           )
         }
 
         {
           (durationToShow || reminder) &&
-            <s.Div className='flex flex-column ml2 f6 lh-copy'>
-              {
-                durationToShow &&
-                <div className='flex items-center'>
-                  <Icon type='clock-circle-o' className='self-grow-1 tl' />
-                  <div className='duration'>{durationToShow.format(durationToShow.creationData().format)}</div>
-                </div>
-              }
-              {
-                reminder &&
-                <div className='flex items-center'>
-                  <Icon type='bell' className='self-grow-1 tl' />
-                  <div>{reminder.format(reminder.creationData().format)}</div>
-                </div>
-              }
-            </s.Div>
+          <s.Div className='flex flex-column ml2 f6 lh-copy'>
+            {
+              durationToShow &&
+              <div className='flex items-center'>
+                <Icon type='clock-circle-o' className='self-grow-1 tl' />
+                <div className='duration'>{durationToShow.format(durationToShow.creationData().format)}</div>
+              </div>
+            }
+            {
+              reminder &&
+              <div className='flex items-center'>
+                <Icon type='bell' className='self-grow-1 tl' />
+                <div>{reminder.format(reminder.creationData().format)}</div>
+              </div>
+            }
+          </s.Div>
         }
       </div>
     </s.Li>

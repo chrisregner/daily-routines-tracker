@@ -5,7 +5,9 @@ import { Link } from 'react-router-dom'
 import RoutineItem from './subcomponents/RoutineItem'
 
 // TODO: turn 'Add one' text into a link
-const RoutineList = ({ routines, handleStartTracker, handleStopTracker, handleEditRoutine }) => (<ul>
+const RoutineList = ({
+  routines, handleStartTracker, handleStopTracker, handleEditRoutine, handleResetTracker
+}) => (<ul>
   {
     (routines && routines.length)
     ? (
@@ -15,6 +17,7 @@ const RoutineList = ({ routines, handleStartTracker, handleStopTracker, handleEd
           key={routine.id}
           handleStartTracker={handleStartTracker}
           handleStopTracker={handleStopTracker}
+          handleResetTracker={handleResetTracker}
           {...routine}
         />
       ))
@@ -34,6 +37,7 @@ const RoutineList = ({ routines, handleStartTracker, handleStopTracker, handleEd
 RoutineList.propTypes = {
   handleStartTracker: PropTypes.func.isRequired,
   handleStopTracker: PropTypes.func.isRequired,
+  handleResetTracker: PropTypes.func.isRequired,
   routines: PropTypes.arrayOf(
     PropTypes.shape(RoutineItem.propTypes)
   ).isRequired,

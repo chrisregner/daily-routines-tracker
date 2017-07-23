@@ -124,5 +124,36 @@ describe('CONTAINER: PopulatedRoutineList', () => {
         td.verify(dispatch(stopTrackerRes), { times: 1 })
       })
     })
+
+    it('should receive the handleResetTracker() prop', () => {
+      const wrapper = createInstance()
+      const wrappedComponent = wrapper.dive()
+
+      expect(wrappedComponent.prop('handleResetTracker')).to.be.a('function')
+    })
+
+    describe('handleResetTracker() prop', () => {
+      it('should call dispatch() with resetTracker()\'s result when called with handleResetTracker\'s first argument', () => {
+        const resetTracker = td.function()
+        td.replace('duck/actions', { resetTracker })
+        const resetTrackerArg = '123'
+        const resetTrackerRes = '456'
+        td.when(resetTracker(resetTrackerArg)).thenReturn(resetTrackerRes)
+
+        PopulatedRoutineList = require('./PopulatedRoutineList').default
+
+        const initialState = { routines: [] }
+        const mockStore = getMockStore(initialState)
+        const dispatch = td.replace(mockStore, 'dispatch')
+
+        const wrapper = createInstance({ store: mockStore })
+        const wrappedComponent = wrapper.dive()
+        const passedArg = resetTrackerArg
+
+        td.verify(dispatch(), { times: 0, ignoreExtraArgs: true })
+        wrappedComponent.prop('handleResetTracker')(resetTrackerArg)
+        td.verify(dispatch(resetTrackerRes), { times: 1 })
+      })
+    })
   })
 })

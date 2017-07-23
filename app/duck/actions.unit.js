@@ -173,4 +173,18 @@ describe('REDUX: action creators', () => {
       expect(actual).to.deep.equal(expected)
     })
   })
+
+  it('has action creator for resetting tracker', () => {
+    const passedId = '123'
+
+    const actual = actions.resetTracker(passedId)
+    const expected = {
+      type: 'RESET_TRACKER',
+      payload: {
+        id: passedId,
+      },
+    }
+
+    expect(actual).to.deep.equal(expected)
+  })
 })

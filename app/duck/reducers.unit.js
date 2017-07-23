@@ -64,7 +64,7 @@ describe('REDUX: reducer#routines', () => {
   it('should return the initial state', () => {
     const expectedStatePart = [{
       routineName: 'Jog',
-      duration: moment('00:15:00', 'HH:mm:ss'),
+      duration: moment('00:00:03', 'HH:mm:ss'),
       reminder: moment('4:00 am', 'h:mm a'),
     }, {
       routineName: 'pneumonoultramicroscopicsilicovolcanoconiosis',
@@ -496,6 +496,49 @@ describe('REDUX: reducer#routines', () => {
 
     const actualState = reducers.routines(initialState, {
       type: 'STOP_TRACKER'
+    })
+
+    expect(actualState).to.deep.equal(expectedState)
+  })
+
+  it('can handle RESET_TRACKER', () => {
+    const initialState = [
+      {
+        id: '1',
+        routineName: 'Do something',
+        duration: moment('11:11:11', 'HH:mm:ss'),
+        reminder: moment('1:11 am', 'h:mm a'),
+      },
+      {
+        id: '2',
+        routineName: 'Do another thing',
+        duration: moment('12:30:00', 'HH:mm:ss'),
+        reminder: moment('2:22 am', 'h:mm a'),
+        timeLeft: moment('01:15:15', 'HH:mm:ss'),
+      },
+    ]
+
+    const expectedState = [
+      {
+        id: '1',
+        routineName: 'Do something',
+        duration: moment('11:11:11', 'HH:mm:ss'),
+        reminder: moment('1:11 am', 'h:mm a'),
+      },
+      {
+        id: '2',
+        routineName: 'Do another thing',
+        duration: moment('12:30:00', 'HH:mm:ss'),
+        reminder: moment('2:22 am', 'h:mm a'),
+        timeLeft: moment('12:30:00', 'HH:mm:ss'),
+      },
+    ]
+
+    const actualState = reducers.routines(initialState, {
+      type: 'RESET_TRACKER',
+      payload: {
+        id: '2'
+      }
     })
 
     expect(actualState).to.deep.equal(expectedState)

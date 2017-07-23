@@ -49,3 +49,10 @@ export const stopTracker = () => {
   return { type: actionTypes.STOP_TRACKER }
 }
 
+export const resetTracker = (routineId) => ({
+  type: actionTypes.RESET_TRACKER,
+  payload: {
+    id: routineId
+  }
+})
+
