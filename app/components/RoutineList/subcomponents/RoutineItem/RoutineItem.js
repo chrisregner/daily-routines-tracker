@@ -90,7 +90,7 @@ class RoutineItem extends React.Component {
         </div>
 
         {
-          durationToShow &&
+          (duration && (isTracking || timeLeft)) &&
           <a className='reset-tracker' onClick={this.handleTrackerControl}>
             <Icon type='reload' className='ml2 f3' />
           </a>

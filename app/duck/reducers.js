@@ -35,20 +35,16 @@ const routines = (state = initialRoutinesState, { type, payload }) => {
             const newDurationFormatted = newDuration.format(newDuration.creationData().format)
             const oldDurationFormatted = oldDuration.format(oldDuration.creationData().format)
 
-            if (newDurationFormatted !== oldDurationFormatted) {
-              const updatedRoutine = Object.assign(
+            if (newDurationFormatted !== oldDurationFormatted)
+              return Object.assign(
                 {},
                 routineObj,
                 payload,
                 {
                   isTracking: false,
+                  timeLeft: null,
                 }
               )
-
-              delete updatedRoutine.timeLeft
-
-              return updatedRoutine
-            }
           }
 
           return Object.assign({}, routineObj, payload)
@@ -105,8 +101,8 @@ const routines = (state = initialRoutinesState, { type, payload }) => {
             routineObj,
             { isTracking: false }
           )
-        else
-          return routineObj
+
+        return routineObj
       })
 
     case actionTypes.RESET_TRACKER:
@@ -116,12 +112,12 @@ const routines = (state = initialRoutinesState, { type, payload }) => {
             {},
             routineObj,
             {
-              timeLeft: routineObj.duration.clone(),
+              timeLeft: null,
               isTracking: false,
             }
           )
-        else
-          return routineObj
+
+        return routineObj
       })
 
     default:

@@ -5,11 +5,9 @@ TODO
 ----------------------------------------
 
 - add & test other components
-  - edit resetRoutine action/reducer
-    - they should stop the tracker as necessary
-  - edit editRoutine action/reducer
-    - they should reset the time left as necessary
-  - double check RoutineItem\'s specs for conditional rendering
+  - [done] edit resetRoutine action/reducer so that it stops the tracker as necessary
+  - [done] edit editRoutine action/reducer so that it resets the time left as necessary
+  - [done] pass RoutineItem\'s specs for conditional rendering
 - final design/theming
   - add page transitions for mobile
 - optimization

@@ -271,11 +271,23 @@ describe('COMPONENT: RoutineList/RoutineItem', () => {
     =            Reset Tracker Button            =
     ============================================*/
 
-    describe.skip('the \'reset tracker\' button', () => {
-      context('when there is timeLeft prop and it differs from duration prop', () => {
+    describe('the \'reset tracker\' button', () => {
+      context('when there are timeLeft and duration prop', () => {
         it('should render the \'reset tracker\' button', () => {
           const wrapper = shallow(<RoutineItem {...getRequiredProps({
-            duration: moment('12:34:56', 'HH:mm:ss'),
+            duration: moment('11:11:11', 'HH:mm:ss'),
+            timeLeft: moment('11:11:11', 'HH:mm:ss'),
+          })} />)
+
+          expect(wrapper).to.have.exactly(1).descendants('.reset-tracker')
+        })
+      })
+
+      context('when there are timeLeft prop and isTracking prop is set to true', () => {
+        it('should render the \'reset tracker\' button', () => {
+          const wrapper = shallow(<RoutineItem {...getRequiredProps({
+            duration: moment('11:11:11', 'HH:mm:ss'),
+            isTracking: true,
           })} />)
 
           expect(wrapper).to.have.exactly(1).descendants('.reset-tracker')
@@ -283,15 +295,21 @@ describe('COMPONENT: RoutineList/RoutineItem', () => {
       })
 
       context('when there is no duration prop', () => {
-        it('should not render')
+        it('should not render', () => {
+          const wrapper = shallow(<RoutineItem {...getRequiredProps()} />)
+
+          expect(wrapper).to.have.exactly(0).descendants('.reset-tracker')
+        })
       })
 
       context('when there is duration but no timeLeft prop', () => {
-        it('should not render')
-      })
+        it('should not render', () => {
+          const wrapper = shallow(<RoutineItem {...getRequiredProps({
+            duration: moment('12:34:56', 'HH:mm:ss'),
+          })} />)
 
-      context('when there are duration and timeLeft prop but they are just the same', () => {
-        it('should not render')
+          expect(wrapper).to.have.exactly(0).descendants('.reset-tracker')
+        })
       })
 
       context('when clicked', () => {
@@ -319,51 +337,6 @@ describe('COMPONENT: RoutineList/RoutineItem', () => {
           trackerLink.prop('onClick')(fakeEv)
           td.verify(handleResetTracker(expectedArg), { times: 1 })
         })
-
-        /*it('should call handleStopTracker() prop if isTracking prop is true', () => {
-          const handleStopTracker = td.function()
-          const wrapper = shallow(<RoutineItem {...getRequiredProps({
-            id: '123',
-            routineName: 'The Routine',
-            duration: moment('12:34:56', 'HH:mm:ss'),
-            isTracking: true,
-            handleStopTracker,
-          })} />)
-          const trackerLink = wrapper.find('.reset-tracker')
-          const fakeEv = {
-            preventDefault: () => {},
-            stopPropagation: () => {},
-            currentTarget: {
-              className: 'reset-tracker',
-            }
-          }
-
-          td.verify(handleStopTracker(), { times: 0, ignoreExtraArgs: 0 })
-          trackerLink.prop('onClick')(fakeEv)
-          td.verify(handleStopTracker(), { times: 1 })
-        })*/
-
-        /*it('should call NOT handleStopTracker() prop if isTracking prop is not true', () => {
-          const handleStopTracker = td.function()
-          const wrapper = shallow(<RoutineItem {...getRequiredProps({
-            id: '123',
-            routineName: 'The Routine',
-            duration: moment('12:34:56', 'HH:mm:ss'),
-            handleStopTracker,
-          })} />)
-          const trackerLink = wrapper.find('.reset-tracker')
-          const fakeEv = {
-            preventDefault: () => {},
-            stopPropagation: () => {},
-            currentTarget: {
-              className: 'reset-tracker',
-            }
-          }
-
-          td.verify(handleStopTracker(), { times: 0, ignoreExtraArgs: 0 })
-          trackerLink.prop('onClick')(fakeEv)
-          td.verify(handleStopTracker(), { times: 0, ignoreExtraArgs: 0 })
-        })*/
       })
     })
 

@@ -356,7 +356,7 @@ describe('REDUX: reducer#routines', () => {
       expect(actualState).to.deep.equal(expectedState)
     })
 
-    it('should copy the delete timeLeft and set isTracking to false IF duration will change', () => {
+    it('should set timeLeft to null and set isTracking to false IF duration will change', () => {
       const initialState = [
         {
           id: '1',
@@ -398,6 +398,7 @@ describe('REDUX: reducer#routines', () => {
           routineName: 'Changed Routine',
           duration: moment('04:44:44', 'HH:mm:ss'),
           reminder: moment('03:33 am', 'h:mm a'),
+          timeLeft: null,
           isTracking: false,
         },
       ]
@@ -560,7 +561,7 @@ describe('REDUX: reducer#routines', () => {
   })
 
   describe('handling RESET_TRACKER', () => {
-    it('should turn the value of timeLeft to the same as duration', () => {
+    it('should set timeLeft to null and isTracking to false', () => {
       const initialState = [
         {
           id: '1',
@@ -589,52 +590,7 @@ describe('REDUX: reducer#routines', () => {
           routineName: 'Do another thing',
           duration: moment('12:30:00', 'HH:mm:ss'),
           reminder: moment('2:22 am', 'h:mm a'),
-          timeLeft: moment('12:30:00', 'HH:mm:ss'),
-          isTracking: false,
-        },
-      ]
-
-      const actualState = reducers.routines(initialState, {
-        type: 'RESET_TRACKER',
-        payload: {
-          id: '2'
-        }
-      })
-
-      expect(actualState).to.deep.equal(expectedState)
-    })
-
-    it('should set isTracking to false', () => {
-      const initialState = [
-        {
-          id: '1',
-          routineName: 'Do something',
-          duration: moment('11:11:11', 'HH:mm:ss'),
-          reminder: moment('1:11 am', 'h:mm a'),
-        },
-        {
-          id: '2',
-          routineName: 'Do another thing',
-          duration: moment('12:30:00', 'HH:mm:ss'),
-          reminder: moment('2:22 am', 'h:mm a'),
-          timeLeft: moment('01:15:15', 'HH:mm:ss'),
-          isTracking: true,
-        },
-      ]
-
-      const expectedState = [
-        {
-          id: '1',
-          routineName: 'Do something',
-          duration: moment('11:11:11', 'HH:mm:ss'),
-          reminder: moment('1:11 am', 'h:mm a'),
-        },
-        {
-          id: '2',
-          routineName: 'Do another thing',
-          duration: moment('12:30:00', 'HH:mm:ss'),
-          reminder: moment('2:22 am', 'h:mm a'),
-          timeLeft: moment('12:30:00', 'HH:mm:ss'),
+          timeLeft: null,
           isTracking: false,
         },
       ]
