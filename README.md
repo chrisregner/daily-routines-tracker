@@ -4,22 +4,16 @@ Daily Routine Tracker
 TODO
 ----------------------------------------
 
-- chores
-  - [done] routineForm proptype errors
-  - [done] research writing integration specs
-- research
-  - [done] redux app architecture
-  - [?done] research testing redux/react-redux
-- [done] chores
-  - purge chance.js in all specs
-    - think how time should work
-  - rename test files to .unit.js
 - add & test other components
-  - [done] review current code
-  - add the redux
+  - edit resetRoutine action/reducer
+    - they should stop the tracker as necessary
+  - edit editRoutine action/reducer
+    - they should reset the time left as necessary
+  - double check RoutineItem\'s specs for conditional rendering
 - final design/theming
   - add page transitions for mobile
 - optimization
+  - lookout for unnecessary updates
   - override browser back and forward button to use history object
   - warn when attempting to refresh/back/forward in instances that may delete the state
   - do something about flash of loading fonts
@@ -76,3 +70,13 @@ Done
   - [done] fix the propType lint errors
   - [done] evaluate the function composition of current code
   - [done] evaluate the tests of current code, especially on HOC/decorator-relation aspect
+- [done] chores
+  - [done] routineForm proptype errors
+  - [done] research writing integration specs
+- [done] research
+  - [done] redux app architecture
+  - [done] research testing redux/react-redux
+- [done] chores
+  - purge chance.js in all specs
+    - think how time should work
+  - rename test files to .unit.js

@@ -39,21 +39,121 @@ describe('REDUX: action creators', () => {
     expect(actual).to.deep.equal(expected)
   })
 
-  it('has action creator for editing a routine', () => {
-    const formData = {
-      id: '123',
-      routineName: 'Routine Name',
-      duration: moment('12:30:30', 'HH:mm:ss'),
-      reminder: moment('12:30:30', 'H:mm a'),
-    }
+  describe('action creator for editing a routine', () => {
+    it('should be a function that returns another function', () => {
+      const res = actions.editRoutine()
+      expect(res).to.be.a('function')
+    })
 
-    const actual = actions.editRoutine(formData)
-    const expected = {
-      type: 'EDIT_ROUTINE',
-      payload: formData,
-    }
+    describe('function returned by the action creator for editing a routine', () => {
+      context('when target routine is tracking and duration will change', () => {
+        it('should call clearInterval with an argument', () => {
+          const clearInterval = td.replace(global, 'clearInterval')
+          const dispatch = () => {}
+          const idOfTrackingRoutine = '2'
+          const fakeDispatch = () => {}
+          const fakeGetState = () => ({
+            routines: [
+              { id: '1', isTracking: false },
+              {
+                id: idOfTrackingRoutine,
+                duration: moment('11:11:11', 'HH:mm:ss'),
+                isTracking: true,
+              },
+              { id: '3' },
+            ]
+          })
+          const formData = {
+            id: idOfTrackingRoutine,
+            routineName: 'Routine Name',
+            duration: moment('01:01:01', 'HH:mm:ss'),
+            reminder: moment('12:30:30', 'H:mm a'),
+          }
 
-    expect(actual).to.deep.equal(expected)
+          actions.editRoutine(formData)(fakeDispatch, fakeGetState)
+
+          td.verify(clearInterval(td.matchers.anything()), { times: 1 })
+        })
+      })
+
+      context('when target routine is tracking but duration will not change', () => {
+        it('should NOT call clearInterval', () => {
+          const clearInterval = td.replace(global, 'clearInterval')
+          const dispatch = () => {}
+          const idOfTrackingRoutine = '2'
+          const fakeDispatch = () => {}
+          const fakeGetState = () => ({
+            routines: [
+              { id: '1', isTracking: true },
+              {
+                id: idOfTrackingRoutine,
+                duration: moment('11:11:11', 'HH:mm:ss'),
+                isTracking: true,
+              },
+              { id: '3' },
+            ]
+          })
+          const formData = {
+            id: idOfTrackingRoutine,
+            routineName: 'Routine Name',
+            duration: moment('11:11:11', 'HH:mm:ss'),
+            reminder: moment('12:30:30', 'H:mm a'),
+          }
+
+          actions.editRoutine(formData)(fakeDispatch, fakeGetState)
+
+          td.verify(clearInterval(), { times: 0, ignoreExtraArgs: true })
+        })
+      })
+
+      context('when target routine is not tracking', () => {
+        it('should NOT call clearInterval', () => {
+          const clearInterval = td.replace(global, 'clearInterval')
+          const dispatch = () => {}
+          const idOfNonTrackingRoutine = '2'
+          const fakeDispatch = () => {}
+          const fakeGetState = () => ({
+            routines: [
+              { id: '1', isTracking: true },
+              { id: idOfNonTrackingRoutine, isTracking: false },
+              { id: '3' },
+            ]
+          })
+          const formData = {
+            id: idOfNonTrackingRoutine,
+            routineName: 'Routine Name',
+            duration: moment('12:30:30', 'HH:mm:ss'),
+            reminder: moment('12:30:30', 'H:mm a'),
+          }
+
+          actions.editRoutine(formData)(fakeDispatch, fakeGetState)
+
+          td.verify(clearInterval(), { times: 0, ignoreExtraArgs: true })
+        })
+      })
+
+      it('should call dispatch with an action for editing a routine', () => {
+        const formData = {
+          id: '123',
+          routineName: 'Routine Name',
+          duration: moment('12:30:30', 'HH:mm:ss'),
+          reminder: moment('12:30:30', 'H:mm a'),
+        }
+        const fakeDispatch = td.function()
+        const fakeGetState = () => ({
+          routines: [{ id: '123' }]
+        })
+
+        actions.editRoutine(formData)(fakeDispatch, fakeGetState)
+
+        const expectedArg = {
+          type: 'EDIT_ROUTINE',
+          payload: formData,
+        }
+
+        td.verify(fakeDispatch(expectedArg), { times: 1 })
+      })
+    })
   })
 
   it('has action creator for deleting a routine', () => {
@@ -84,17 +184,10 @@ describe('REDUX: action creators', () => {
     expect(actual).to.deep.equal(expected)
   })
 
-  it('has action for starting tracker', () => {
-    const subj = actions.startTracker
-
-    expect(subj).to.be.a('function')
-  })
-
-  describe('action for starting tracker', () => {
-    it('should return a function', () => {
-      const subj = actions.startTracker()
-
-      expect(subj).to.be.a('function')
+  describe('action creator for starting tracker', () => {
+    it('should be a function that returns another function', () => {
+      const res = actions.startTracker()
+      expect(res).to.be.a('function')
     })
 
     describe('the returned function of the action for starting tracker',  () => {
@@ -135,31 +228,25 @@ describe('REDUX: action creators', () => {
         // TODO: findout if we need to somehow clear the interval created by actions.startTracker()()
      })
 
-      it('should call clearInterval with an object', () => {
+      it('should call clearInterval with an argument', () => {
         const clearInterval = td.replace(global, 'clearInterval')
         const dispatch = () => {}
         actions.startTracker()(dispatch)
 
-        td.verify(clearInterval(td.matchers.isA(Object)), { times: 1 })
+        td.verify(clearInterval(td.matchers.anything()), { times: 1 })
 
         // TODO: findout if we need to somehow clear the interval created by actions.startTracker()()
       })
     })
   })
 
-  it('has action for stopping tracker', () => {
-    const subj = actions.stopTracker
-
-    expect(subj).to.be.a('function')
-  })
-
-  describe('action for stopping tracker', () => {
-    it('should call clearInterval with an object', () => {
+  describe('action creator for stopping tracker', () => {
+    it('should call clearInterval with an argument', () => {
       const clearInterval = td.replace(global, 'clearInterval')
       const dispatch = () => {}
       actions.stopTracker()
 
-      td.verify(clearInterval(td.matchers.isA(Object)), { times: 1 })
+      td.verify(clearInterval(td.matchers.anything()), { times: 1 })
     })
 
     it('should return an action for stopping tracker', () => {
@@ -174,17 +261,72 @@ describe('REDUX: action creators', () => {
     })
   })
 
-  it('has action creator for resetting tracker', () => {
-    const passedId = '123'
+  describe('action creator for resetting tracker', () => {
+    it('should be a function that returns function', () => {
+      const res = actions.resetTracker()
+      expect(res).to.be.a('function')
+    })
 
-    const actual = actions.resetTracker(passedId)
-    const expected = {
-      type: 'RESET_TRACKER',
-      payload: {
-        id: passedId,
-      },
-    }
+    describe('the function returned by action for resetting tracker', () => {
+      context('when target routine is tracking', () => {
+        it('should call clearInterval with an argument', () => {
+          const clearInterval = td.replace(global, 'clearInterval')
+          const dispatch = () => {}
+          const idOfTrackingRoutine = '2'
+          const fakeDispatch = () => {}
+          const fakeGetState = () => ({
+            routines: [
+              { id: '1', isTracking: false },
+              { id: idOfTrackingRoutine, isTracking: true },
+              { id: '3' },
+            ]
+          })
 
-    expect(actual).to.deep.equal(expected)
+          actions.resetTracker(idOfTrackingRoutine)(fakeDispatch, fakeGetState)
+
+          td.verify(clearInterval(td.matchers.anything()), { times: 1 })
+        })
+      })
+
+      context('when target routine is not tracking', () => {
+        it('should NOT call clearInterval', () => {
+          const clearInterval = td.replace(global, 'clearInterval')
+          const dispatch = () => {}
+          const idOfNonTrackingRoutine = '2'
+          const fakeDispatch = () => {}
+          const fakeGetState = () => ({
+            routines: [
+              { id: '1', isTracking: true },
+              { id: idOfNonTrackingRoutine, isTracking: false },
+              { id: '3' },
+            ]
+          })
+
+          actions.resetTracker(idOfNonTrackingRoutine)(fakeDispatch, fakeGetState)
+
+          td.verify(clearInterval(), { times: 0, ignoreExtraArgs: true })
+        })
+      })
+
+      it('should call dispatch with an action for resetting a tracker', () => {
+        const passedId = '123'
+        const fakeGetState = () => ({
+          routines: [{ id: '123' }]
+        })
+        const fakeDispatch = td.function()
+
+        actions.resetTracker(passedId)(fakeDispatch, fakeGetState)
+
+        const expectedArg = {
+          type: 'RESET_TRACKER',
+          payload: {
+            id: passedId,
+          },
+        }
+
+        td.verify(fakeDispatch(expectedArg), { times: 1 })
+      })
+    })
   })
+
 })

@@ -2,6 +2,7 @@
 import { JSDOM } from 'jsdom'
 import chai from 'chai'
 import chaiEnzyme from 'chai-enzyme'
+import chaiDeepMatch from 'chai-deep-match'
 
 /* Setup virtual DOM */
 
@@ -47,3 +48,4 @@ global.HTMLElement = window.HTMLElement
 /* Setup Chai-Enzyme */
 
 chai.use(chaiEnzyme())
+chai.use(chaiDeepMatch)

@@ -12,7 +12,7 @@ describe('COMPONENT: RoutineList', () => {
     handleStartTracker: () => {},
     handleStopTracker: () => {},
     handleEditRoutine: () => {},
-    handleResetRoutine: () => {},
+    handleResetTracker: () => {},
     routines: [],
   }, props)
 

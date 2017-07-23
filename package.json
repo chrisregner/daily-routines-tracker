@@ -18,6 +18,7 @@
     "babel-preset-react": "^6.24.1",
     "babel-register": "^6.24.1",
     "chai": "^4.0.2",
+    "chai-deep-match": "^1.0.2",
     "chai-enzyme": "^0.8.0",
     "classname": "^0.0.0",
     "cross-env": "^5.0.1",
@@ -60,7 +61,7 @@
   },
   "scripts": {
     "start": "webpack-dev-server --config tools/webpack.config.babel.js --history-api-fallback --hot --open",
-    "mocha": "cross-env NODE_PATH=./app mocha --compilers js:babel-register --require tools/mocha-setup.js --reporter min",
+    "mocha": "cross-env NODE_PATH=./app mocha --compilers js:babel-register --require tools/mocha-setup.js",
     "test": "yarn run mocha app/**/*.unit.js",
     "test:watch": "yarn run test -- --watch",
     "lint:js": "eslint --config tools/.eslintrc **/*.js",

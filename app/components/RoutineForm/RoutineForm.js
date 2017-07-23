@@ -46,17 +46,24 @@ class RoutineForm extends React.Component {
   handleSubmit = (e) => {
     e.preventDefault()
 
+    let isTracking
     const {
       handleSubmit,
       form: { validateFields },
       initialValues,
     } = this.props
 
-    validateFields((err, values) => {
-      if (initialValues && initialValues.id)
-        values.id = initialValues.id
+    validateFields((err, formValues) => {
 
-      if (!err) handleSubmit(values)
+      if (!err) {
+        const valuesToPass = Object.assign(
+          {},
+          initialValues,
+          formValues,
+        )
+
+        handleSubmit(valuesToPass)
+      }
     })
   }
 

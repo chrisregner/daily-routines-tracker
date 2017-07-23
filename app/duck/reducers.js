@@ -27,11 +27,35 @@ const routines = (state = initialRoutinesState, { type, payload }) => {
       ]
 
     case actionTypes.EDIT_ROUTINE:
-      return state.map(routineObj => (
-        routineObj.id === payload.id
-        ? Object.assign({}, routineObj, payload)
-        : routineObj
-      ))
+      return state.map(routineObj => {
+        if (routineObj.id === payload.id) {
+          if (payload.duration && routineObj.duration) {
+            const newDuration = payload.duration
+            const oldDuration = routineObj.duration
+            const newDurationFormatted = newDuration.format(newDuration.creationData().format)
+            const oldDurationFormatted = oldDuration.format(oldDuration.creationData().format)
+
+            if (newDurationFormatted !== oldDurationFormatted) {
+              const updatedRoutine = Object.assign(
+                {},
+                routineObj,
+                payload,
+                {
+                  isTracking: false,
+                }
+              )
+
+              delete updatedRoutine.timeLeft
+
+              return updatedRoutine
+            }
+          }
+
+          return Object.assign({}, routineObj, payload)
+        }
+
+        return routineObj
+      })
 
     case actionTypes.DELETE_ROUTINE:
       return state.filter(routineObj => routineObj.id !== payload.id)
@@ -93,6 +117,7 @@ const routines = (state = initialRoutinesState, { type, payload }) => {
             routineObj,
             {
               timeLeft: routineObj.duration.clone(),
+              isTracking: false,
             }
           )
         else
@@ -105,6 +130,11 @@ const routines = (state = initialRoutinesState, { type, payload }) => {
 }
 
 const rootReducer = combineReducers({ routines })
+// const getRoutine = (state, id) => state.find(routine => routine.id === id)
+
 
 export default rootReducer
-export { routines }
+export {
+  routines
+  // getRoutine
+}

@@ -434,14 +434,17 @@ describe('COMPONENT: RoutineForm', () => {
 
       context('when form is valid', () => {
         context('when initialValues is provided', () => {
-          it('should call the passed onSubmit handler with form values AND the id from initialValues prop', () => {
+          it('should call the passed onSubmit handler with an object of initialValues merged with form values', () => {
             const handleSubmit = td.function()
-            const initialId = '123'
             const routineForm = shallow(
               <RoutineForm {...getRequiredProps({
                 initialValues: {
-                  id: initialId,
-                  name: 'Initial Routine Name',
+                  id: '123',
+                  routineName: 'Initial Routine Name',
+                  duration: moment('11:11:11', 'HH:mm:ss'),
+                  reminder: moment('22:22 am', 'h:mm a'),
+                  isTracking: true,
+                  timeLeft: moment('03:33:33', 'HH:mm:ss'),
                 },
                 handleSubmit,
               })} />
@@ -449,17 +452,54 @@ describe('COMPONENT: RoutineForm', () => {
             const pureRoutineForm = diveThruAntDHOC(routineForm)
             const formValues = {
               routineName: 'New Routine Name',
-              duration: moment('12:30:30', 'HH:mm:ss'),
-              reminder: moment('12:30 am', 'h:mm a'),
+              duration: moment('22:22:22', 'HH:mm:ss'),
+              reminder: moment('22:22 am', 'h:mm a'),
             }
 
             routineForm.prop('form').setFieldsValue(formValues)
             td.verify(handleSubmit(), { times: 0, ignoreExtraArgs: true })
             pureRoutineForm.prop('onSubmit')({ preventDefault: () => {} })
 
-            const expectedArg = Object.assign({ id: initialId }, formValues)
+            const expectedArg = {
+              id: '123',
+              routineName: 'New Routine Name',
+              duration: moment('22:22:22', 'HH:mm:ss'),
+              reminder: moment('22:22 am', 'h:mm a'),
+              isTracking: true,
+              timeLeft: moment('03:33:33', 'HH:mm:ss'),
+            }
             td.verify(handleSubmit(expectedArg), { times: 1 })
           })
+
+          // context('when duration is changed and initialValues has timeLeft property', () => {
+          //   it.skip('should call the passed onSubmit handler with true boolean as SECOND argument', () => {
+          //     const isTracking = 'MyUniqueIsTrackingVal'
+          //     const handleSubmit = td.function()
+          //     const routineForm = shallow(
+          //       <RoutineForm {...getRequiredProps({
+          //         initialValues: {
+          //           id: '123',
+          //           name: 'Initial Routine Name',
+          //           duration: moment('11:11:11', 'HH:mm:ss'),
+          //           isTracking: isTracking
+          //         },
+          //         handleSubmit,
+          //       })} />
+          //     )
+          //     const pureRoutineForm = diveThruAntDHOC(routineForm)
+          //     const formValues = {
+          //       routineName: 'Initial Routine Name',
+          //       duration: moment('22:22:22', 'HH:mm:ss'),
+          //     }
+
+          //     routineForm.prop('form').setFieldsValue(formValues)
+          //     td.verify(handleSubmit(), { times: 0, ignoreExtraArgs: true })
+          //     pureRoutineForm.prop('onSubmit')({ preventDefault: () => {} })
+
+          //     const expectedArg = true
+          //     td.verify(handleSubmit(td.matchers.anything(), expectedArg), { times: 1 })
+          //   })
+          // })
         })
 
         context('when initialValues is not provided', () => {

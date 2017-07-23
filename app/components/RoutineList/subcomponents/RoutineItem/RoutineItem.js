@@ -68,9 +68,6 @@ class RoutineItem extends React.Component {
       handleStopTracker()
     } else if (btnClassName.includes('reset-tracker')) {
       handleResetTracker(id)
-
-      if (isTracking)
-        handleStopTracker()
     }
   }
 

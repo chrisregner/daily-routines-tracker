@@ -299,7 +299,7 @@ describe('REDUX: reducer#routines', () => {
         },
       })
 
-      expect(actualState).to.deep.equal(expectedState)
+      expect(actualState).to.deep.match(expectedState)
     })
 
     it('should not delete existing properties if not explicitly set to falsey values (i.e. when payload doesn\'t specify anything about these properties)', () => {
@@ -350,6 +350,64 @@ describe('REDUX: reducer#routines', () => {
         payload: {
           id: '3',
           routineName: 'This routine should keep the duration and reminder as is',
+        },
+      })
+
+      expect(actualState).to.deep.equal(expectedState)
+    })
+
+    it('should copy the delete timeLeft and set isTracking to false IF duration will change', () => {
+      const initialState = [
+        {
+          id: '1',
+          routineName: 'Do something',
+          duration: moment('11:11:11', 'HH:mm:ss'),
+          reminder: moment('1:11 am', 'h:mm a'),
+        },
+        {
+          id: '2',
+          routineName: 'Do another thing',
+          duration: moment('22:22:22', 'HH:mm:ss'),
+          reminder: moment('2:22 am', 'h:mm a'),
+        },
+        {
+          id: '3',
+          routineName: 'Do one last thing',
+          duration: moment('03:33:33', 'HH:mm:ss'),
+          reminder: moment('03:33 am', 'h:mm a'),
+          timeLeft: moment('11:11:11', 'HH:mm:ss'),
+          isTracking: true,
+        },
+      ]
+
+      const expectedState = [
+        {
+          id: '1',
+          routineName: 'Do something',
+          duration: moment('11:11:11', 'HH:mm:ss'),
+          reminder: moment('1:11 am', 'h:mm a'),
+        },
+        {
+          id: '2',
+          routineName: 'Do another thing',
+          duration: moment('22:22:22', 'HH:mm:ss'),
+          reminder: moment('2:22 am', 'h:mm a'),
+        },
+        {
+          id: '3',
+          routineName: 'Changed Routine',
+          duration: moment('04:44:44', 'HH:mm:ss'),
+          reminder: moment('03:33 am', 'h:mm a'),
+          isTracking: false,
+        },
+      ]
+
+      const actualState = reducers.routines(initialState, {
+        type: 'EDIT_ROUTINE',
+        payload: {
+          id: '3',
+          routineName: 'Changed Routine',
+          duration: moment('04:44:44', 'HH:mm:ss'),
         },
       })
 
@@ -501,46 +559,95 @@ describe('REDUX: reducer#routines', () => {
     expect(actualState).to.deep.equal(expectedState)
   })
 
-  it('can handle RESET_TRACKER', () => {
-    const initialState = [
-      {
-        id: '1',
-        routineName: 'Do something',
-        duration: moment('11:11:11', 'HH:mm:ss'),
-        reminder: moment('1:11 am', 'h:mm a'),
-      },
-      {
-        id: '2',
-        routineName: 'Do another thing',
-        duration: moment('12:30:00', 'HH:mm:ss'),
-        reminder: moment('2:22 am', 'h:mm a'),
-        timeLeft: moment('01:15:15', 'HH:mm:ss'),
-      },
-    ]
+  describe('handling RESET_TRACKER', () => {
+    it('should turn the value of timeLeft to the same as duration', () => {
+      const initialState = [
+        {
+          id: '1',
+          routineName: 'Do something',
+          duration: moment('11:11:11', 'HH:mm:ss'),
+          reminder: moment('1:11 am', 'h:mm a'),
+        },
+        {
+          id: '2',
+          routineName: 'Do another thing',
+          duration: moment('12:30:00', 'HH:mm:ss'),
+          reminder: moment('2:22 am', 'h:mm a'),
+          timeLeft: moment('01:15:15', 'HH:mm:ss'),
+        },
+      ]
 
-    const expectedState = [
-      {
-        id: '1',
-        routineName: 'Do something',
-        duration: moment('11:11:11', 'HH:mm:ss'),
-        reminder: moment('1:11 am', 'h:mm a'),
-      },
-      {
-        id: '2',
-        routineName: 'Do another thing',
-        duration: moment('12:30:00', 'HH:mm:ss'),
-        reminder: moment('2:22 am', 'h:mm a'),
-        timeLeft: moment('12:30:00', 'HH:mm:ss'),
-      },
-    ]
+      const expectedState = [
+        {
+          id: '1',
+          routineName: 'Do something',
+          duration: moment('11:11:11', 'HH:mm:ss'),
+          reminder: moment('1:11 am', 'h:mm a'),
+        },
+        {
+          id: '2',
+          routineName: 'Do another thing',
+          duration: moment('12:30:00', 'HH:mm:ss'),
+          reminder: moment('2:22 am', 'h:mm a'),
+          timeLeft: moment('12:30:00', 'HH:mm:ss'),
+          isTracking: false,
+        },
+      ]
 
-    const actualState = reducers.routines(initialState, {
-      type: 'RESET_TRACKER',
-      payload: {
-        id: '2'
-      }
+      const actualState = reducers.routines(initialState, {
+        type: 'RESET_TRACKER',
+        payload: {
+          id: '2'
+        }
+      })
+
+      expect(actualState).to.deep.equal(expectedState)
     })
 
-    expect(actualState).to.deep.equal(expectedState)
+    it('should set isTracking to false', () => {
+      const initialState = [
+        {
+          id: '1',
+          routineName: 'Do something',
+          duration: moment('11:11:11', 'HH:mm:ss'),
+          reminder: moment('1:11 am', 'h:mm a'),
+        },
+        {
+          id: '2',
+          routineName: 'Do another thing',
+          duration: moment('12:30:00', 'HH:mm:ss'),
+          reminder: moment('2:22 am', 'h:mm a'),
+          timeLeft: moment('01:15:15', 'HH:mm:ss'),
+          isTracking: true,
+        },
+      ]
+
+      const expectedState = [
+        {
+          id: '1',
+          routineName: 'Do something',
+          duration: moment('11:11:11', 'HH:mm:ss'),
+          reminder: moment('1:11 am', 'h:mm a'),
+        },
+        {
+          id: '2',
+          routineName: 'Do another thing',
+          duration: moment('12:30:00', 'HH:mm:ss'),
+          reminder: moment('2:22 am', 'h:mm a'),
+          timeLeft: moment('12:30:00', 'HH:mm:ss'),
+          isTracking: false,
+        },
+      ]
+
+      const actualState = reducers.routines(initialState, {
+        type: 'RESET_TRACKER',
+        payload: {
+          id: '2'
+        }
+      })
+
+      expect(actualState).to.deep.equal(expectedState)
+    })
   })
+
 })

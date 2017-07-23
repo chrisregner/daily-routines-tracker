@@ -1,4 +1,7 @@
 import * as actionTypes from './actionTypes'
+import { getRoutineById } from './selectors'
+
+let timer
 
 /*===================================================================
 =            Actions for routines' basic CRUD operations            =
@@ -9,10 +12,28 @@ export const addRoutine = (formData) => ({
   payload: formData,
 })
 
-export const editRoutine = (formData) => ({
-  type: actionTypes.EDIT_ROUTINE,
-  payload: formData,
-})
+export const editRoutine = (formData) => (dispatch, getState) => {
+  const targetRoutine = getRoutineById(getState(), formData.id)
+
+  if (targetRoutine.isTracking) {
+    const oldDuration = targetRoutine.duration
+    const newDuration = formData.duration
+
+    if (oldDuration && newDuration) {
+      const oldDurationFormatted = oldDuration.format(oldDuration.creationData().format)
+      const newDurationFormatted = newDuration.format(newDuration.creationData().format)
+
+      if (oldDurationFormatted !== newDurationFormatted)
+        clearInterval(timer)
+    }
+  }
+
+
+  dispatch({
+    type: actionTypes.EDIT_ROUTINE,
+    payload: formData,
+  })
+}
 
 export const deleteRoutine = (routineId) => ({
   type: actionTypes.DELETE_ROUTINE,
@@ -30,7 +51,6 @@ export const tickTracker = () => ({
   type: actionTypes.TICK_TRACKER
 })
 
-let timer
 export const startTracker = (routineId) => (dispatch) => {
   clearInterval(timer)
 
@@ -49,10 +69,17 @@ export const stopTracker = () => {
   return { type: actionTypes.STOP_TRACKER }
 }
 
-export const resetTracker = (routineId) => ({
-  type: actionTypes.RESET_TRACKER,
-  payload: {
-    id: routineId
-  }
-})
+export const resetTracker = (routineId) => (dispatch, getState) => {
+  const targetRoutine = getRoutineById(getState(), routineId)
 
+  if (targetRoutine.isTracking)
+    clearInterval(timer)
+
+
+  dispatch({
+    type: actionTypes.RESET_TRACKER,
+    payload: {
+      id: routineId
+    }
+  })
+}

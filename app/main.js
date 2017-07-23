@@ -9,10 +9,6 @@ import './styles/main.css'
 
 let store = configureStore()
 
-store.subscribe(() => {
-  console.log(store.getState())
-})
-
 const render = Component => {
   ReactDOM.render(
     <AppContainer>
