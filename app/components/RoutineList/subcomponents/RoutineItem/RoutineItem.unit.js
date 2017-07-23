@@ -91,32 +91,114 @@ describe('COMPONENT: RoutineList/RoutineItem', () => {
       expect(wrapper).to.contain(formattedDuration)
     })
 
-    it('should render a \'start tracker\' link', () => {
-      const wrapper = shallow(<RoutineItem {...getRequiredProps({
-        duration: moment('12:34:56', 'HH:mm:ss'),
-      })} />)
+    context('when timeLeft prop is passed', () => {
+      it('should render is instead of duration', () => {
+        const duration = moment('12:34:56', 'HH:mm:ss')
+        const timeLeft = moment('11:11:11', 'HH:mm:ss')
+        const wrapper = shallow(<RoutineItem {...getRequiredProps({
+          id: '123',
+          routineName: 'The Routine',
+          duration,
+          timeLeft,
+        })} />)
+        const formattedDuration = duration.format(duration.creationData().format)
+        const formattedTimeLeft = timeLeft.format(timeLeft.creationData().format)
 
-      expect(wrapper).to.have.exactly(1).descendants('.toggle-tracker')
+        expect(wrapper).to.not.contain(formattedDuration)
+        expect(wrapper).to.contain(formattedTimeLeft)
+      })
     })
 
-    context('when \'start tracker\' link is clicked', () => {
-      it('should call the passed handleStartTracker() with routine id', () => {
-        const handleStartTracker = td.function()
-        const passedId = '123'
+    context('when isTracking prop is not set to true', () => {
+      it('should render a \'start tracker\' link', () => {
         const wrapper = shallow(<RoutineItem {...getRequiredProps({
-          id: passedId,
-          routineName: 'The Routine',
           duration: moment('12:34:56', 'HH:mm:ss'),
-          handleStartTracker,
         })} />)
-        const trackerLink = wrapper.find('.toggle-tracker')
-        const fakeEv = { preventDefault: () => {}, stopPropagation: () => {} }
 
-        const expectedArg = passedId
+        expect(wrapper).to.have.exactly(1).descendants('.start-tracker')
+      })
 
-        td.verify(handleStartTracker(), { times: 0, ignoreExtraArgs: 0 })
-        trackerLink.prop('onClick')(fakeEv)
-        td.verify(handleStartTracker(expectedArg), { times: 1 })
+      it('should NOT render a \'stop tracker\' link', () => {
+        const wrapper = shallow(<RoutineItem {...getRequiredProps({
+          duration: moment('12:34:56', 'HH:mm:ss'),
+        })} />)
+
+        expect(wrapper).to.have.exactly(0).descendants('.stop-tracker')
+      })
+
+      describe('the \'start tracker\' link', () => {
+        it('should call the passed handleStartTracker() with routine id when clicked', () => {
+          const handleStartTracker = td.function()
+          const passedId = '123'
+          const wrapper = shallow(<RoutineItem {...getRequiredProps({
+            id: passedId,
+            routineName: 'The Routine',
+            duration: moment('12:34:56', 'HH:mm:ss'),
+            handleStartTracker,
+          })} />)
+          const trackerLink = wrapper.find('.start-tracker')
+          const fakeEv = {
+            preventDefault: () => {},
+            stopPropagation: () => {},
+            currentTarget: {
+              className: 'start-tracker',
+            }
+          }
+
+          const expectedArg = passedId
+
+          td.verify(handleStartTracker(), { times: 0, ignoreExtraArgs: 0 })
+          trackerLink.prop('onClick')(fakeEv)
+          td.verify(handleStartTracker(expectedArg), { times: 1 })
+        })
+      })
+    })
+
+    context('when isTracking prop is set to true', () => {
+      it('should render a \'stop tracker\' link', () => {
+        const wrapper = shallow(<RoutineItem {...getRequiredProps({
+          duration: moment('12:34:56', 'HH:mm:ss'),
+          isTracking: true
+        })} />)
+
+        expect(wrapper).to.have.exactly(1).descendants('.stop-tracker')
+      })
+
+      it('should NOT render a \'start tracker\' link', () => {
+        const wrapper = shallow(<RoutineItem {...getRequiredProps({
+          duration: moment('12:34:56', 'HH:mm:ss'),
+          isTracking: true
+        })} />)
+
+        expect(wrapper).to.have.exactly(0).descendants('.start-tracker')
+      })
+
+      describe('the \'stop tracker\' link', () => {
+        it('should call the passed handleStopTracker() with routine id when clicked', () => {
+          const handleStopTracker = td.function()
+          const passedId = '123'
+          const wrapper = shallow(<RoutineItem {...getRequiredProps({
+            id: passedId,
+            routineName: 'The Routine',
+            duration: moment('12:34:56', 'HH:mm:ss'),
+            handleStopTracker,
+            isTracking: true
+          })} />)
+          const trackerLink = wrapper.find('.stop-tracker')
+          const fakeEv = {
+            preventDefault: () => {},
+            stopPropagation: () => {},
+            currentTarget: {
+              className: 'stop-tracker',
+            }
+          }
+
+          const expectedArg = passedId
+
+          td.verify(handleStopTracker(), { times: 0, ignoreExtraArgs: 0 })
+          trackerLink.prop('onClick')(fakeEv)
+          td.verify(handleStopTracker(), { times: 1 })
+        })
       })
     })
   })

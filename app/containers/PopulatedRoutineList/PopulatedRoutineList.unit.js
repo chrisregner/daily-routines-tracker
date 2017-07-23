@@ -95,5 +95,34 @@ describe('CONTAINER: PopulatedRoutineList', () => {
         td.verify(dispatch(startTrackerRes), { times: 1 })
       })
     })
+
+    it('should receive the handleStopTracker() prop', () => {
+      const wrapper = createInstance()
+      const wrappedComponent = wrapper.dive()
+
+      expect(wrappedComponent.prop('handleStopTracker')).to.be.a('function')
+    })
+
+    describe('handleStopTracker() prop', () => {
+      it('should call dispatch() with stopTracker()\'s result when called', () => {
+        const stopTracker = td.function()
+        td.replace('duck/actions', { stopTracker })
+        const stopTrackerRes = '123'
+        td.when(stopTracker()).thenReturn(stopTrackerRes)
+
+        PopulatedRoutineList = require('./PopulatedRoutineList').default
+
+        const initialState = { routines: [] }
+        const mockStore = getMockStore(initialState)
+        const dispatch = td.replace(mockStore, 'dispatch')
+
+        const wrapper = createInstance({ store: mockStore })
+        const wrappedComponent = wrapper.dive()
+
+        td.verify(dispatch(), { times: 0, ignoreExtraArgs: true })
+        wrappedComponent.prop('handleStopTracker')()
+        td.verify(dispatch(stopTrackerRes), { times: 1 })
+      })
+    })
   })
 })

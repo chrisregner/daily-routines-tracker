@@ -10,6 +10,7 @@ import RoutineItem from './subcomponents/RoutineItem'
 describe('COMPONENT: RoutineList', () => {
   const getRequiredProps = props => Object.assign({
     handleStartTracker: () => {},
+    handleStopTracker: () => {},
     handleEditRoutine: () => {},
     routines: [],
   }, props)
@@ -93,6 +94,23 @@ describe('COMPONENT: RoutineList', () => {
         )
 
         expect(wrapper.find(RoutineItem)).to.have.props({ handleStartTracker })
+      })
+
+       it('should receive the handleStopTracker() prop which is prop of <RoutineList /> itself', () => {
+        const handleStopTracker = () => {}
+        const wrapper = shallow(
+          <RoutineList {...getRequiredProps({
+            routines: [{
+              id: '1',
+              routineName: 'First Routine',
+              duration: moment('12:34:56', 'HH:mm:ss'),
+              reminder: moment('12:34 a', 'h:mm a'),
+            }],
+            handleStopTracker
+          })} />
+        )
+
+        expect(wrapper.find(RoutineItem)).to.have.props({ handleStopTracker })
       })
 
       /* it('should receive the handleEditRoutine() prop which is prop of <RoutineList /> itself', () => {

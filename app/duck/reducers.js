@@ -58,16 +58,19 @@ const routines = (state = initialRoutinesState, { type, payload }) => {
 
     case actionTypes.TICK_TRACKER:
       return state.map(routineObj => {
-        if (routineObj.isTracking)
+        if (routineObj.isTracking) {
+          const { timeLeft, duration } = routineObj
+          const timeToSubtract = timeLeft || duration
           return Object.assign(
             {},
             routineObj,
             {
-              duration: moment(routineObj.duration).subtract('100', 'milliseconds')
+              timeLeft: moment(timeToSubtract).subtract('100', 'milliseconds')
             }
           )
-        else
+        } else {
           return routineObj
+        }
       })
 
     case actionTypes.STOP_TRACKER:

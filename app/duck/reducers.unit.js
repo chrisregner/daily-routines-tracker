@@ -447,8 +447,9 @@ describe('REDUX: reducer#routines', () => {
       {
         id: '2',
         routineName: 'Do another thing',
-        duration: moment('12:30:00', 'HH:mm:ss').subtract(100, 'milliseconds'),
+        duration: moment('12:30:00', 'HH:mm:ss'),
         reminder: moment('2:22 am', 'h:mm a'),
+        timeLeft: moment('12:30:00', 'HH:mm:ss').subtract(100, 'milliseconds'),
         isTracking: true,
       },
     ]
