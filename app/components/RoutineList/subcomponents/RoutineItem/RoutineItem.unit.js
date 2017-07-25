@@ -320,6 +320,7 @@ describe('COMPONENT: RoutineList/RoutineItem', () => {
             id: passedId,
             routineName: 'The Routine',
             duration: moment('12:34:56', 'HH:mm:ss'),
+            isTracking: true,
             handleResetTracker,
           })} />)
           const trackerLink = wrapper.find('.reset-tracker')

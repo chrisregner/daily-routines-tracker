@@ -8,6 +8,8 @@ TODO
   - [done] edit resetRoutine action/reducer so that it stops the tracker as necessary
   - [done] edit editRoutine action/reducer so that it resets the time left as necessary
   - [done] pass RoutineItem\'s specs for conditional rendering
+  - use buttons instead of link in RoutineItem controls and correct the usage of buttons and links
+    elsewhere as possible
 - final design/theming
   - add page transitions for mobile
 - optimization

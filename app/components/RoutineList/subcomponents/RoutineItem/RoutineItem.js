@@ -91,22 +91,28 @@ class RoutineItem extends React.Component {
 
         {
           (duration && (isTracking || timeLeft)) &&
-          <a className='reset-tracker' onClick={this.handleTrackerControl}>
-            <Icon type='reload' className='ml2 f3' />
-          </a>
+          <div className='ml2'>
+            <button className='reset-tracker pa0 ma0 bn bg-transparent outline-0' onClick={this.handleTrackerControl}>
+              <Icon type='reload' className='f3' />
+            </button>
+          </div>
         }
 
         {
           durationToShow &&
           (
             isTracking ? (
-              <a className='stop-tracker' onClick={this.handleTrackerControl}>
-                <Icon type='pause-circle-o' className='ml2 f3' />
-              </a>
+              <div className='ml2'>
+                <button className='stop-tracker pa0 ma0 bn bg-transparent outline-0' onClick={this.handleTrackerControl}>
+                  <Icon type='pause-circle-o' className='f3' />
+                </button>
+              </div>
             ) : (
-              <a className='start-tracker' onClick={this.handleTrackerControl}>
-                <Icon type='play-circle-o' className='ml2 f3' />
-              </a>
+              <div className='ml2'>
+                <button className='start-tracker pa0 ma0 bn bg-transparent outline-0' onClick={this.handleTrackerControl}>
+                  <Icon type='play-circle-o' className='f3' />
+                </button>
+              </div>
             )
           )
         }
