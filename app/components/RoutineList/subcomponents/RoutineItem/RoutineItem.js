@@ -3,6 +3,7 @@ import PropTypes from 'prop-types'
 import { Link, withRouter } from 'react-router-dom'
 import moment from 'moment'
 import styled from 'styled-components'
+import c from 'classname'
 import { Icon, Button } from 'antd'
 
 let s // styled components will be defined in this variable
@@ -74,16 +75,28 @@ class RoutineItem extends React.Component {
   render = () => {
     const {
       history, id, routineName, reminder,
-      duration, timeLeft, isTracking,
+      duration, timeLeft, isTracking, isDone,
     } = this.props
     const durationToShow = timeLeft || duration
 
-    return <s.Li className='b--my-light-gray'>
+    return <s.Li className={c(
+        'b--my-light-gray',
+        isDone ? 'isDone' : 'mh3'
+      )}>
       <div
         onClick={() => { history.push(`/routines/${id}`) }}
-        className='flex items-center h-100 dark-gray f4 lh-title pointer edit-routine'
+        className={c(
+          'flex items-center h-100 dark-gray f4 lh-title pointer edit-routine ',
+          isDone ? 'isDone bg-green ph3' : ''
+        )}
       >
-        <Icon type='check-circle-o' className='f3' />
+        <button className='toggleIsDone pa0 ma0 bn bg-transparent outline-0'>
+          {
+            isDone
+            ? <Icon type='check-circle' className='f3' />
+            : <Icon type='check-circle-o' className='f3' />
+          }
+        </button>
 
         <div className='self-grow-1 pv1 truncate ml2'>
           {routineName}

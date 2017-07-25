@@ -147,18 +147,18 @@ class RoutineForm extends React.Component {
 
     if (notFound)
       return (
-        <div>
-          <div className='mb6 f4 lh-title'>
+        <div className='pa3'>
+          <div className='pb3 f4 lh-title'>
             <Link to='/'><Icon type='arrow-left' /></Link>
           </div>
-          <div className='f3 lh-copy'>
-            Sorry, the routine you requested is not found.
+          <div className='mt6 f3 lh-copy'>
+            Sorry, the routine you requested doesn’t exist.
           </div>
         </div>
       )
     else
       return (
-        <Form onSubmit={this.handleSubmit}>
+        <Form className='pa3' onSubmit={this.handleSubmit}>
           <div className='relative flex items-center mb3 cf f4 lh-title'>
             <Link to='/' className='self-grow-1 dib fl'><Icon type='arrow-left' /></Link>
             <s.CenteredH2 className='ma0 f5 ttu lh-title'>

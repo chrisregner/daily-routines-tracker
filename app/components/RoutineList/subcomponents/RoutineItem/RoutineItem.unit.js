@@ -4,12 +4,11 @@ import { shallow } from 'enzyme'
 import { Link } from 'react-router-dom'
 import td from 'testdouble'
 import moment from 'moment'
-import lolex from 'lolex'
+import { Icon } from 'antd'
 
 import { PureRoutineItem as RoutineItem } from './RoutineItem'
 
 describe('COMPONENT: RoutineList/RoutineItem', () => {
-  let clock, tick
   const getRequiredProps = props => Object.assign(
     {
       id: '123',
@@ -24,23 +23,14 @@ describe('COMPONENT: RoutineList/RoutineItem', () => {
     props,
   )
 
-  before(() => {
-    clock = lolex.install()
-    tick = (durationInStrFormat) => {
-      const durationInMilli = moment.duration(durationInStrFormat).asMilliseconds()
-      clock.tick(durationInMilli)
-    }
-  })
-
   after(() => {
-    clock.uninstall
     td.reset()
   })
 
 
-  /*======================================
-  =            Root Component            =
-  ======================================*/
+  /*==================================
+  =            As a whole            =
+  ==================================*/
 
   it('should render with <li /> as root component', () => {
     const wrapper = shallow(<RoutineItem {...getRequiredProps()} />)
@@ -50,6 +40,9 @@ describe('COMPONENT: RoutineList/RoutineItem', () => {
     expect(isRenderedWithLi || isRenderedWithStyledLi).to.equal(true)
   })
 
+  context('when isDone is set to true', () => {
+
+  })
 
   /*=========================================
   =            Edit Routine Link            =
@@ -337,6 +330,48 @@ describe('COMPONENT: RoutineList/RoutineItem', () => {
           td.verify(handleResetTracker(), { times: 0, ignoreExtraArgs: 0 })
           trackerLink.prop('onClick')(fakeEv)
           td.verify(handleResetTracker(expectedArg), { times: 1 })
+        })
+      })
+    })
+
+    /*============================================
+    =            Toggle isDone Button            =
+    ============================================*/
+
+    describe('isDone button', () => {
+      it('there should be one', () => {
+        const wrapper = shallow(<RoutineItem {...getRequiredProps({
+          id: '123',
+          routineName: 'The Routine',
+        })} />)
+
+        expect(wrapper).to.have.exactly(1).descendants('.toggleIsDone')
+      })
+
+      context('when isDone is not set to true', () => {
+        it('should contain one AndD Icon which has a type of \'check-circle-0\'', () => {
+          const wrapper = shallow(<RoutineItem {...getRequiredProps({
+            id: '123',
+            routineName: 'The Routine',
+          })} />)
+          const icon = wrapper.find('.toggleIsDone').find(Icon)
+
+          expect(icon).to.have.lengthOf(1)
+          expect(icon).to.have.prop('type', 'check-circle-o')
+        })
+      })
+
+      context('when isDone is set to true', () => {
+        it('should be \'check-circle-0\' icon if isDone is not set to true', () => {
+          const wrapper = shallow(<RoutineItem {...getRequiredProps({
+            id: '123',
+            routineName: 'The Routine',
+            isDone: true,
+          })} />)
+          const icon = wrapper.find('.toggleIsDone').find(Icon)
+
+          expect(icon).to.have.lengthOf(1)
+          expect(icon).to.have.prop('type', 'check-circle')
         })
       })
     })

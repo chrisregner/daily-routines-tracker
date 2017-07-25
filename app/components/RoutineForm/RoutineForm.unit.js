@@ -545,7 +545,18 @@ describe('COMPONENT: RoutineForm', () => {
       const routineForm = diveThruAntDHOC(shallow(
         <RoutineForm {...getRequiredProps({ notFound: true })} />
       ))
-      expect(routineForm.text()).to.contain('not found')
+      const actualText = routineForm.text()
+      const doesInclude = (text) => actualText.includes(text)
+
+
+      expect(
+        doesInclude('404')
+        || doesInclude('not found')
+        || doesInclude('not exist')
+        || doesInclude('doesn’t exist')
+        || doesInclude('doesn&rsquo;t exist')
+      )
+        .to.equal(true)
     })
 
     it('should not render the AntD form', () => {

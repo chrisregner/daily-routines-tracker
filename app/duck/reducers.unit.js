@@ -2,6 +2,7 @@ import { expect } from 'chai'
 import moment from 'moment'
 import getDiff from 'deep-diff'
 
+import { getLastIntervalId } from './actions'
 import * as reducers from './reducers'
 import * as actionTypes from './actionTypes'
 
@@ -52,9 +53,13 @@ const diffThatIsIdOnly = (expected, actual) => {
   return hasNonIdDiff ? false : noOfDiff
 }
 
-describe('REDUX: reducer#routines', () => {
+describe('REDUCER: rootReducer.routines', () => {
   before(() => {
     moment()
+  })
+
+  afterEach(() => {
+    clearInterval(getLastIntervalId())
   })
 
   /*===================================================================
@@ -64,7 +69,7 @@ describe('REDUX: reducer#routines', () => {
   it('should return the initial state', () => {
     const expectedStatePart = [{
       routineName: 'Jog',
-      duration: moment('00:00:03', 'HH:mm:ss'),
+      duration: moment('00:00:01', 'HH:mm:ss'),
       reminder: moment('4:00 am', 'h:mm a'),
     }, {
       routineName: 'pneumonoultramicroscopicsilicovolcanoconiosis',
@@ -479,45 +484,138 @@ describe('REDUX: reducer#routines', () => {
     })
   })
 
-  it('can handle TICK_TRACKER', () => {
-    const initialState = [
-      {
-        id: '1',
-        routineName: 'Do something',
-        duration: moment('11:11:11', 'HH:mm:ss'),
-        reminder: moment('1:11 am', 'h:mm a'),
-      },
-      {
-        id: '2',
-        routineName: 'Do another thing',
-        duration: moment('12:30:00', 'HH:mm:ss'),
-        reminder: moment('2:22 am', 'h:mm a'),
-        isTracking: true,
-      },
-    ]
+  describe('handling TICK_TRACKER', () => {
+    context('when timeLeft is not set yet', () => {
+      it('should set the value of timeLeft to be 100 ms less than duration', () => {
+        const initialState = [
+          {
+            id: '1',
+            routineName: 'Do something',
+            duration: moment('11:11:11', 'HH:mm:ss'),
+            reminder: moment('1:11 am', 'h:mm a'),
+          },
+          {
+            id: '2',
+            routineName: 'Do another thing',
+            duration: moment('12:30:00', 'HH:mm:ss'),
+            reminder: moment('2:22 am', 'h:mm a'),
+            isTracking: true,
+          },
+        ]
 
-    const expectedState = [
-      {
-        id: '1',
-        routineName: 'Do something',
-        duration: moment('11:11:11', 'HH:mm:ss'),
-        reminder: moment('1:11 am', 'h:mm a'),
-      },
-      {
-        id: '2',
-        routineName: 'Do another thing',
-        duration: moment('12:30:00', 'HH:mm:ss'),
-        reminder: moment('2:22 am', 'h:mm a'),
-        timeLeft: moment('12:30:00', 'HH:mm:ss').subtract(100, 'milliseconds'),
-        isTracking: true,
-      },
-    ]
+        const expectedState = [
+          {
+            id: '1',
+            routineName: 'Do something',
+            duration: moment('11:11:11', 'HH:mm:ss'),
+            reminder: moment('1:11 am', 'h:mm a'),
+          },
+          {
+            id: '2',
+            routineName: 'Do another thing',
+            duration: moment('12:30:00', 'HH:mm:ss'),
+            reminder: moment('2:22 am', 'h:mm a'),
+            timeLeft: moment('12:30:00', 'HH:mm:ss').subtract(100, 'milliseconds'),
+            isTracking: true,
+          },
+        ]
 
-    const actualState = reducers.routines(initialState, {
-      type: 'TICK_TRACKER'
+        const actualState = reducers.routines(initialState, {
+          type: 'TICK_TRACKER'
+        })
+
+        expect(actualState).to.deep.equal(expectedState)
+      })
     })
 
-    expect(actualState).to.deep.equal(expectedState)
+    context('when timeLeft set', () => {
+      it('should set the value of timeLeft to be 100 ms less than the previous timeLeft', () => {
+        const initialState = [
+          {
+            id: '1',
+            routineName: 'Do something',
+            duration: moment('11:11:11', 'HH:mm:ss'),
+            reminder: moment('1:11 am', 'h:mm a'),
+          },
+          {
+            id: '2',
+            routineName: 'Do another thing',
+            duration: moment('12:30:00', 'HH:mm:ss'),
+            reminder: moment('2:22 am', 'h:mm a'),
+            timeLeft: moment('12:29:00', 'HH:mm:ss'),
+            isTracking: true,
+          },
+        ]
+
+        const expectedState = [
+          {
+            id: '1',
+            routineName: 'Do something',
+            duration: moment('11:11:11', 'HH:mm:ss'),
+            reminder: moment('1:11 am', 'h:mm a'),
+          },
+          {
+            id: '2',
+            routineName: 'Do another thing',
+            duration: moment('12:30:00', 'HH:mm:ss'),
+            reminder: moment('2:22 am', 'h:mm a'),
+            timeLeft: moment('12:29:00', 'HH:mm:ss').subtract(100, 'milliseconds'),
+            isTracking: true,
+          },
+        ]
+
+        const actualState = reducers.routines(initialState, {
+          type: 'TICK_TRACKER'
+        })
+
+        expect(actualState).to.deep.equal(expectedState)
+      })
+    })
+
+    context('when timeLeft is 00:00:00.100', () => {
+      it('should set timeLeft to null, isTracking to false, and isDone to true', () => {
+        const initialState = [
+          {
+            id: '1',
+            routineName: 'Do something',
+            duration: moment('11:11:11', 'HH:mm:ss'),
+            reminder: moment('1:11 am', 'h:mm a'),
+          },
+          {
+            id: '2',
+            routineName: 'Do another thing',
+            duration: moment('12:30:00', 'HH:mm:ss'),
+            reminder: moment('2:22 am', 'h:mm a'),
+            timeLeft: moment('00:00:00', 'HH:mm:ss').add(100, 'milliseconds'),
+            isTracking: true,
+          },
+        ]
+
+        const expectedState = [
+          {
+            id: '1',
+            routineName: 'Do something',
+            duration: moment('11:11:11', 'HH:mm:ss'),
+            reminder: moment('1:11 am', 'h:mm a'),
+          },
+          {
+            id: '2',
+            routineName: 'Do another thing',
+            duration: moment('12:30:00', 'HH:mm:ss'),
+            reminder: moment('2:22 am', 'h:mm a'),
+            timeLeft: null,
+            isTracking: false,
+            isDone: true,
+          },
+        ]
+
+        const actualState = reducers.routines(initialState, {
+          type: 'TICK_TRACKER'
+        })
+
+        expect(actualState).to.deep.equal(expectedState)
+      })
+    })
   })
 
   it('can handle STOP_TRACKER', () => {

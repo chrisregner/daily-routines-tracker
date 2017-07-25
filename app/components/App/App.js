@@ -13,7 +13,7 @@ import EditRoutineForm from 'containers/EditRoutineForm'
 let StyledDiv
 
 const App = () => (<Router>
-  <StyledDiv className='pa3'>
+  <StyledDiv>
     <Switch>
       <Route exact path='/' component={HomePage} />
       <Route path='/routines/new' component={AddNewRoutineForm} />

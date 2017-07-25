@@ -3,7 +3,7 @@ import td from 'testdouble'
 import moment from 'moment'
 import lolex from 'lolex'
 
-describe('REDUX: action creators', () => {
+describe('ACTION: creators', () => {
   let actions
 
   beforeEach(() => {
@@ -12,11 +12,7 @@ describe('REDUX: action creators', () => {
 
   afterEach(() => {
     td.reset()
-
-    // clear last interval (https://stackoverflow.com/a/6843291/7823311)
-    const i = setInterval (function () {}, 10000);
-    clearInterval (i - 1)
-    clearInterval (i)
+    clearInterval(actions.getLastIntervalId())
   })
 
   /*===================================================================
@@ -47,7 +43,7 @@ describe('REDUX: action creators', () => {
 
     describe('function returned by the action creator for editing a routine', () => {
       context('when target routine is tracking and duration will change', () => {
-        it('should call clearInterval with an argument', () => {
+        it('should call clearInterval with the last interval ID', () => {
           const clearInterval = td.replace(global, 'clearInterval')
           const dispatch = () => {}
           const idOfTrackingRoutine = '2'
@@ -72,7 +68,7 @@ describe('REDUX: action creators', () => {
 
           actions.editRoutine(formData)(fakeDispatch, fakeGetState)
 
-          td.verify(clearInterval(td.matchers.anything()), { times: 1 })
+          td.verify(clearInterval(actions.getLastIntervalId()), { times: 1 })
         })
       })
 
@@ -209,44 +205,90 @@ describe('REDUX: action creators', () => {
 
       it('should call dispatch (from second set of argument) the result of tickTracker right when its called, and then every 100ms after that', () => {
         const clock = lolex.install()
-        const dispatch = td.function()
-        actions.startTracker()(dispatch)
+        const fakeGetState = () => ({ routines: [{ id: '123' }] })
+        const fakeDispatch = td.function()
+        actions.startTracker('123')(fakeDispatch, fakeGetState)
 
         const expectedArg = actions.tickTracker()
 
-        td.verify(dispatch(expectedArg), { times: 0 })
+        td.verify(fakeDispatch(expectedArg), { times: 0 })
         clock.tick(50)
-        td.verify(dispatch(expectedArg), { times: 0 })
+        td.verify(fakeDispatch(expectedArg), { times: 0 })
         clock.tick(60)
-        td.verify(dispatch(expectedArg), { times: 1 })
+        td.verify(fakeDispatch(expectedArg), { times: 1 })
         clock.tick(300)
-        td.verify(dispatch(expectedArg), { times: 4 })
+        td.verify(fakeDispatch(expectedArg), { times: 4 })
 
         // teardown
         clock.uninstall()
+      })
 
-        // TODO: findout if we need to somehow clear the interval created by actions.startTracker()()
-     })
+      context('when 100ms is past after the target routine\'s timeLeft is set to 00:00:00.100', () => {
+        it('should call clearInterval again with the last interval ID', () => {
+          const clock = lolex.install()
+          const clearInterval = td.replace(global, 'clearInterval')
+          const fakeDispatch = () => {}
+          const fakeGetState = () => ({
+            routines: [{
+              id: '123',
+              timeLeft: moment('00:00:00.100', 'HH:mm:ss.SSS'),
+            }]
+          })
 
-      it('should call clearInterval with an argument', () => {
+          actions.startTracker('123')(fakeDispatch, fakeGetState)
+          clock.tick(90)
+          td.verify(clearInterval(actions.getLastIntervalId()), { times: 0 })
+          clock.tick(20)
+          td.verify(clearInterval(actions.getLastIntervalId()), { times: 1 })
+
+          // teardown
+          clock.uninstall()
+        })
+
+        it('should dispatch tickTracker once again but no more after that', () => {
+          const clock = lolex.install()
+          const fakeDispatch = td.function()
+          const fakeGetState = () => ({
+            routines: [{
+              id: '123',
+              timeLeft: moment('00:00:00.100', 'HH:mm:ss.SSS'),
+            }]
+          })
+
+          actions.startTracker('123')(fakeDispatch, fakeGetState)
+          clock.tick(90)
+          td.verify(fakeDispatch(actions.tickTracker()), { times: 0 })
+          clock.tick(20)
+          td.verify(fakeDispatch(actions.tickTracker()), { times: 1 })
+          clock.tick(1000)
+          td.verify(fakeDispatch(actions.tickTracker()), { times: 1 })
+
+          // teardown
+          clock.uninstall()
+        })
+      })
+
+      it('should call clearInterval with the previous interval ID', () => {
         const clearInterval = td.replace(global, 'clearInterval')
         const dispatch = () => {}
         actions.startTracker()(dispatch)
 
+        /**
+         * We have no means of getting the previous interval ID (we've only exposed the latest one)
+         * so we'll use td.matchers.anything() instead
+         */
         td.verify(clearInterval(td.matchers.anything()), { times: 1 })
-
-        // TODO: findout if we need to somehow clear the interval created by actions.startTracker()()
       })
     })
   })
 
   describe('action creator for stopping tracker', () => {
-    it('should call clearInterval with an argument', () => {
+    it('should call clearInterval with the last interval ID', () => {
       const clearInterval = td.replace(global, 'clearInterval')
       const dispatch = () => {}
       actions.stopTracker()
 
-      td.verify(clearInterval(td.matchers.anything()), { times: 1 })
+      td.verify(clearInterval(actions.getLastIntervalId()), { times: 1 })
     })
 
     it('should return an action for stopping tracker', () => {
@@ -269,7 +311,7 @@ describe('REDUX: action creators', () => {
 
     describe('the function returned by action for resetting tracker', () => {
       context('when target routine is tracking', () => {
-        it('should call clearInterval with an argument', () => {
+        it('should call clearInterval with the last interval ID', () => {
           const clearInterval = td.replace(global, 'clearInterval')
           const dispatch = () => {}
           const idOfTrackingRoutine = '2'
@@ -284,7 +326,7 @@ describe('REDUX: action creators', () => {
 
           actions.resetTracker(idOfTrackingRoutine)(fakeDispatch, fakeGetState)
 
-          td.verify(clearInterval(td.matchers.anything()), { times: 1 })
+          td.verify(clearInterval(actions.getLastIntervalId()), { times: 1 })
         })
       })
 

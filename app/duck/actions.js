@@ -3,6 +3,9 @@ import { getRoutineById } from './selectors'
 
 let timer
 
+// convenient for clearing intervals in tests
+export const getLastIntervalId = () => timer
+
 /*===================================================================
 =            Actions for routines' basic CRUD operations            =
 ===================================================================*/
@@ -51,10 +54,19 @@ export const tickTracker = () => ({
   type: actionTypes.TICK_TRACKER
 })
 
-export const startTracker = (routineId) => (dispatch) => {
+export const startTracker = (routineId) => (dispatch, getState) => {
   clearInterval(timer)
 
-  timer = setInterval(() => dispatch(tickTracker()), 100)
+  timer = setInterval(() => {
+    const timeLeft = getRoutineById(getState(), routineId).timeLeft
+
+    dispatch(tickTracker())
+
+    if (timeLeft && timeLeft.format('HH:mm:ss.SSS') === '00:00:00.100')
+      clearInterval(timer)
+
+    console.log('Tick!')
+  }, 100)
 
   dispatch({
     type: actionTypes.START_TRACKER,

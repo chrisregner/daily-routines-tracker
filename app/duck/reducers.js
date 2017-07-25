@@ -10,7 +10,7 @@ moment('00:15:00', 'HH:mm:ss')
 const initialRoutinesState = [{
   id: id.generate(),
   routineName: 'Jog',
-  duration: moment('00:00:03', 'HH:mm:ss'),
+  duration: moment('00:00:01', 'HH:mm:ss'),
   reminder: moment('4:00 am', 'h:mm a'),
 }, {
   id: id.generate(),
@@ -81,6 +81,22 @@ const routines = (state = initialRoutinesState, { type, payload }) => {
         if (routineObj.isTracking) {
           const { timeLeft, duration } = routineObj
           const timeToSubtract = timeLeft || duration
+          const oneHundredMsBeforeZero = moment('00:00:00.100', 'HH:mm:ss.SSS')
+
+          if (
+            timeLeft
+            && timeLeft.format('HH:mm:ss.SSS') === oneHundredMsBeforeZero.format('HH:mm:ss.SSS')
+          )
+            return Object.assign(
+              {},
+              routineObj,
+              {
+                timeLeft: null,
+                isTracking: false,
+                isDone: true,
+              }
+            )
+
           return Object.assign(
             {},
             routineObj,
