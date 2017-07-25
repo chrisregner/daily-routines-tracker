@@ -14,6 +14,7 @@ TODO
 - final design/theming
   - add page transitions for mobile
 - optimization
+  - review implemented features and specified features
   - lookout for unnecessary updates
   - override browser back and forward button to use history object
   - warn when attempting to refresh/back/forward in instances that may delete the state
@@ -81,3 +82,50 @@ Done
   - purge chance.js in all specs
     - think how time should work
   - rename test files to .unit.js
+
+---
+
+# Features
+
+describe.skip('Daily Routine Tracker', () => {
+  // Managing the Routines
+  DONE.describe('Adding a Routine')
+  INCOMPLETE.describe('Editing a Routine')
+    .maybe('RoutineForm should have the controls that RoutineItem has')
+    .maybe('If RoutineForm does have the controls of RoutineItem, synchronize the data as appropriate')
+    .maybe('Or maybe leave the time controls on RoutineItem alone')
+  DONE.describe('Deleting a Routine')
+
+  // Duration and Tracker
+  DONE.describe('Starting a tracker')
+  DONE.describe('Stopping a tracker')
+  DONE.describe('Resuming a tracker')
+  DONE.describe('Showing of duration that tracker still needs to track')
+  DONE.describe('Stopping a tracker when finished')
+
+  // Duration and Tracker (part II)
+  DONE.describe('Marking the routine completed when tracker is finished')
+  INCOMPLETE.describe('Resetting of a tracker manually')
+    .should('show only reset button instead of start button when routine is marked done')
+    .should('mark undone if reset button is pressed when it is done')
+  describe('Resetting of trackers every start of day')
+  describe('Alarming when tracking is done')
+
+  // Marking the Routines
+  describe('Marking the routine completed')
+  describe('Marking the routine incomplete')
+
+  // Reminder
+  describe('Ringing of reminder alarms')
+  describe('Turning off of a reminder reminder alarm')
+  describe('Showing of pending reminders')
+  describe('Editing of a reminder')
+  describe('Removing of a reminder')
+
+  // Data export/import
+  describe('Exporting of daily routine set')
+  describe('Importing of daily routine set')
+
+  // Managing the Routines (part II)
+  describe('Reordering the routines')
+})
