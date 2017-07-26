@@ -3,38 +3,10 @@ import PropTypes from 'prop-types'
 import { Link, withRouter } from 'react-router-dom'
 import moment from 'moment'
 import styled from 'styled-components'
-import c from 'classname'
+import c from 'services/convertVirtualClassNames'
 import { Icon, Button } from 'antd'
 
 let s // styled components will be defined in this variable
-const requiredIfHasDuration = (type) => (props, propName, componentName) => {
-  const propBeingTested = props[propName]
-
-  if (props['duration']) {
-    if (!propBeingTested) {
-      return new Error(
-        `Missing Prop: '${propName}' for component '${componentName}', it is required when 'duration' prop is present`
-      )
-    } else {
-      const shouldBeArrayButNot = (type === 'array' && !Array.isArray(propBeingTested))
-      const shouldBeXButNot = (
-        typeof type === 'string'
-        && type !== 'array'
-        && typeof propBeingTested !== type
-      )
-      const shouldBeInstOfXButNot = (
-        typeof type !== 'string'
-        && !(propBeingTested instanceof Type)
-      )
-
-      if (shouldBeXButNot || shouldBeArrayButNot || shouldBeInstOfXButNot) {
-        return new Error(
-          `Invalid Proptype: Prop '${propName}' supplied to component '${componentName}', it should be of type/be intance of '${type}'`
-        )
-      }
-    }
-  }
-}
 
 class RoutineItem extends React.Component {
   static propTypes = {
@@ -46,9 +18,9 @@ class RoutineItem extends React.Component {
     isDone: PropTypes.bool,
     isTracking: PropTypes.bool,
     handleMarkDone: PropTypes.func.isRequired,
-    handleStartTracker: requiredIfHasDuration('function'),
-    handleStopTracker: requiredIfHasDuration('function'),
-    handleResetTracker: requiredIfHasDuration('function'),
+    handleStartTracker: PropTypes.func.isRequired,
+    handleStopTracker: PropTypes.func.isRequired,
+    handleResetTracker: PropTypes.func.isRequired,
 
     // props from React Router
     history: PropTypes.shape({
@@ -99,7 +71,7 @@ class RoutineItem extends React.Component {
           isDone ? 'isDone bg-green ph3' : ''
         )}
       >
-        <button className='toggleIsDone pa0 ma0 bn bg-transparent outline-0 pointer' onClick={this.handleRoutineControls}>
+        <button className={c('toggleIsDone -btn-reset')} onClick={this.handleRoutineControls}>
           {
             isDone
             ? <Icon type='check-circle' className='f3' />
@@ -114,7 +86,7 @@ class RoutineItem extends React.Component {
         {
           ((duration && (isTracking || timeLeft)) || isDone) &&
           <div className='ml2'>
-            <button className='reset-tracker pa0 ma0 bn bg-transparent outline-0 pointer' onClick={this.handleRoutineControls}>
+            <button className={c('reset-tracker -btn-reset')} onClick={this.handleRoutineControls}>
               <Icon type='reload' className='f3' />
             </button>
           </div>
@@ -125,13 +97,13 @@ class RoutineItem extends React.Component {
           (
             isTracking ? (
               <div className='ml2'>
-                <button className='stop-tracker pa0 ma0 bn bg-transparent outline-0 pointer' onClick={this.handleRoutineControls}>
+                <button className={c('stop-tracker -btn-reset')} onClick={this.handleRoutineControls}>
                   <Icon type='pause-circle-o' className='f3' />
                 </button>
               </div>
             ) : (
               <div className='ml2'>
-                <button className='start-tracker pa0 ma0 bn bg-transparent outline-0 pointer' onClick={this.handleRoutineControls}>
+                <button className={c('start-tracker -btn-reset')} onClick={this.handleRoutineControls}>
                   <Icon type='play-circle-o' className='f3' />
                 </button>
               </div>

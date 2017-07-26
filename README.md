@@ -8,9 +8,8 @@ TODO
   - [done] edit resetRoutine action/reducer so that it stops the tracker as necessary
   - [done] edit editRoutine action/reducer so that it resets the time left as necessary
   - [done] pass RoutineItem\'s specs for conditional rendering
-  - [done] use buttons instead of link in RoutineItem controls and correct the usage of buttons and
-    links elsewhere as applicable
-  - test two of my custom proptypes
+  - [done] use buttons instead of link in RoutineItem controls and correct the usage of buttons and links elsewhere as applicable
+  - [done] test two of my custom proptypes
   - add the virtual class library
   - the rest of the functionality
 - final design/theming
@@ -56,18 +55,21 @@ TODO
   - update README.md
 
 
-Features/To do list
+Features To do list
 ----------------------------------------
 
 - Managing routines
   - [done] Adding a routine
   - [done] Editing a routine
   - [done] Deleting a routine
+  - [done] Marking the routine done
+  - [done] Marking the routine undone
   - Sorting routines
 - Tracking Routines
-  - [done] Starting the tracker of routine
-  - [done] Stopping the tracker of routine
-  - [done] Resuming the tracker of routine
+  - [done] Starting the tracker of a routine
+  - [done] Stopping the tracker of a routine
+  - [done] Resuming the tracker of a routine
+  - [done] Resetting the tracker of a routine
   - [done] Showing the time that is still needed to track for each routine
   - [done] Stopping the tracker of routine when finished tracking
   - [done] Marking the routine done when finished tracking
@@ -78,16 +80,20 @@ Features/To do list
   - Persisting the data in cache
   - Exporting data
   - Importing data
+- UX
+  - prompt when deleting a routine
+  - prompt when resetting an incomplete routine that has already tracked some time
 
 ### Issues
 
-- [done] collision of state when simultaneously tracking, toggling completeness and/or editing a routine
+- [done] logical management of state when simultaneously tracking, toggling completeness and/or editing a routine
 - [done] logical conditional rendering for routine controls
 
 ### Maybe in future
 
 - Reminder for each routine
-- spreadsheet/dashboard the shows daily/weekly/monthly/yearly progress
+- Editing the time tracked
+- Spreadsheet or a dashboard that shows daily/weekly/monthly/yearly progress
 
 Done
 ----------------------------------------
