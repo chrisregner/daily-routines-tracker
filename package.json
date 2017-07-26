@@ -63,7 +63,7 @@
     "start": "webpack-dev-server --config tools/webpack.config.babel.js --history-api-fallback --hot --open",
     "mocha": "cross-env NODE_PATH=./app mocha --compilers js:babel-register --require tools/mocha-setup.js",
     "test": "yarn run mocha app/**/*.unit.js",
-    "test:watch": "yarn run test -- --watch",
+    "test:watch": "yarn run test -- -- --watch",
     "lint:js": "eslint --config tools/.eslintrc **/*.js",
     "lint:css": "stylelint --config tools/.stylelintrc app/**/*.css"
   },

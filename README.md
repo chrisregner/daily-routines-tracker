@@ -10,8 +10,11 @@ TODO
   - [done] pass RoutineItem\'s specs for conditional rendering
   - [done] use buttons instead of link in RoutineItem controls and correct the usage of buttons and
     links elsewhere as applicable
+  - test two of my custom proptypes
+  - add the virtual class library
   - the rest of the functionality
 - final design/theming
+  - buttons should animate when pressed
   - add page transitions for mobile
 - optimization
   - review implemented features and specified features

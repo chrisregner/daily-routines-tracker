@@ -53,7 +53,7 @@ const diffThatIsIdOnly = (expected, actual) => {
   return hasNonIdDiff ? false : noOfDiff
 }
 
-describe('REDUCER: rootReducer.routines', () => {
+describe('REDUCER: routines', () => {
   before(() => {
     moment()
   })
@@ -528,7 +528,7 @@ describe('REDUCER: rootReducer.routines', () => {
       })
     })
 
-    context('when timeLeft set', () => {
+    context('when timeLeft is set', () => {
       it('should set the value of timeLeft to be 100 ms less than the previous timeLeft', () => {
         const initialState = [
           {
@@ -659,7 +659,7 @@ describe('REDUCER: rootReducer.routines', () => {
   })
 
   describe('handling RESET_TRACKER', () => {
-    it('should set timeLeft to null and isTracking to false', () => {
+    it('should set timeLeft to null, isTracking to false, and isDone to false', () => {
       const initialState = [
         {
           id: '1',
@@ -690,11 +690,59 @@ describe('REDUCER: rootReducer.routines', () => {
           reminder: moment('2:22 am', 'h:mm a'),
           timeLeft: null,
           isTracking: false,
+          isDone: false,
         },
       ]
 
       const actualState = reducers.routines(initialState, {
         type: 'RESET_TRACKER',
+        payload: {
+          id: '2'
+        }
+      })
+
+      expect(actualState).to.deep.equal(expectedState)
+    })
+  })
+
+  describe('handling MARK_DONE', () => {
+    it('should set timeLeft to null, isTracking to false, and isDone to true', () => {
+      const initialState = [
+        {
+          id: '1',
+          routineName: 'Do something',
+          duration: moment('11:11:11', 'HH:mm:ss'),
+          reminder: moment('1:11 am', 'h:mm a'),
+        },
+        {
+          id: '2',
+          routineName: 'Do another thing',
+          duration: moment('12:30:00', 'HH:mm:ss'),
+          reminder: moment('2:22 am', 'h:mm a'),
+          timeLeft: moment('01:15:15', 'HH:mm:ss'),
+        },
+      ]
+
+      const expectedState = [
+        {
+          id: '1',
+          routineName: 'Do something',
+          duration: moment('11:11:11', 'HH:mm:ss'),
+          reminder: moment('1:11 am', 'h:mm a'),
+        },
+        {
+          id: '2',
+          routineName: 'Do another thing',
+          duration: moment('12:30:00', 'HH:mm:ss'),
+          reminder: moment('2:22 am', 'h:mm a'),
+          timeLeft: null,
+          isTracking: false,
+          isDone: true,
+        },
+      ]
+
+      const actualState = reducers.routines(initialState, {
+        type: 'MARK_DONE',
         payload: {
           id: '2'
         }

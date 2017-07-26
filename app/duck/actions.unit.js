@@ -371,4 +371,15 @@ describe('ACTION: creators', () => {
     })
   })
 
+  it('has action creator for marking routine done', () => {
+    const actual = actions.markDone('123')
+    const expected = {
+      type: 'MARK_DONE',
+      payload: {
+        id: '123',
+      }
+    }
+
+    expect(actual).to.deep.equal(expected)
+  })
 })

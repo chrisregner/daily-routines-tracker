@@ -91,7 +91,14 @@ export const resetTracker = (routineId) => (dispatch, getState) => {
   dispatch({
     type: actionTypes.RESET_TRACKER,
     payload: {
-      id: routineId
+      id: routineId,
     }
   })
 }
+
+export const markDone = (routineId) => ({
+  type: actionTypes.MARK_DONE,
+  payload: {
+    id: routineId,
+  }
+})

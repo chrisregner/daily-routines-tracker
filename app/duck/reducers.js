@@ -130,6 +130,23 @@ const routines = (state = initialRoutinesState, { type, payload }) => {
             {
               timeLeft: null,
               isTracking: false,
+              isDone: false,
+            }
+          )
+
+        return routineObj
+      })
+
+    case actionTypes.MARK_DONE:
+      return state.map(routineObj => {
+        if (routineObj.id === payload.id)
+          return Object.assign(
+            {},
+            routineObj,
+            {
+              timeLeft: null,
+              isTracking: false,
+              isDone: true,
             }
           )
 

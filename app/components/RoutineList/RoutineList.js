@@ -4,10 +4,7 @@ import { Link } from 'react-router-dom'
 
 import RoutineItem from './subcomponents/RoutineItem'
 
-// TODO: turn 'Add one' text into a link
-const RoutineList = ({
-  routines, handleStartTracker, handleStopTracker, handleEditRoutine, handleResetTracker
-}) => (<ul>
+const RoutineList = ({ routines, handlers }) => (<ul>
   {
     (routines && routines.length)
     ? (
@@ -15,10 +12,8 @@ const RoutineList = ({
       routines.map(routine => (
         <RoutineItem
           key={routine.id}
-          handleStartTracker={handleStartTracker}
-          handleStopTracker={handleStopTracker}
-          handleResetTracker={handleResetTracker}
           {...routine}
+          {...handlers}
         />
       ))
 
@@ -35,9 +30,18 @@ const RoutineList = ({
 </ul>)
 
 RoutineList.propTypes = {
-  handleStartTracker: PropTypes.func.isRequired,
-  handleStopTracker: PropTypes.func.isRequired,
-  handleResetTracker: PropTypes.func.isRequired,
+  handlers: (props, propName, componentName) => {
+    const handlers = props[propName]
+    const errMsg = `Invalid prop supplied to RoutineList: handlers. It should be an object whose all values are functions. Instead, received: ${JSON.stringify(handlers)}`
+
+    if (typeof handlers !== 'object')
+      throw new Error(errMsg)
+
+    const nonFuncHandler = Object.entries(handlers).find((handler) => typeof handler[1] !== 'function')
+
+    if (nonFuncHandler)
+      throw new Error(errMsg)
+  },
   routines: PropTypes.arrayOf(
     PropTypes.shape(RoutineItem.propTypes)
   ).isRequired,

@@ -16,6 +16,7 @@ describe('COMPONENT: RoutineList/RoutineItem', () => {
       handleResetTracker: () => {},
       handleStartTracker: () => {},
       handleStopTracker: () => {},
+      handleMarkDone: () => {},
       history: {
         push: () => {},
       },
@@ -167,6 +168,17 @@ describe('COMPONENT: RoutineList/RoutineItem', () => {
             expect(wrapper).to.have.exactly(0).descendants('.start-tracker')
           })
         })
+
+        context('when is isDone is set to true', () => {
+          it('should NOT render a \'start tracker\' button', () => {
+            const wrapper = shallow(<RoutineItem {...getRequiredProps({
+              duration: moment('12:34:56', 'HH:mm:ss'),
+              isDone: true
+            })} />)
+
+            expect(wrapper).to.have.exactly(0).descendants('.start-tracker')
+          })
+        })
       })
 
       context('when duration prop is not passed', () => {
@@ -261,12 +273,22 @@ describe('COMPONENT: RoutineList/RoutineItem', () => {
     })
 
     /*============================================
-    =            Reset Tracker Button            =
+    =            Reset Routine Button            =
     ============================================*/
 
     describe('the \'reset tracker\' button', () => {
-      context('when there are timeLeft and duration prop', () => {
-        it('should render the \'reset tracker\' button', () => {
+      context('when (duration) prop', () => {
+        it('should not render', () => {
+          const wrapper = shallow(<RoutineItem {...getRequiredProps({
+            duration: moment('12:34:56', 'HH:mm:ss'),
+          })} />)
+
+          expect(wrapper).to.have.exactly(0).descendants('.reset-tracker')
+        })
+      })
+
+      context('when (duration && timeLeft) prop', () => {
+        it('should render', () => {
           const wrapper = shallow(<RoutineItem {...getRequiredProps({
             duration: moment('11:11:11', 'HH:mm:ss'),
             timeLeft: moment('11:11:11', 'HH:mm:ss'),
@@ -276,8 +298,19 @@ describe('COMPONENT: RoutineList/RoutineItem', () => {
         })
       })
 
-      context('when there are timeLeft prop and isTracking prop is set to true', () => {
-        it('should render the \'reset tracker\' button', () => {
+      context('when (duration && isDone) prop', () => {
+        it('should render', () => {
+          const wrapper = shallow(<RoutineItem {...getRequiredProps({
+            duration: moment('12:34:56', 'HH:mm:ss'),
+            isDone: true,
+          })} />)
+
+          expect(wrapper).to.have.exactly(1).descendants('.reset-tracker')
+        })
+      })
+
+      context('when (duration && isTracking) prop', () => {
+        it('should render', () => {
           const wrapper = shallow(<RoutineItem {...getRequiredProps({
             duration: moment('11:11:11', 'HH:mm:ss'),
             isTracking: true,
@@ -287,19 +320,19 @@ describe('COMPONENT: RoutineList/RoutineItem', () => {
         })
       })
 
-      context('when there is no duration prop', () => {
-        it('should not render', () => {
-          const wrapper = shallow(<RoutineItem {...getRequiredProps()} />)
+      context('when (isDone) prop', () => {
+        it('should render', () => {
+          const wrapper = shallow(<RoutineItem {...getRequiredProps({
+            isDone: true,
+          })} />)
 
-          expect(wrapper).to.have.exactly(0).descendants('.reset-tracker')
+          expect(wrapper).to.have.exactly(1).descendants('.reset-tracker')
         })
       })
 
-      context('when there is duration but no timeLeft prop', () => {
+      context('when !(duration || timeLeft || isTracking || isDone) prop', () => {
         it('should not render', () => {
-          const wrapper = shallow(<RoutineItem {...getRequiredProps({
-            duration: moment('12:34:56', 'HH:mm:ss'),
-          })} />)
+          const wrapper = shallow(<RoutineItem {...getRequiredProps()} />)
 
           expect(wrapper).to.have.exactly(0).descendants('.reset-tracker')
         })
@@ -359,6 +392,50 @@ describe('COMPONENT: RoutineList/RoutineItem', () => {
           expect(icon).to.have.lengthOf(1)
           expect(icon).to.have.prop('type', 'check-circle-o')
         })
+
+        it('should call handleMarkDone() with routineId prop when pressed', () => {
+          const handleMarkDone = td.function()
+          const passedId = '123'
+          const wrapper = shallow(<RoutineItem {...getRequiredProps({
+            id: passedId,
+            routineName: 'The Routine',
+            handleMarkDone,
+          })} />)
+          const trackerLink = wrapper.find('.toggleIsDone')
+          const fakeEv = {
+            preventDefault: () => {},
+            stopPropagation: () => {},
+            currentTarget: {
+              className: 'toggleIsDone',
+            }
+          }
+
+          const expectedArg = passedId
+
+          td.verify(handleMarkDone(), { times: 0, ignoreExtraArgs: 0 })
+          trackerLink.prop('onClick')(fakeEv)
+          td.verify(handleMarkDone(expectedArg), { times: 1 })
+        })
+
+        it('should NOT call handleResetTracker() prop when pressed', () => {
+          const handleResetTracker = td.function()
+          const wrapper = shallow(<RoutineItem {...getRequiredProps({
+            id: '123',
+            routineName: 'The Routine',
+            handleResetTracker,
+          })} />)
+          const trackerLink = wrapper.find('.toggleIsDone')
+          const fakeEv = {
+            preventDefault: () => {},
+            stopPropagation: () => {},
+            currentTarget: {
+              className: 'toggleIsDone',
+            }
+          }
+
+          trackerLink.prop('onClick')(fakeEv)
+          td.verify(handleResetTracker(), { times: 0, ignoreExtraArgs: 0 })
+        })
       })
 
       context('when isDone is set to true', () => {
@@ -372,6 +449,52 @@ describe('COMPONENT: RoutineList/RoutineItem', () => {
 
           expect(icon).to.have.lengthOf(1)
           expect(icon).to.have.prop('type', 'check-circle')
+        })
+
+        it('should call handleResetTracker() with routineId prop when pressed', () => {
+          const handleResetTracker = td.function()
+          const passedId = '123'
+          const wrapper = shallow(<RoutineItem {...getRequiredProps({
+            id: passedId,
+            routineName: 'The Routine',
+            isDone: true,
+            handleResetTracker,
+          })} />)
+          const trackerLink = wrapper.find('.toggleIsDone')
+          const fakeEv = {
+            preventDefault: () => {},
+            stopPropagation: () => {},
+            currentTarget: {
+              className: 'toggleIsDone',
+            }
+          }
+
+          const expectedArg = passedId
+
+          td.verify(handleResetTracker(), { times: 0, ignoreExtraArgs: 0 })
+          trackerLink.prop('onClick')(fakeEv)
+          td.verify(handleResetTracker(expectedArg), { times: 1 })
+        })
+
+        it('should NOT call handleMarkDone() prop when pressed', () => {
+          const handleMarkDone = td.function()
+          const wrapper = shallow(<RoutineItem {...getRequiredProps({
+            id: '123',
+            routineName: 'The Routine',
+            isDone: true,
+            handleMarkDone,
+          })} />)
+          const trackerLink = wrapper.find('.toggleIsDone')
+          const fakeEv = {
+            preventDefault: () => {},
+            stopPropagation: () => {},
+            currentTarget: {
+              className: 'toggleIsDone',
+            }
+          }
+
+          trackerLink.prop('onClick')(fakeEv)
+          td.verify(handleMarkDone(), { times: 0, ignoreExtraArgs: 0 })
         })
       })
     })

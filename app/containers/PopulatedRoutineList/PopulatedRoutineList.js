@@ -1,6 +1,6 @@
 import { connect } from 'react-redux'
 
-import { startTracker, stopTracker, resetTracker } from 'duck/actions'
+import { startTracker, stopTracker, resetTracker, markDone } from 'duck/actions'
 import RoutineList from 'components/RoutineList'
 
 const mapStateToProps = state => ({
@@ -8,9 +8,12 @@ const mapStateToProps = state => ({
 })
 
 const mapDispatchToProps = dispatch => ({
-  handleStartTracker: (routineId) => { dispatch(startTracker(routineId)) },
-  handleStopTracker: () => { dispatch(stopTracker()) },
-  handleResetTracker: (routineId) => { dispatch(resetTracker(routineId)) },
+  handlers: {
+    handleStartTracker: (routineId) => { dispatch(startTracker(routineId)) },
+    handleStopTracker: () => { dispatch(stopTracker()) },
+    handleResetTracker: (routineId) => { dispatch(resetTracker(routineId)) },
+    handleMarkDone: (routineId) => { dispatch(markDone(routineId)) },
+  }
 })
 
 const PopulatedRoutineList = connect(mapStateToProps, mapDispatchToProps)(RoutineList)

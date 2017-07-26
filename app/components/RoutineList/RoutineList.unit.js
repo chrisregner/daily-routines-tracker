@@ -9,10 +9,9 @@ import RoutineItem from './subcomponents/RoutineItem'
 
 describe('COMPONENT: RoutineList', () => {
   const getRequiredProps = props => Object.assign({
-    handleStartTracker: () => {},
-    handleStopTracker: () => {},
-    handleEditRoutine: () => {},
-    handleResetTracker: () => {},
+    handlers: {
+      sampleHandler: () => {},
+    },
     routines: [],
   }, props)
 
@@ -80,49 +79,25 @@ describe('COMPONENT: RoutineList', () => {
         expect(wrapper.find(RoutineItem)).to.have.props(routineData)
       })
 
-      it('should receive the handleStartTracker() prop which is prop of <RoutineList /> itself', () => {
-        const handleStartTracker = () => {}
+      it('should receive each of the handler in handlers{} prop', () => {
+        const handlers = {
+          handler1: () => {},
+          handler2: () => {},
+        }
         const wrapper = shallow(
           <RoutineList {...getRequiredProps({
             routines: [{
               id: '1',
               routineName: 'First Routine',
             }],
-            handleStartTracker
+            handlers,
           })} />
         )
 
-        expect(wrapper.find(RoutineItem)).to.have.props({ handleStartTracker })
-      })
+        const expected = handlers
+        const actual = wrapper.find(RoutineItem).props()
 
-      it('should receive the handleStopTracker() prop which is prop of <RoutineList /> itself', () => {
-        const handleStopTracker = () => {}
-        const wrapper = shallow(
-          <RoutineList {...getRequiredProps({
-            routines: [{
-              id: '1',
-              routineName: 'First Routine',
-            }],
-            handleStopTracker
-          })} />
-        )
-
-        expect(wrapper.find(RoutineItem)).to.have.props({ handleStopTracker })
-      })
-
-      it('should receive the handleResetTracker() prop which is prop of <RoutineList /> itself', () => {
-        const handleResetTracker = () => {}
-        const wrapper = shallow(
-          <RoutineList {...getRequiredProps({
-            routines: [{
-              id: '1',
-              routineName: 'First Routine',
-            }],
-            handleResetTracker
-          })} />
-        )
-
-        expect(wrapper.find(RoutineItem)).to.have.props({ handleResetTracker })
+        expect(actual).to.deep.match(expected)
       })
     })
   })

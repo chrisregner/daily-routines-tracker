@@ -43,6 +43,9 @@ class RoutineItem extends React.Component {
     duration: PropTypes.instanceOf(moment),
     reminder: PropTypes.instanceOf(moment),
     timeLeft: PropTypes.instanceOf(moment),
+    isDone: PropTypes.bool,
+    isTracking: PropTypes.bool,
+    handleMarkDone: PropTypes.func.isRequired,
     handleStartTracker: requiredIfHasDuration('function'),
     handleStopTracker: requiredIfHasDuration('function'),
     handleResetTracker: requiredIfHasDuration('function'),
@@ -53,13 +56,13 @@ class RoutineItem extends React.Component {
     }).isRequired,
   }
 
-  handleTrackerControl = (e) => {
+  handleRoutineControls = (e) => {
     e.preventDefault()
     e.stopPropagation()
 
     const {
-      handleStartTracker, handleStopTracker, handleResetTracker,
-      id, isTracking
+      handleStartTracker, handleStopTracker, handleResetTracker, handleMarkDone,
+      id, isDone
     } = this.props
     const btnClassName = e.currentTarget.className
 
@@ -69,6 +72,12 @@ class RoutineItem extends React.Component {
       handleStopTracker()
     } else if (btnClassName.includes('reset-tracker')) {
       handleResetTracker(id)
+    } else if (btnClassName.includes('toggleIsDone')) {
+      if (isDone) {
+        handleResetTracker(id)
+      } else {
+        handleMarkDone(id)
+      }
     }
   }
 
@@ -90,7 +99,7 @@ class RoutineItem extends React.Component {
           isDone ? 'isDone bg-green ph3' : ''
         )}
       >
-        <button className='toggleIsDone pa0 ma0 bn bg-transparent outline-0'>
+        <button className='toggleIsDone pa0 ma0 bn bg-transparent outline-0 pointer' onClick={this.handleRoutineControls}>
           {
             isDone
             ? <Icon type='check-circle' className='f3' />
@@ -103,26 +112,26 @@ class RoutineItem extends React.Component {
         </div>
 
         {
-          (duration && (isTracking || timeLeft)) &&
+          ((duration && (isTracking || timeLeft)) || isDone) &&
           <div className='ml2'>
-            <button className='reset-tracker pa0 ma0 bn bg-transparent outline-0' onClick={this.handleTrackerControl}>
+            <button className='reset-tracker pa0 ma0 bn bg-transparent outline-0 pointer' onClick={this.handleRoutineControls}>
               <Icon type='reload' className='f3' />
             </button>
           </div>
         }
 
         {
-          durationToShow &&
+          (durationToShow && isDone !== true) &&
           (
             isTracking ? (
               <div className='ml2'>
-                <button className='stop-tracker pa0 ma0 bn bg-transparent outline-0' onClick={this.handleTrackerControl}>
+                <button className='stop-tracker pa0 ma0 bn bg-transparent outline-0 pointer' onClick={this.handleRoutineControls}>
                   <Icon type='pause-circle-o' className='f3' />
                 </button>
               </div>
             ) : (
               <div className='ml2'>
-                <button className='start-tracker pa0 ma0 bn bg-transparent outline-0' onClick={this.handleTrackerControl}>
+                <button className='start-tracker pa0 ma0 bn bg-transparent outline-0 pointer' onClick={this.handleRoutineControls}>
                   <Icon type='play-circle-o' className='f3' />
                 </button>
               </div>
