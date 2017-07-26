@@ -197,84 +197,6 @@ describe('COMPONENT: RoutineForm', () => {
       })
     })
 
-    /* ======================================
-    =            Reminder Field            =
-    ====================================== */
-
-    const findReminderField = wrpr => diveThruAntDHOC(wrpr).find('[name="reminder"]')
-
-    it('should render a reminder field', () => {
-      const reminderField = findReminderField(shallow(<RoutineForm {...getRequiredProps()} />))
-      expect(reminderField).to.have.lengthOf(1)
-    })
-
-    describe('the rendered reminder field', () => {
-      it('should be an AntD <TimePicker />', () => {
-        const reminderField = findReminderField(shallow(<RoutineForm {...getRequiredProps()} />))
-        expect(reminderField).to.match(TimePicker)
-      })
-
-      it('should have a default open value of 00:00 am', () => {
-        const reminderField = findReminderField(shallow(<RoutineForm {...getRequiredProps()} />))
-        const expectedDefault = moment('00:00 am', 'h:mm a')
-        const actualDefault = reminderField.prop('defaultOpenValue')
-        const isDefaultCorrect = actualDefault.isSame(expectedDefault)
-        expect(isDefaultCorrect).to.equal(true)
-      })
-
-      context('when field value is changed and left empty', () => {
-        it('should not invalidate', () => {
-          const routineForm = shallow(<RoutineForm {...getRequiredProps()} />)
-          const getFieldError = () => routineForm.prop('form').getFieldError('routineName')
-          const reminderField = findReminderField(routineForm)
-
-          reminderField.prop('onChange')(moment('12:30 am', 'h:mm a'))
-          expect(getFieldError()).to.equal(undefined)
-          reminderField.prop('onChange')(null)
-          expect(getFieldError()).to.equal(undefined)
-        })
-      })
-
-      context('when initial value is set', () => {
-        it('should apply the initial value', () => {
-          const initialVal = moment('12:30 am', 'h:mm a')
-          const reminderField = findReminderField(shallow(
-            <RoutineForm {...getRequiredProps({ initialValues: { reminder: initialVal } })} />
-          ))
-          const isCurrentValCorrect = reminderField.prop('value').isSame(initialVal)
-          expect(isCurrentValCorrect).to.equal(true)
-        })
-
-        it('should still let its value be changed', () => {
-          const initialVal = moment('12:30 am', 'h:mm a')
-          const changedVal = moment('18:45:45', 'HH:mm:ss')
-          const routineForm = shallow(
-            <RoutineForm {...getRequiredProps({ initialValues: { reminder: initialVal } })} />
-          )
-          const getReminderField = () => findReminderField(routineForm)
-          getReminderField().prop('onChange')({ target: { value: changedVal } })
-          const isCurrentValCorrect = getReminderField().prop('value').isSame(changedVal)
-          expect(isCurrentValCorrect).to.equal(true)
-        })
-      })
-
-      context('when initial value is not set', () => {
-        it('should have no initial value', () => {
-          const reminderField = findReminderField(shallow(<RoutineForm {...getRequiredProps()} />))
-          expect(reminderField).to.not.have.prop('value')
-        })
-
-        it('should still let its value be changed', () => {
-          const changedVal = moment('12:30 am', 'h:mm a')
-          const routineForm = shallow(<RoutineForm {...getRequiredProps()} />)
-          const getReminderField = () => findReminderField(routineForm)
-          getReminderField().prop('onChange')({ target: { value: changedVal } })
-          const isCurrentValCorrect = getReminderField().prop('value').isSame(changedVal)
-          expect(isCurrentValCorrect).to.equal(true)
-        })
-      })
-    })
-
     /* =====================================
     =            Submit Button            =
     ===================================== */
@@ -442,7 +364,6 @@ describe('COMPONENT: RoutineForm', () => {
                   id: '123',
                   routineName: 'Initial Routine Name',
                   duration: moment('11:11:11', 'HH:mm:ss'),
-                  reminder: moment('22:22 am', 'h:mm a'),
                   isTracking: true,
                   timeLeft: moment('03:33:33', 'HH:mm:ss'),
                 },
@@ -453,7 +374,6 @@ describe('COMPONENT: RoutineForm', () => {
             const formValues = {
               routineName: 'New Routine Name',
               duration: moment('22:22:22', 'HH:mm:ss'),
-              reminder: moment('22:22 am', 'h:mm a'),
             }
 
             routineForm.prop('form').setFieldsValue(formValues)
@@ -464,7 +384,6 @@ describe('COMPONENT: RoutineForm', () => {
               id: '123',
               routineName: 'New Routine Name',
               duration: moment('22:22:22', 'HH:mm:ss'),
-              reminder: moment('22:22 am', 'h:mm a'),
               isTracking: true,
               timeLeft: moment('03:33:33', 'HH:mm:ss'),
             }
@@ -514,7 +433,6 @@ describe('COMPONENT: RoutineForm', () => {
             const formValues = {
               routineName: 'New Routine Name',
               duration: moment('12:30:30', 'HH:mm:ss'),
-              reminder: moment('12:30 am', 'h:mm a'),
             }
 
             routineForm.prop('form').setFieldsValue(formValues)

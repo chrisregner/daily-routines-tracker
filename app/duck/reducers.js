@@ -11,7 +11,6 @@ const initialRoutinesState = [{
   id: id.generate(),
   routineName: 'Jog',
   duration: moment('00:00:01', 'HH:mm:ss'),
-  reminder: moment('4:00 am', 'h:mm a'),
 }, {
   id: id.generate(),
   routineName: 'pneumonoultramicroscopicsilicovolcanoconiosis',

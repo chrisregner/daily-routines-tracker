@@ -14,7 +14,6 @@ class RoutineForm extends React.Component {
     initialValues: PropTypes.shape({
       routineForm: PropTypes.string,
       duration: MomentProp.momentObj,
-      reminder: MomentProp.momentObj,
     }),
     handleSubmit: PropTypes.func.isRequired,
     handleDelete: PropTypes.func,
@@ -117,27 +116,6 @@ class RoutineForm extends React.Component {
     </Form.Item>
   }
 
-  renderReminderField = () => {
-    const {
-      initialValues: initValues,
-      form: { getFieldDecorator },
-    } = this.props
-
-    return <Form.Item className='ma0' label='Reminder' colon={false}>
-      {getFieldDecorator('reminder', {
-        initialValue: initValues.reminder,
-      })(
-        <TimePicker
-          use12Hours
-          format='h:mm a'
-          defaultOpenValue={moment('00:00 am', 'h:mm a')}
-          placeholder='h:mm a'
-          name='reminder'
-        />
-      )}
-    </Form.Item>
-  }
-
   render = () => {
     const {
       initialValues,
@@ -181,16 +159,11 @@ class RoutineForm extends React.Component {
             {this.renderRoutineNameField()}
           </div>
 
-          <div className='cf'>
-            <div className='fl mb2 w-50'>
-              {this.renderDurationField()}
-            </div>
-            <div className='fl mb2 w-50'>
-              {this.renderReminderField()}
-            </div>
+          <div className='mb2'>
+            {this.renderDurationField()}
           </div>
 
-          <Form.Item className='mt4'>
+          <Form.Item className='fr mt4'>
             <Button
               name='submit'
               disabled={this.shouldDisableSubmit()}

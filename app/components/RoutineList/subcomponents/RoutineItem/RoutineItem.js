@@ -13,7 +13,6 @@ class RoutineItem extends React.Component {
     id: PropTypes.string.isRequired,
     routineName: PropTypes.string.isRequired,
     duration: PropTypes.instanceOf(moment),
-    reminder: PropTypes.instanceOf(moment),
     timeLeft: PropTypes.instanceOf(moment),
     isDone: PropTypes.bool,
     isTracking: PropTypes.bool,
@@ -112,20 +111,13 @@ class RoutineItem extends React.Component {
         }
 
         {
-          (durationToShow || reminder) &&
+          (durationToShow) &&
           <s.Div className='flex flex-column ml2 f6 lh-copy'>
             {
               durationToShow &&
               <div className='flex items-center'>
                 <Icon type='clock-circle-o' className='self-grow-1 tl' />
                 <div className='duration'>{durationToShow.format(durationToShow.creationData().format)}</div>
-              </div>
-            }
-            {
-              reminder &&
-              <div className='flex items-center'>
-                <Icon type='bell' className='self-grow-1 tl' />
-                <div>{reminder.format(reminder.creationData().format)}</div>
               </div>
             }
           </s.Div>

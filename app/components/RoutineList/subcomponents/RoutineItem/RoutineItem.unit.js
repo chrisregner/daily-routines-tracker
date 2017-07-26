@@ -78,18 +78,6 @@ describe('COMPONENT: RoutineList/RoutineItem', () => {
     expect(wrapper).to.contain(routineName)
   })
 
-  it('should render the reminder, if any', () => {
-    const reminder = moment('00:00 am', 'h:mm a')
-    const wrapper = shallow(<RoutineItem {...getRequiredProps({
-      id: '123',
-      routineName: 'The Routine',
-      reminder: reminder,
-    })} />)
-    const formattedReminder = reminder.format(reminder.creationData().format)
-
-    expect(wrapper).to.contain(formattedReminder)
-  })
-
   context('when duration prop is passed', () => {
     context('when timeLeft prop is not passed', () => {
       it('should render the duration', () => {

@@ -31,10 +31,7 @@ const diffThatIsIdOnly = (expected, actual) => {
      * objects as a whole whenever they differ, and then treat them as equal if
      * the case is just the one described above.
      */
-    if (
-      statePartDiff.path[1] === 'duration'
-      || statePartDiff.path[1] === 'reminder'
-    ) {
+    if (statePartDiff.path[1] === 'duration') {
       const path = statePartDiff.path
       const momentOne = expected[path[0]][path[1]]
       const momentTwo = actual[path[0]][path[1]]
@@ -70,7 +67,6 @@ describe('REDUCER: routines', () => {
     const expectedStatePart = [{
       routineName: 'Jog',
       duration: moment('00:00:01', 'HH:mm:ss'),
-      reminder: moment('4:00 am', 'h:mm a'),
     }, {
       routineName: 'pneumonoultramicroscopicsilicovolcanoconiosis',
       duration: moment('08:00:00', 'HH:mm:ss'),
@@ -88,7 +84,6 @@ describe('REDUCER: routines', () => {
       const payload = {
         routineName: 'Do something new',
         duration: moment('03:33:33', 'HH:mm:ss'),
-        reminder: moment('3:33 am', 'h:mm a'),
       }
 
       const initialState = [
@@ -96,13 +91,11 @@ describe('REDUCER: routines', () => {
           id: '1',
           routineName: 'Do something',
           duration: moment('11:11:11', 'HH:mm:ss'),
-          reminder: moment('1:11 am', 'h:mm a'),
         },
         {
           id: '2',
           routineName: 'Do another thing',
           duration: moment('22:22:22', 'HH:mm:ss'),
-          reminder: moment('2:22 am', 'h:mm a'),
         },
       ]
 
@@ -127,7 +120,6 @@ describe('REDUCER: routines', () => {
       const payload = {
         routineName: 'This will be the only thing to do.',
         duration: moment('03:33:33', 'HH:mm:ss'),
-        reminder: moment('3:33 am', 'h:mm a'),
       }
 
       const initialState = []
@@ -159,19 +151,16 @@ describe('REDUCER: routines', () => {
           id: '1',
           routineName: 'Do something',
           duration: moment('11:11:11', 'HH:mm:ss'),
-          reminder: moment('1:11 am', 'h:mm a'),
         },
         {
           id: '2',
           routineName: 'Do another thing',
           duration: moment('22:22:22', 'HH:mm:ss'),
-          reminder: moment('2:22 am', 'h:mm a'),
         },
         {
           id: '3',
           routineName: 'Do one last thing',
           duration: moment('03:33:33', 'HH:mm:ss'),
-          reminder: moment('03:33 am', 'h:mm a'),
         },
       ]
 
@@ -194,7 +183,6 @@ describe('REDUCER: routines', () => {
         id: '1',
         routineName: 'Do something',
         duration: moment('11:11:11', 'HH:mm:ss'),
-        reminder: moment('1:11 am', 'h:mm a'),
       }]
 
       const action = {
@@ -217,19 +205,16 @@ describe('REDUCER: routines', () => {
           id: '1',
           routineName: 'Do something',
           duration: moment('11:11:11', 'HH:mm:ss'),
-          reminder: moment('1:11 am', 'h:mm a'),
         },
         {
           id: '2',
           routineName: 'Do another thing',
           duration: moment('22:22:22', 'HH:mm:ss'),
-          reminder: moment('2:22 am', 'h:mm a'),
         },
         {
           id: '3',
           routineName: 'Do one last thing',
           duration: moment('03:33:33', 'HH:mm:ss'),
-          reminder: moment('03:33 am', 'h:mm a'),
         },
       ]
 
@@ -251,25 +236,22 @@ describe('REDUCER: routines', () => {
   })
 
   describe('handling EDIT_ROUTINE', () => {
-    it('should be able to overwrite routeName, duration, and reminder with new values, even with null', () => {
+    it('should be able to overwrite routeName, and duration with new values, even with null', () => {
       const initialState = [
         {
           id: '1',
           routineName: 'Do something',
           duration: moment('11:11:11', 'HH:mm:ss'),
-          reminder: moment('1:11 am', 'h:mm a'),
         },
         {
           id: '2',
           routineName: 'Do another thing',
           duration: moment('22:22:22', 'HH:mm:ss'),
-          reminder: moment('2:22 am', 'h:mm a'),
         },
         {
           id: '3',
           routineName: 'Do one last thing',
           duration: moment('03:33:33', 'HH:mm:ss'),
-          reminder: moment('03:33 am', 'h:mm a'),
         },
       ]
 
@@ -278,19 +260,16 @@ describe('REDUCER: routines', () => {
           id: '1',
           routineName: 'Do something',
           duration: moment('11:11:11', 'HH:mm:ss'),
-          reminder: moment('1:11 am', 'h:mm a'),
         },
         {
           id: '2',
           routineName: 'Do another thing',
           duration: moment('22:22:22', 'HH:mm:ss'),
-          reminder: moment('2:22 am', 'h:mm a'),
         },
         {
           id: '3',
           routineName: 'Do one last thing differently',
           duration: moment('04:44:44', 'HH:mm:ss'),
-          reminder: null,
         },
       ]
 
@@ -300,7 +279,6 @@ describe('REDUCER: routines', () => {
           id: '3',
           routineName: 'Do one last thing differently',
           duration: moment('04:44:44', 'HH:mm:ss'),
-          reminder: null,
         },
       })
 
@@ -313,19 +291,16 @@ describe('REDUCER: routines', () => {
           id: '1',
           routineName: 'Do something',
           duration: moment('11:11:11', 'HH:mm:ss'),
-          reminder: moment('1:11 am', 'h:mm a'),
         },
         {
           id: '2',
           routineName: 'Do another thing',
           duration: moment('22:22:22', 'HH:mm:ss'),
-          reminder: moment('2:22 am', 'h:mm a'),
         },
         {
           id: '3',
           routineName: 'Do one last thing',
           duration: moment('03:33:33', 'HH:mm:ss'),
-          reminder: moment('03:33 am', 'h:mm a'),
         },
       ]
 
@@ -334,19 +309,16 @@ describe('REDUCER: routines', () => {
           id: '1',
           routineName: 'Do something',
           duration: moment('11:11:11', 'HH:mm:ss'),
-          reminder: moment('1:11 am', 'h:mm a'),
         },
         {
           id: '2',
           routineName: 'Do another thing',
           duration: moment('22:22:22', 'HH:mm:ss'),
-          reminder: moment('2:22 am', 'h:mm a'),
         },
         {
           id: '3',
-          routineName: 'This routine should keep the duration and reminder as is',
+          routineName: 'This routine should keep the duration as is',
           duration: moment('03:33:33', 'HH:mm:ss'),
-          reminder: moment('03:33 am', 'h:mm a'),
         },
       ]
 
@@ -354,7 +326,7 @@ describe('REDUCER: routines', () => {
         type: 'EDIT_ROUTINE',
         payload: {
           id: '3',
-          routineName: 'This routine should keep the duration and reminder as is',
+          routineName: 'This routine should keep the duration as is',
         },
       })
 
@@ -367,19 +339,16 @@ describe('REDUCER: routines', () => {
           id: '1',
           routineName: 'Do something',
           duration: moment('11:11:11', 'HH:mm:ss'),
-          reminder: moment('1:11 am', 'h:mm a'),
         },
         {
           id: '2',
           routineName: 'Do another thing',
           duration: moment('22:22:22', 'HH:mm:ss'),
-          reminder: moment('2:22 am', 'h:mm a'),
         },
         {
           id: '3',
           routineName: 'Do one last thing',
           duration: moment('03:33:33', 'HH:mm:ss'),
-          reminder: moment('03:33 am', 'h:mm a'),
           timeLeft: moment('11:11:11', 'HH:mm:ss'),
           isTracking: true,
         },
@@ -390,19 +359,16 @@ describe('REDUCER: routines', () => {
           id: '1',
           routineName: 'Do something',
           duration: moment('11:11:11', 'HH:mm:ss'),
-          reminder: moment('1:11 am', 'h:mm a'),
         },
         {
           id: '2',
           routineName: 'Do another thing',
           duration: moment('22:22:22', 'HH:mm:ss'),
-          reminder: moment('2:22 am', 'h:mm a'),
         },
         {
           id: '3',
           routineName: 'Changed Routine',
           duration: moment('04:44:44', 'HH:mm:ss'),
-          reminder: moment('03:33 am', 'h:mm a'),
           timeLeft: null,
           isTracking: false,
         },
@@ -433,19 +399,16 @@ describe('REDUCER: routines', () => {
           id: '1',
           routineName: 'Do something',
           duration: moment('12:30:30', 'HH:mm:ss'),
-          reminder: moment('1:11 am', 'h:mm a'),
         },
         {
           id: '2',
           routineName: 'Do another thing',
           duration: moment('22:22:22', 'HH:mm:ss'),
-          reminder: moment('2:22 am', 'h:mm a'),
         },
         {
           id: '3',
           routineName: 'Do one last thing',
           duration: moment('03:33:33', 'HH:mm:ss'),
-          reminder: moment('03:33 am', 'h:mm a'),
           isTracking: true,
         },
       ]
@@ -455,20 +418,17 @@ describe('REDUCER: routines', () => {
           id: '1',
           routineName: 'Do something',
           duration: moment('12:30:30', 'HH:mm:ss'),
-          reminder: moment('1:11 am', 'h:mm a'),
           isTracking: true,
         },
         {
           id: '2',
           routineName: 'Do another thing',
           duration: moment('22:22:22', 'HH:mm:ss'),
-          reminder: moment('2:22 am', 'h:mm a'),
         },
         {
           id: '3',
           routineName: 'Do one last thing',
           duration: moment('03:33:33', 'HH:mm:ss'),
-          reminder: moment('03:33 am', 'h:mm a'),
           isTracking: false,
         },
       ]
@@ -492,13 +452,11 @@ describe('REDUCER: routines', () => {
             id: '1',
             routineName: 'Do something',
             duration: moment('11:11:11', 'HH:mm:ss'),
-            reminder: moment('1:11 am', 'h:mm a'),
           },
           {
             id: '2',
             routineName: 'Do another thing',
             duration: moment('12:30:00', 'HH:mm:ss'),
-            reminder: moment('2:22 am', 'h:mm a'),
             isTracking: true,
           },
         ]
@@ -508,13 +466,11 @@ describe('REDUCER: routines', () => {
             id: '1',
             routineName: 'Do something',
             duration: moment('11:11:11', 'HH:mm:ss'),
-            reminder: moment('1:11 am', 'h:mm a'),
           },
           {
             id: '2',
             routineName: 'Do another thing',
             duration: moment('12:30:00', 'HH:mm:ss'),
-            reminder: moment('2:22 am', 'h:mm a'),
             timeLeft: moment('12:30:00', 'HH:mm:ss').subtract(100, 'milliseconds'),
             isTracking: true,
           },
@@ -535,13 +491,11 @@ describe('REDUCER: routines', () => {
             id: '1',
             routineName: 'Do something',
             duration: moment('11:11:11', 'HH:mm:ss'),
-            reminder: moment('1:11 am', 'h:mm a'),
           },
           {
             id: '2',
             routineName: 'Do another thing',
             duration: moment('12:30:00', 'HH:mm:ss'),
-            reminder: moment('2:22 am', 'h:mm a'),
             timeLeft: moment('12:29:00', 'HH:mm:ss'),
             isTracking: true,
           },
@@ -552,13 +506,11 @@ describe('REDUCER: routines', () => {
             id: '1',
             routineName: 'Do something',
             duration: moment('11:11:11', 'HH:mm:ss'),
-            reminder: moment('1:11 am', 'h:mm a'),
           },
           {
             id: '2',
             routineName: 'Do another thing',
             duration: moment('12:30:00', 'HH:mm:ss'),
-            reminder: moment('2:22 am', 'h:mm a'),
             timeLeft: moment('12:29:00', 'HH:mm:ss').subtract(100, 'milliseconds'),
             isTracking: true,
           },
@@ -579,13 +531,11 @@ describe('REDUCER: routines', () => {
             id: '1',
             routineName: 'Do something',
             duration: moment('11:11:11', 'HH:mm:ss'),
-            reminder: moment('1:11 am', 'h:mm a'),
           },
           {
             id: '2',
             routineName: 'Do another thing',
             duration: moment('12:30:00', 'HH:mm:ss'),
-            reminder: moment('2:22 am', 'h:mm a'),
             timeLeft: moment('00:00:00', 'HH:mm:ss').add(100, 'milliseconds'),
             isTracking: true,
           },
@@ -596,13 +546,11 @@ describe('REDUCER: routines', () => {
             id: '1',
             routineName: 'Do something',
             duration: moment('11:11:11', 'HH:mm:ss'),
-            reminder: moment('1:11 am', 'h:mm a'),
           },
           {
             id: '2',
             routineName: 'Do another thing',
             duration: moment('12:30:00', 'HH:mm:ss'),
-            reminder: moment('2:22 am', 'h:mm a'),
             timeLeft: null,
             isTracking: false,
             isDone: true,
@@ -624,13 +572,11 @@ describe('REDUCER: routines', () => {
         id: '1',
         routineName: 'Do something',
         duration: moment('11:11:11', 'HH:mm:ss'),
-        reminder: moment('1:11 am', 'h:mm a'),
       },
       {
         id: '2',
         routineName: 'Do another thing',
         duration: moment('12:30:00', 'HH:mm:ss'),
-        reminder: moment('2:22 am', 'h:mm a'),
         isTracking: true,
       },
     ]
@@ -640,13 +586,11 @@ describe('REDUCER: routines', () => {
         id: '1',
         routineName: 'Do something',
         duration: moment('11:11:11', 'HH:mm:ss'),
-        reminder: moment('1:11 am', 'h:mm a'),
       },
       {
         id: '2',
         routineName: 'Do another thing',
         duration: moment('12:30:00', 'HH:mm:ss'),
-        reminder: moment('2:22 am', 'h:mm a'),
         isTracking: false,
       },
     ]
@@ -665,13 +609,11 @@ describe('REDUCER: routines', () => {
           id: '1',
           routineName: 'Do something',
           duration: moment('11:11:11', 'HH:mm:ss'),
-          reminder: moment('1:11 am', 'h:mm a'),
         },
         {
           id: '2',
           routineName: 'Do another thing',
           duration: moment('12:30:00', 'HH:mm:ss'),
-          reminder: moment('2:22 am', 'h:mm a'),
           timeLeft: moment('01:15:15', 'HH:mm:ss'),
         },
       ]
@@ -681,13 +623,11 @@ describe('REDUCER: routines', () => {
           id: '1',
           routineName: 'Do something',
           duration: moment('11:11:11', 'HH:mm:ss'),
-          reminder: moment('1:11 am', 'h:mm a'),
         },
         {
           id: '2',
           routineName: 'Do another thing',
           duration: moment('12:30:00', 'HH:mm:ss'),
-          reminder: moment('2:22 am', 'h:mm a'),
           timeLeft: null,
           isTracking: false,
           isDone: false,
@@ -712,13 +652,11 @@ describe('REDUCER: routines', () => {
           id: '1',
           routineName: 'Do something',
           duration: moment('11:11:11', 'HH:mm:ss'),
-          reminder: moment('1:11 am', 'h:mm a'),
         },
         {
           id: '2',
           routineName: 'Do another thing',
           duration: moment('12:30:00', 'HH:mm:ss'),
-          reminder: moment('2:22 am', 'h:mm a'),
           timeLeft: moment('01:15:15', 'HH:mm:ss'),
         },
       ]
@@ -728,13 +666,11 @@ describe('REDUCER: routines', () => {
           id: '1',
           routineName: 'Do something',
           duration: moment('11:11:11', 'HH:mm:ss'),
-          reminder: moment('1:11 am', 'h:mm a'),
         },
         {
           id: '2',
           routineName: 'Do another thing',
           duration: moment('12:30:00', 'HH:mm:ss'),
-          reminder: moment('2:22 am', 'h:mm a'),
           timeLeft: null,
           isTracking: false,
           isDone: true,

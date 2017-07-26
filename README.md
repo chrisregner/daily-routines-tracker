@@ -5,12 +5,13 @@ TODO
 ----------------------------------------
 
 - add & test other components
-  - [done] edit resetRoutine action/reducer so that it stops the tracker as necessary
-  - [done] edit editRoutine action/reducer so that it resets the time left as necessary
-  - [done] pass RoutineItem\'s specs for conditional rendering
-  - [done] use buttons instead of link in RoutineItem controls and correct the usage of buttons and links elsewhere as applicable
-  - [done] test two of my custom proptypes
-  - add the virtual class library
+  - misc
+    - [done] edit resetRoutine action/reducer so that it stops the tracker as necessary
+    - [done] edit editRoutine action/reducer so that it resets the time left as necessary
+    - [done] pass RoutineItem\'s specs for conditional rendering
+    - [done] use buttons instead of link in RoutineItem controls and correct the usage of buttons and links elsewhere as applicable
+    - [done] test two of my custom proptypes
+    - [done] add the virtual class library
   - the rest of the functionality
 - final design/theming
   - buttons should animate when pressed
@@ -83,6 +84,10 @@ Features To do list
 - UX
   - prompt when deleting a routine
   - prompt when resetting an incomplete routine that has already tracked some time
+  - page transition animation
+  - animation when routine is finished
+    - by tracking
+    - by manual toggling
 
 ### Issues
 
