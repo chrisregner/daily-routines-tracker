@@ -9,4 +9,4 @@
 
 .self-grow-1 { flex-grow: 1; }
 
-.b--my-light-gray { border-color: #ddd; }
+.bg-lighter-gray { background-color: var(--lighter-gray); }

@@ -739,4 +739,36 @@ describe('REDUCER: routines', () => {
       expect(actualState).to.deep.equal(expectedState)
     })
   })
+
+  it('can handle SET_ROUTINES', () => {
+    const passedRoutines = [
+      {
+        id: '1',
+        routineName: 'Do something',
+        duration: moment('11:11:11', 'HH:mm:ss'),
+      },
+      {
+        id: '2',
+        routineName: 'Do another thing',
+        duration: moment('22:22:22', 'HH:mm:ss'),
+      },
+      {
+        id: '3',
+        routineName: 'Do one last thing',
+        duration: moment('03:33:33', 'HH:mm:ss'),
+        timeLeft: moment('11:11:11', 'HH:mm:ss'),
+        isTracking: true,
+      },
+    ]
+
+    const expectedState = passedRoutines
+    const actualState = reducers.routines([], {
+      type: 'SET_ROUTINES',
+      payload: {
+        routines: passedRoutines
+      }
+    })
+
+    expect(actualState).to.deep.equal(expectedState)
+  })
 })

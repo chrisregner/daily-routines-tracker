@@ -66,7 +66,7 @@ Features To do list
   - [done] Deleting a routine
   - [done] Marking the routine done
   - [done] Marking the routine undone
-  - Sorting routines
+  - [done] Sorting routines
 - Tracking Routines
   - [done] Starting the tracker of a routine
   - [done] Stopping the tracker of a routine
@@ -76,13 +76,14 @@ Features To do list
   - [done] Stopping the tracker of routine when finished tracking
   - [done] Marking the routine done when finished tracking
   - Alarms to ring when finished tracking
-  - Resetting all trackers
+  - [done] Resetting all trackers
 - [done] Toggling a routine completed
 - Routines data
   - Persisting the data in cache
   - Exporting data
   - Importing data
 - UX
+  - introductory page
   - prompt when deleting a routine
   - prompt when resetting an incomplete routine that has already tracked some time
   - page transition animation

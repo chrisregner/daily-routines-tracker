@@ -3,6 +3,7 @@ import { expect } from 'chai'
 import { shallow } from 'enzyme'
 import td from 'testdouble'
 import { Link, MemoryRouter } from 'react-router-dom'
+import { Provider } from 'react-redux'
 import { Dropdown } from 'antd'
 import merge from 'lodash/merge'
 
@@ -27,10 +28,9 @@ describe('Page: HomePagePure', () => {
     expect(wrapper).to.match('div')
   })
 
-  it('should render a PopulatedRoutineList', () => {
+  it('should render a PopulatedRoutineList with isSorting prop as false by default', () => {
     const wrapper = shallow(<HomePagePure {...getRequiredProps()} />)
-    expect(wrapper).to.containMatchingElement(<PopulatedRoutineList />)
-    expect(wrapper).to.have.exactly(1).descendants(PopulatedRoutineList)
+    expect(wrapper).to.containMatchingElement(<PopulatedRoutineList isSorting={false} />)
   })
 
   it('should render a react router Link to the page for adding new routine', () => {
@@ -40,6 +40,13 @@ describe('Page: HomePagePure', () => {
       wrpr.prop('to') === '/routines/new')
     )
     expect(expectedComponent).to.have.lengthOf(1)
+  })
+
+  it('should render an h1 with the app name by default', () => {
+    const wrapper = shallow(<HomePagePure {...getRequiredProps()} />)
+    const theH1 = wrapper.find('h1')
+
+    expect(theH1).to.have.text('Daily Routines Tracker')
   })
 
   describe('action overflow menu', () => {
@@ -73,40 +80,182 @@ describe('Page: HomePagePure', () => {
       expect(expectedComponent).to.have.lengthOf(1)
     })
 
-    it('should have a menu item that contains \'reset all routines\' button', () => {
-      const wrapper = getMenu()
-      expect(wrapper).to.have.exactly(1).descendants('.jsResetAllRoutines')
-    })
-
     describe('the \'reset all routines\' button', () => {
-      it('should have a menu item that contains \'reset all routines\' button', () => {
+      it('should render one of it in the menu', () => {
         const wrapper = getMenu()
         expect(wrapper).to.have.exactly(1).descendants('.jsResetAllRoutines')
       })
 
-      describe('\'reset all routines\' button', () => {
-        it('should call the passed handlers.handleResetAllRoutines() when pressed', () => {
-          const handleResetAllRoutines = td.function()
-          const rootCompWrapper = shallow(
-            <HomePagePure {...getRequiredProps({
-              handlers: {
-                handleResetAllRoutines
-              }
-            })} />
-          )
-          const menuWrapper = getMenu(rootCompWrapper)
+      it('should call the passed handlers.handleResetAllRoutines() when pressed', () => {
+        const handleResetAllRoutines = td.function()
+        const rootCompWrapper = shallow(
+          <HomePagePure {...getRequiredProps({
+            handlers: {
+              handleResetAllRoutines
+            }
+          })} />
+        )
+        const menuWrapper = getMenu(rootCompWrapper)
 
-          const resetAllRoutineBtn = menuWrapper.find('.jsResetAllRoutines')
+        const resetAllRoutineBtn = menuWrapper.find('.jsResetAllRoutines')
+        const fakeEv = {
+          preventDefault: () => {},
+          currentTarget: {
+            className: 'jsResetAllRoutines',
+          }
+        }
+
+        td.verify(handleResetAllRoutines(), { times: 0, ignoreExtraArgs: 0 })
+        resetAllRoutineBtn.prop('onClick')(fakeEv)
+        td.verify(handleResetAllRoutines(), { times: 1 })
+      })
+    })
+
+    describe('the \'sort routines\' button', () => {
+      it('should render one of it in the menu', () => {
+        const wrapper = getMenu()
+        expect(wrapper).to.have.exactly(1).descendants('.jsSortRoutines')
+      })
+
+      context('when \'sort routines\' is pressed', () => {
+        it('should set the rendered <PopulatedRoutineList />\'s prop isSorting to true', () => {
+          const wrapper = shallow(<HomePagePure {...getRequiredProps()} />)
+          const sortBtn = getMenu(wrapper).find('.jsSortRoutines')
+          const getPopulatedRoutineList = () => wrapper.find(PopulatedRoutineList)
           const fakeEv = {
             preventDefault: () => {},
             currentTarget: {
-              className: 'jsResetAllRoutines',
+              className: 'jsSortRoutines',
             }
           }
 
-          td.verify(handleResetAllRoutines(), { times: 0, ignoreExtraArgs: 0 })
-          resetAllRoutineBtn.prop('onClick')(fakeEv)
-          td.verify(handleResetAllRoutines(), { times: 1 })
+          expect(getPopulatedRoutineList()).to.have.prop('isSorting', false)
+          sortBtn.prop('onClick')(fakeEv)
+          expect(getPopulatedRoutineList()).to.have.prop('isSorting', true)
+        })
+
+        it('should set the h1\'s text to \'Sort Routines\'', () => {
+          const wrapper = shallow(<HomePagePure {...getRequiredProps()} />)
+          const sortBtn = getMenu(wrapper).find('.jsSortRoutines')
+          const getPopulatedRoutineList = () => wrapper.find(PopulatedRoutineList)
+          const fakeEv = {
+            preventDefault: () => {},
+            currentTarget: {
+              className: 'jsSortRoutines',
+            }
+          }
+          const getH1 = () => wrapper.find('h1')
+
+          expect(getH1()).to.not.have.text('Sort Routines')
+          sortBtn.prop('onClick')(fakeEv)
+          expect(getH1()).to.have.text('Sort Routines')
+        })
+
+
+        it('should replace the menu with \'finish sort routines\' button', () => {
+          const wrapper = shallow(<HomePagePure {...getRequiredProps()} />)
+          const sortBtn = getMenu(wrapper).find('.jsSortRoutines')
+          const getPopulatedRoutineList = () => wrapper.find(PopulatedRoutineList)
+          const fakeEv = {
+            preventDefault: () => {},
+            currentTarget: {
+              className: 'jsSortRoutines',
+            }
+          }
+          const getH1 = () => wrapper.find('h1')
+
+          expect(wrapper).to.have.exactly(1).descendants(Dropdown)
+          expect(wrapper).to.have.exactly(0).descendants('.jsFinishSortingRoutines')
+          sortBtn.prop('onClick')(fakeEv)
+          expect(wrapper).to.have.exactly(0).descendants(Dropdown)
+          expect(wrapper).to.have.exactly(1).descendants('.jsFinishSortingRoutines')
+        })
+
+        context('when \'sort routines\' button is pressed', () => {
+          it('should set the rendered <PopulatedRoutineList />\'s prop isSorting to false', () => {
+            const wrapper = shallow(<HomePagePure {...getRequiredProps()} />)
+            const sortBtn = getMenu(wrapper).find('.jsSortRoutines')
+            const getPopulatedRoutineList = () => wrapper.find(PopulatedRoutineList)
+            const fakeEvForSortBtn = {
+              preventDefault: () => {},
+              currentTarget: {
+                className: 'jsSortRoutines',
+              }
+            }
+            const fakeEvForFinishSortBtn = {
+              preventDefault: () => {},
+              currentTarget: {
+                className: 'jsFinishSortingRoutines',
+              }
+            }
+
+            const getFinishSortBtn = () => (
+              wrapper.find('.jsFinishSortingRoutines')
+            )
+
+            sortBtn.prop('onClick')(fakeEvForSortBtn)
+            expect(getPopulatedRoutineList()).to.have.prop('isSorting', true)
+            getFinishSortBtn().prop('onClick')(fakeEvForFinishSortBtn)
+            expect(getPopulatedRoutineList()).to.have.prop('isSorting', false)
+          })
+
+          it('should set the h1\'s text to \'Sort Routines\'', () => {
+            const wrapper = shallow(<HomePagePure {...getRequiredProps()} />)
+            const sortBtn = getMenu(wrapper).find('.jsSortRoutines')
+            const getPopulatedRoutineList = () => wrapper.find(PopulatedRoutineList)
+            const fakeEvForSortBtn = {
+              preventDefault: () => {},
+              currentTarget: {
+                className: 'jsSortRoutines',
+              }
+            }
+            const fakeEvForFinishSortBtn = {
+              preventDefault: () => {},
+              currentTarget: {
+                className: 'jsFinishSortingRoutines',
+              }
+            }
+
+            const getFinishSortBtn = () => (
+              wrapper.find('.jsFinishSortingRoutines')
+            )
+            const getH1 = () => wrapper.find('h1')
+
+            sortBtn.prop('onClick')(fakeEvForSortBtn)
+            expect(getH1()).to.not.have.text('Daily Routines Tracker')
+            getFinishSortBtn().prop('onClick')(fakeEvForFinishSortBtn)
+            expect(getH1()).to.have.text('Daily Routines Tracker')
+          })
+
+
+          it('should replace the menu with \'finish sort routines\' button', () => {
+            const wrapper = shallow(<HomePagePure {...getRequiredProps()} />)
+            const sortBtn = getMenu(wrapper).find('.jsSortRoutines')
+            const getPopulatedRoutineList = () => wrapper.find(PopulatedRoutineList)
+            const fakeEvForSortBtn = {
+              preventDefault: () => {},
+              currentTarget: {
+                className: 'jsSortRoutines',
+              }
+            }
+            const fakeEvForFinishSortBtn = {
+              preventDefault: () => {},
+              currentTarget: {
+                className: 'jsFinishSortingRoutines',
+              }
+            }
+
+            const getFinishSortBtn = () => (
+              wrapper.find('.jsFinishSortingRoutines')
+            )
+
+            sortBtn.prop('onClick')(fakeEvForSortBtn)
+            expect(wrapper).to.have.exactly(0).descendants(Dropdown)
+            expect(wrapper).to.have.exactly(1).descendants('.jsFinishSortingRoutines')
+            getFinishSortBtn().prop('onClick')(fakeEvForFinishSortBtn)
+            expect(wrapper).to.have.exactly(1).descendants(Dropdown)
+            expect(wrapper).to.have.exactly(0).descendants('.jsFinishSortingRoutines')
+          })
         })
       })
     })

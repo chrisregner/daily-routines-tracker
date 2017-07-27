@@ -11,11 +11,15 @@
 @custom-media --breakpoint-large screen and (min-width: 60em);
 
 :root {
-  /* non-tachyons variables  */
-
-  /* --my-border-width-1: 2px;
-  --my-border-width-2: 3px;
-  --duration-1: 2s; */
+  /* custom variables  */
+  --spacing-n-extra-small: -.25rem;
+  --spacing-n-small: -.5rem;
+  --spacing-n-medium: -1rem;
+  --spacing-n-large: -2rem;
+  --spacing-n-extra-large: -4rem;
+  --spacing-n-extra-extra-large: -8rem;
+  --spacing-n-extra-extra-extra-large: -16rem;
+  --lighter-gray: #ddd;
 
   /* tachyons variables */
   --sans-serif: -apple-system, BlinkMacSystemFont,

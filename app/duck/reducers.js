@@ -165,17 +165,18 @@ const routines = (state = initialRoutinesState, { type, payload }) => {
         )
       ))
 
+    case actionTypes.SET_ROUTINES:
+      return payload.routines
+
     default:
       return state
   }
 }
 
 const rootReducer = combineReducers({ routines })
-// const getRoutine = (state, id) => state.find(routine => routine.id === id)
 
 
 export default rootReducer
 export {
   routines
-  // getRoutine
 }

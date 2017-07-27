@@ -167,21 +167,21 @@ describe('CONTAINER: PopulatedRoutineList', () => {
         })
       })
 
-      it('should have the handleMarkDone() property', () => {
+      it('should have the handleSetRoutines() property', () => {
         const wrapper = createInstance()
         const wrappedComponent = wrapper.dive()
-        const subj = wrappedComponent.prop('handlers').handleMarkDone
+        const subj = wrappedComponent.prop('handlers').handleSetRoutines
 
         expect(subj).to.be.a('function')
       })
 
-      describe('handleMarkDone()', () => {
-        it('should call dispatch() with markDone()\'s result when called with handleMarkDone\'s first argument', () => {
-          const markDone = td.function()
-          td.replace('duck/actions', { markDone })
-          const markDoneArg = '123'
-          const markDoneRes = '456'
-          td.when(markDone(markDoneArg)).thenReturn(markDoneRes)
+      describe('handleSetRoutines()', () => {
+        it('should call dispatch() with setRoutines()\'s result when called with handleSetRoutines\'s first argument', () => {
+          const setRoutines = td.function()
+          td.replace('duck/actions', { setRoutines })
+          const setRoutinesArg = '123'
+          const setRoutinesRes = '456'
+          td.when(setRoutines(setRoutinesArg)).thenReturn(setRoutinesRes)
 
           PopulatedRoutineList = require('./PopulatedRoutineList').default
 
@@ -191,11 +191,11 @@ describe('CONTAINER: PopulatedRoutineList', () => {
 
           const wrapper = createInstance({ store: mockStore })
           const wrappedComponent = wrapper.dive()
-          const passedArg = markDoneArg
+          const passedArg = setRoutinesArg
 
           td.verify(dispatch(), { times: 0, ignoreExtraArgs: true })
-          wrappedComponent.prop('handlers').handleMarkDone(markDoneArg)
-          td.verify(dispatch(markDoneRes), { times: 1 })
+          wrappedComponent.prop('handlers').handleSetRoutines(setRoutinesArg)
+          td.verify(dispatch(setRoutinesRes), { times: 1 })
         })
       })
     })

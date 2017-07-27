@@ -59,100 +59,83 @@ class RoutineItem extends React.Component {
     } = this.props
     const durationToShow = timeLeft || duration
 
-    return <s.Li className={c(
-        'b--my-light-gray',
-        isDone && 'isDone'
-      )}>
-      <div
-        onClick={() => { history.push(`/routines/${id}`) }}
+    return (
+      <s.RootDiv
+        role='listitem'
         className={c(
-          'flex items-center h-100 dark-gray f4 lh-title pointer edit-routine ',
-          isDone ? 'isDone bg-green ph3' : ''
+          isDone ? 'isDone green' : 'dark-gray'
         )}
       >
-        <button className={c('toggleIsDone -btn-reset')} onClick={this.handleRoutineControls}>
-          {
-            isDone
-            ? <Icon type='check-circle' className='f3' />
-            : <Icon type='check-circle-o' className='f3' />
-          }
-        </button>
-
-        <div className='self-grow-1 pv1 truncate ml2'>
-          {routineName}
-        </div>
-
-        {
-          ((duration && (isTracking || timeLeft)) || isDone) &&
-          <div className='ml2'>
-            <button className={c('reset-tracker -btn-reset')} onClick={this.handleRoutineControls}>
-              <Icon type='reload' className='f3' />
-            </button>
-          </div>
-        }
-
-        {
-          (durationToShow && isDone !== true) &&
-          (
-            isTracking ? (
-              <div className='ml2'>
-                <button className={c('stop-tracker -btn-reset')} onClick={this.handleRoutineControls}>
-                  <Icon type='pause-circle-o' className='f3' />
-                </button>
-              </div>
-            ) : (
-              <div className='ml2'>
-                <button className={c('start-tracker -btn-reset')} onClick={this.handleRoutineControls}>
-                  <Icon type='play-circle-o' className='f3' />
-                </button>
-              </div>
-            )
-          )
-        }
-
-        {
-          (durationToShow) &&
-          <s.Div className='flex flex-column ml2 f6 lh-copy'>
+        <div
+          onClick={() => { history.push(`/routines/${id}`) }}
+          className={c(
+            'flex items-center h-100 f4 lh-title pointer edit-routine bg-white'
+          )}
+        >
+          <button className={c('toggleIsDone -btn-reset')} onClick={this.handleRoutineControls}>
             {
-              durationToShow &&
-              <div className='flex items-center'>
-                <Icon type='clock-circle-o' className='self-grow-1 tl' />
-                <div className='duration'>{durationToShow.format(durationToShow.creationData().format)}</div>
-              </div>
+              isDone
+              ? <Icon type='check-circle' className='f3' />
+              : <Icon type='check-circle-o' className='f3' />
             }
-          </s.Div>
-        }
-      </div>
-    </s.Li>
+          </button>
+
+          <div className='self-grow-1 pv1 truncate ml2'>
+            {routineName}
+          </div>
+
+          {
+            ((duration && (isTracking || timeLeft)) || isDone) &&
+            <div className='ml2'>
+              <button className={c('reset-tracker -btn-reset')} onClick={this.handleRoutineControls}>
+                <Icon type='reload' className='f3' />
+              </button>
+            </div>
+          }
+
+          {
+            (durationToShow && isDone !== true) &&
+            (
+              isTracking ? (
+                <div className='ml2'>
+                  <button className={c('stop-tracker -btn-reset')} onClick={this.handleRoutineControls}>
+                    <Icon type='pause-circle-o' className='f3' />
+                  </button>
+                </div>
+              ) : (
+                <div className='ml2'>
+                  <button className={c('start-tracker -btn-reset')} onClick={this.handleRoutineControls}>
+                    <Icon type='play-circle-o' className='f3' />
+                  </button>
+                </div>
+              )
+            )
+          }
+
+          {
+            (durationToShow) &&
+            <s.DurationDiv className='flex flex-column ml2 f6 lh-copy'>
+              {
+                durationToShow &&
+                <div className='flex items-center'>
+                  <Icon type='clock-circle-o' className='self-grow-1 tl' />
+                  <div className='duration'>{durationToShow.format(durationToShow.creationData().format)}</div>
+                </div>
+              }
+            </s.DurationDiv>
+          }
+        </div>
+      </s.RootDiv>
+    )
   }
 }
 
 s = {
-  Li: styled.li`
+  RootDiv: styled.div`
     height: 3.5rem;
-    border-top-width: 1px;
-    border-top-style: solid;
-
-    &:first-child {
-      border-top-width: 0 !important;
-    }
-
-    &:not(.isDone) + &:not(.isDone) {
-      margin-left: var(--spacing-medium);
-      margin-right: var(--spacing-medium);
-    }
-
-    &:first-child > div {
-      padding-left: var(--spacing-medium);
-      padding-right: var(--spacing-medium);
-    }
-
-    .isDone + & > div {
-      padding-left: var(--spacing-medium);
-      padding-right: var(--spacing-medium);
-    }
+    margin-bottom: 1px;
   `,
-  Div: styled.div`
+  DurationDiv: styled.div`
     min-width: 4.5rem;
     width: 4.5rem;
   `,

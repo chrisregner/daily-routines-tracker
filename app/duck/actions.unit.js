@@ -396,5 +396,18 @@ describe('ACTION: creators', () => {
     expect(actual).to.deep.equal(expected)
   })
 
+  it('has action for setting routines', () => {
+    const passedRoutines = 'passedRoutines'
+
+    const actual = actions.setRoutines(passedRoutines)
+    const expected = {
+      type: 'SET_ROUTINES',
+      payload: {
+        routines: passedRoutines
+      }
+    }
+
+    expect(actual).to.deep.equal(expected)
+  })
 })
 

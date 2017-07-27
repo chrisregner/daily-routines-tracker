@@ -107,7 +107,15 @@ export const markDone = (routineId) => ({
 =            Misc Actions for Routines            =
 =================================================*/
 
+// TODO: make it clear the last interval as well
 export const resetAllRoutines = () => ({
   type: actionTypes.RESET_ALL_ROUTINES
+})
+
+export const setRoutines = (routines) => ({
+  type: actionTypes.SET_ROUTINES,
+  payload: {
+    routines,
+  }
 })
 

@@ -20,9 +20,17 @@ class HomePage extends React.Component {
 
     if (btnClassName.includes('jsResetAllRoutines'))
       handlers.handleResetAllRoutines()
+    else if (btnClassName.includes('jsSortRoutines'))
+      this.setState({ isSorting: true })
+    else if (btnClassName.includes('jsFinishSortingRoutines'))
+      this.setState({ isSorting: false })
   }
 
-  menu = (
+  state = {
+    isSorting: false
+  }
+
+  getMenu = (
     <Menu selectable={false}>
       <Menu.Item>
         <Link to='/routines/new'>
@@ -32,6 +40,11 @@ class HomePage extends React.Component {
       <Menu.Item>
         <button className={c('jsResetAllRoutines -btn-reset')} onClick={this.handleControls}>
           Reset all routines
+        </button>
+      </Menu.Item>
+      <Menu.Item>
+        <button className={c('jsSortRoutines -btn-reset')} onClick={this.handleControls}>
+          Sort routines
         </button>
       </Menu.Item>
       <Menu.Item>
@@ -47,34 +60,51 @@ class HomePage extends React.Component {
     </Menu>
   )
 
-  render = () => (
-    <div className='relative vh-100'>
-      <div className='flex items-center pa3 f3'>
-        <h1 className='self-grow-1 ma0 f5 dark-gray normal ttu lh-title'>{'Daily Routine Tracker'}</h1>
-        {/*<div className='lh-title'>
-          <Link to='routines/new'><Icon type='plus' /></Link>
-        </div>*/}
-        <div>
-          <Dropdown
-            className='jsActionOverflow'
-            overlay={this.menu}
-            placement='bottomRight'
-            trigger={['click']}
-          >
-            <div>
-              <MenuIcon />
-            </div>
-          </Dropdown>
+  render = () => {
+    const { isSorting } = this.state
+
+    return (
+      <div className='relative vh-100'>
+        <div className='flex items-center pa3 f3'>
+          <h1 className='self-grow-1 ma0 f5 dark-gray normal ttu lh-title'>
+            {
+              isSorting
+              ? (<strong>Sort Routines</strong>)
+              : 'Daily Routines Tracker'
+            }
+          </h1>
+          <div>
+            {
+              isSorting
+              ? (
+                <button className={c('jsFinishSortingRoutines -btn-reset db f6 ttu')} onClick={this.handleControls}>
+                  Finish Sorting
+                </button>
+              )
+              : (
+                <Dropdown
+                  className='jsActionOverflow'
+                  overlay={this.getMenu}
+                  placement='bottomRight'
+                  trigger={['click']}
+                >
+                  <div>
+                    <MenuIcon />
+                  </div>
+                </Dropdown>
+              )
+            }
+          </div>
+        </div>
+        <PopulatedRoutineList isSorting={this.state.isSorting} />
+        <div className={'absolute right-2 bottom-2'}>
+          <Link to='/routines/new'>
+            <Button type='primary' size='large' icon='plus' shape='circle' />
+          </Link>
         </div>
       </div>
-      <PopulatedRoutineList />
-      <div className={'absolute right-2 bottom-2'}>
-        <Link to='/routines/new'>
-          <Button type='primary' size='large' icon='plus' shape='circle' />
-        </Link>
-      </div>
-    </div>
-  )
+    )
+  }
 }
 
 export default HomePage

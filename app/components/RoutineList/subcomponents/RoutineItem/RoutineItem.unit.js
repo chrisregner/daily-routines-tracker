@@ -33,16 +33,9 @@ describe('COMPONENT: RoutineList/RoutineItem', () => {
   =            As a whole            =
   ==================================*/
 
-  it('should render with <li /> as root component', () => {
+  it('should render without crashing', () => {
     const wrapper = shallow(<RoutineItem {...getRequiredProps()} />)
-    const isRenderedWithLi = wrapper.is('li')
-    const isRenderedWithStyledLi = wrapper.dive().is('li')
-
-    expect(isRenderedWithLi || isRenderedWithStyledLi).to.equal(true)
-  })
-
-  context('when isDone is set to true', () => {
-
+    expect(wrapper).to.be.present()
   })
 
   /*=========================================
