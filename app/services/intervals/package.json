@@ -1,6 +1,0 @@
-{
-  "name:": "intervals",
-  "version": "0.0.0",
-  "private": true,
-  "main": "./intervals.js"
-}

@@ -1,6 +1,0 @@
-{
-  "name:": "momentToInitialFormat",
-  "version": "0.0.0",
-  "private": true,
-  "main": "./momentToInitialFormat.js"
-}

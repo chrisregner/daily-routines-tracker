@@ -17,6 +17,7 @@ TODO
   - buttons should animate when pressed
   - add page transitions for mobile
 - optimization
+  - install accessibility eslint rules
   - review implemented features and specified features
   - lookout for unnecessary updates
   - override browser back and forward button to use history object
@@ -88,6 +89,8 @@ Features To do list
   - animation when routine is finished
     - by tracking
     - by manual toggling
+  - button/link hove animaitons
+  - button/link press animations
 
 ### Issues
 

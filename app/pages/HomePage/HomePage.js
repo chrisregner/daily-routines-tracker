@@ -1,17 +1,14 @@
-import React from 'react'
-import { Link } from 'react-router-dom'
-import { Icon } from 'antd'
+import { connect } from 'react-redux'
 
-import PopulatedRoutineList from 'containers/PopulatedRoutineList'
+import { resetAllRoutines } from 'duck/actions'
+import HomePagePure from './HomePagePure'
 
-const HomePage = () => (<div>
-  <div className='flex items-center pa3 f3'>
-    <h1 className='self-grow-1 ma0 f5 dark-gray normal ttu lh-title'>{'Daily Routine Tracker'}</h1>
-    <div className='lh-title'>
-      <Link to='routines/new'><Icon type='plus' /></Link>
-    </div>
-  </div>
-  <PopulatedRoutineList />
-</div>)
+const mapDispatchToProps = dispatch => ({
+  handlers: {
+    handleResetAllRoutines: () => { dispatch(resetAllRoutines()) },
+  }
+})
+
+const HomePage = connect(undefined, mapDispatchToProps)(HomePagePure)
 
 export default HomePage

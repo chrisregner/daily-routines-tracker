@@ -61,7 +61,7 @@ class RoutineItem extends React.Component {
 
     return <s.Li className={c(
         'b--my-light-gray',
-        isDone ? 'isDone' : 'mh3'
+        isDone && 'isDone'
       )}>
       <div
         onClick={() => { history.push(`/routines/${id}`) }}
@@ -130,11 +130,26 @@ class RoutineItem extends React.Component {
 s = {
   Li: styled.li`
     height: 3.5rem;
-    border-bottom-width: 1px;
-    border-bottom-style: solid;
+    border-top-width: 1px;
+    border-top-style: solid;
 
-    &:last-child {
-      border-bottom-width: 0 !important;
+    &:first-child {
+      border-top-width: 0 !important;
+    }
+
+    &:not(.isDone) + &:not(.isDone) {
+      margin-left: var(--spacing-medium);
+      margin-right: var(--spacing-medium);
+    }
+
+    &:first-child > div {
+      padding-left: var(--spacing-medium);
+      padding-right: var(--spacing-medium);
+    }
+
+    .isDone + & > div {
+      padding-left: var(--spacing-medium);
+      padding-right: var(--spacing-medium);
     }
   `,
   Div: styled.div`

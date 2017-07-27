@@ -152,6 +152,19 @@ const routines = (state = initialRoutinesState, { type, payload }) => {
         return routineObj
       })
 
+    case actionTypes.RESET_ALL_ROUTINES:
+      return state.map(routineObj => (
+        Object.assign(
+          {},
+          routineObj,
+          {
+            timeLeft: null,
+            isTracking: false,
+            isDone: false,
+          }
+        )
+      ))
+
     default:
       return state
   }

@@ -1,29 +1,85 @@
 import React from 'react'
+import { MemoryRouter } from 'react-router-dom'
 import { expect } from 'chai'
 import { shallow } from 'enzyme'
-import { Link } from 'react-router-dom'
+import td from 'testdouble'
+import configureMockStore  from 'redux-mock-store'
+import merge from 'lodash/merge'
 
-import HomePage from './HomePage'
-import PopulatedRoutineList from 'containers/PopulatedRoutineList'
+import HomePagePure from './HomePagePure'
+import { resetAllRoutines } from 'duck/actions'
 
-describe('Page: HomePage', () => {
-  it('should have <div /> as its root component', () => {
-    const wrapper = shallow(<HomePage />)
-    expect(wrapper).to.match('div')
-  })
+describe('PAGE: HomePage', () => {
+  let HomePage
+  const getMockStore = configureMockStore()
+  const createInstance = (passedProps) => {
+    const initialState = { routines: [] }
+    const requiredProps = {
+      store: getMockStore(initialState),
+    }
 
-  it('should render a PopulatedRoutineList', () => {
-    const wrapper = shallow(<HomePage />)
-    expect(wrapper).to.containMatchingElement(<PopulatedRoutineList />)
-    expect(wrapper).to.have.exactly(1).descendants(PopulatedRoutineList)
-  })
+    const finalProps = passedProps
+      ? merge({}, requiredProps, passedProps)
+      : requiredProps
 
-  it('should render a react router Link to the page for adding new routine', () => {
-    const wrapper = shallow(<HomePage />)
-    const wantedLinkElement = wrapper.findWhere(wrpr => (
-      wrpr.is(Link) &&
-      wrpr.prop('to') === 'routines/new')
+    return shallow(
+      <MemoryRouter>
+        <HomePage {...finalProps} />
+      </MemoryRouter>
     )
-    expect(wantedLinkElement).to.have.lengthOf(1)
+      .find(HomePage)
+  }
+
+  beforeEach(() => {
+    HomePage = require('./HomePage').default
+  })
+
+  afterEach(() => { td.reset() })
+
+  it('should render <HomePagePure /> inside the HOC', () => {
+    const wrapper = createInstance()
+    expect(wrapper.dive()).to.match(HomePagePure)
+  })
+
+  describe('the rendered <HomePagePure />', () => {
+    describe('handlers {} prop', () => {
+      it('should be an object passed to <RoutineList />', () => {
+        const wrapper = createInstance()
+        const wrappedComponent = wrapper.dive()
+
+        expect(wrappedComponent.prop('handlers')).to.be.an('object')
+      })
+
+      it('should have the handleResetAllRoutines() property', () => {
+        const wrapper = createInstance()
+        const wrappedComponent = wrapper.dive()
+        const subj = wrappedComponent.prop('handlers').handleResetAllRoutines
+
+        expect(subj).to.be.a('function')
+      })
+
+      describe('handleResetAllRoutines()', () => {
+        it('should call dispatch() with resetAllRoutines()\'s result when called', () => {
+          const resetAllRoutines = td.function()
+          td.replace('duck/actions', { resetAllRoutines })
+          const resetAllRoutinesRes = '123'
+          td.when(resetAllRoutines()).thenReturn(resetAllRoutinesRes)
+
+          HomePage = require('./HomePage').default
+
+          const initialState = { routines: [] }
+          const mockStore = getMockStore(initialState)
+          const dispatch = td.replace(mockStore, 'dispatch')
+
+          const wrapper = createInstance({ store: mockStore })
+          const wrappedComponent = wrapper.dive()
+
+          td.verify(dispatch(), { times: 0, ignoreExtraArgs: true })
+          wrappedComponent.prop('handlers').handleResetAllRoutines()
+          td.verify(dispatch(resetAllRoutinesRes), { times: 1 })
+        })
+      })
+    })
+
   })
 })

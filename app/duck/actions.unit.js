@@ -166,7 +166,6 @@ describe('ACTION: creators', () => {
     expect(actual).to.deep.equal(expected)
   })
 
-
   /*============================================================
   =            Actions for routine tracking feature            =
   ============================================================*/
@@ -382,4 +381,20 @@ describe('ACTION: creators', () => {
 
     expect(actual).to.deep.equal(expected)
   })
+
+
+  /*=================================================
+  =            Misc Actions for Routines            =
+  =================================================*/
+
+  it('has action creator for resetting all routines', () => {
+    const actual = actions.resetAllRoutines()
+    const expected = {
+      type: 'RESET_ALL_ROUTINES',
+    }
+
+    expect(actual).to.deep.equal(expected)
+  })
+
 })
+

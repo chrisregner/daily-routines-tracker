@@ -102,3 +102,12 @@ export const markDone = (routineId) => ({
     id: routineId,
   }
 })
+
+/*=================================================
+=            Misc Actions for Routines            =
+=================================================*/
+
+export const resetAllRoutines = () => ({
+  type: actionTypes.RESET_ALL_ROUTINES
+})
+

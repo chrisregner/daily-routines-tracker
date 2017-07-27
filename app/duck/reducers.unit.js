@@ -688,4 +688,55 @@ describe('REDUCER: routines', () => {
     })
   })
 
+  /*=================================================
+  =            Misc Actions for Routines            =
+  =================================================*/
+
+  describe('handling RESET_ALL_TRACKERS', () => {
+    it('should set all routine\'s timeLeft to null, isTracking to false, and isDone to false', () => {
+      const initialState = [
+        {
+          id: '1',
+          routineName: 'Do something',
+          duration: moment('11:11:11', 'HH:mm:ss'),
+          isDone: true,
+        },
+        {
+          id: '2',
+          routineName: 'Do another thing',
+          duration: moment('12:30:00', 'HH:mm:ss'),
+          timeLeft: moment('01:15:15', 'HH:mm:ss'),
+          isTracking: true,
+        },
+      ]
+
+      const expectedState = [
+        {
+          id: '1',
+          routineName: 'Do something',
+          duration: moment('11:11:11', 'HH:mm:ss'),
+          timeLeft: null,
+          isTracking: false,
+          isDone: false,
+        },
+        {
+          id: '2',
+          routineName: 'Do another thing',
+          duration: moment('12:30:00', 'HH:mm:ss'),
+          timeLeft: null,
+          isTracking: false,
+          isDone: false,
+        },
+      ]
+
+      const actualState = reducers.routines(initialState, {
+        type: 'RESET_ALL_ROUTINES',
+        payload: {
+          id: '2'
+        }
+      })
+
+      expect(actualState).to.deep.equal(expectedState)
+    })
+  })
 })
