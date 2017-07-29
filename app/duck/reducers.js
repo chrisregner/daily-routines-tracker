@@ -3,6 +3,10 @@ import id from 'shortid'
 import merge from 'lodash/merge'
 import { combineReducers } from 'redux'
 
+import {
+  duration as durationFormat,
+  durationWithMs as durationWithMsFormat,
+} from 'constants/timeFormats'
 import * as actionTypes from './actionTypes'
 
 moment('00:15:00', 'HH:mm:ss')
@@ -35,8 +39,8 @@ const routines = (state = initialRoutinesState, { type, payload }) => {
           if (payload.duration && routineObj.duration) {
             const newDuration = payload.duration
             const oldDuration = routineObj.duration
-            const newDurationFormatted = newDuration.format(newDuration.creationData().format)
-            const oldDurationFormatted = oldDuration.format(oldDuration.creationData().format)
+            const newDurationFormatted = newDuration.format(durationFormat)
+            const oldDurationFormatted = oldDuration.format(durationFormat)
 
             if (newDurationFormatted !== oldDurationFormatted)
               return Object.assign(
@@ -84,11 +88,11 @@ const routines = (state = initialRoutinesState, { type, payload }) => {
         if (routineObj.isTracking) {
           const { timeLeft, duration } = routineObj
           const timeToSubtract = timeLeft || duration
-          const oneHundredMsBeforeZero = moment('00:00:00.100', 'HH:mm:ss.SSS')
+          const oneHundredMsBeforeZero = moment('00:00:00.100', durationWithMsFormat)
 
           if (
             timeLeft
-            && timeLeft.format('HH:mm:ss.SSS') === oneHundredMsBeforeZero.format('HH:mm:ss.SSS')
+            && timeLeft.format(durationWithMsFormat) === oneHundredMsBeforeZero.format(durationWithMsFormat)
           )
             return Object.assign(
               {},

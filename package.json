@@ -24,6 +24,7 @@
     "cross-env": "^5.0.1",
     "css-loader": "^0.28.4",
     "deep-diff": "^0.3.8",
+    "deep-map": "^1.5.0",
     "enzyme": "^2.9.1",
     "eslint": "3.x",
     "eslint-config-standard": "^10.2.1",

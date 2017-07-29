@@ -10,6 +10,7 @@ import HomePage from 'pages/HomePage'
 import AddNewRoutineForm from 'containers/AddNewRoutineForm'
 import EditRoutineForm from 'containers/EditRoutineForm'
 import DoneRoutinesNotifier from 'containers/DoneRoutinesNotifier'
+import DataPersistor from 'containers/DataPersistor'
 
 let StyledDiv
 
@@ -24,6 +25,7 @@ class App extends React.Component {
           </Switch>
         </Router>
       <DoneRoutinesNotifier />
+      <DataPersistor />
     </StyledDiv>
   )
 }

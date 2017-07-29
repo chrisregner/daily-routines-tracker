@@ -76,11 +76,11 @@ Features To do list
   - [done] Showing the time that is still needed to track for each routine
   - [done] Stopping the tracker of routine when finished tracking
   - [done] Marking the routine done when finished tracking
-  - Alarms to ring when finished tracking
+  - [done] Alarms to ring when finished tracking
   - [done] Resetting all trackers
 - [done] Toggling a routine completed
 - Routines data
-  - Persisting the data in cache
+  - Persisting the data in local storage
   - Exporting data
   - Importing data
 - UX
@@ -91,7 +91,7 @@ Features To do list
   - animation when routine is finished
     - by tracking
     - by manual toggling
-  - button/link hove animaitons
+  - button/link hover animaitons
   - button/link press animations
 
 ### Issues

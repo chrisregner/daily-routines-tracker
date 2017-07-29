@@ -43,6 +43,7 @@ export default {
     alias: {
       components: resolve(__dirname, '../app/components'),
       containers: resolve(__dirname, '../app/containers'),
+      constants: resolve(__dirname, '../app/constants'),
       pages: resolve(__dirname, '../app/pages'),
       services: resolve(__dirname, '../app/services'),
       duck: resolve(__dirname, '../app/duck'),

@@ -4,8 +4,9 @@ import MomentProp from 'react-moment-proptypes'
 import moment from 'moment'
 import { Link } from 'react-router-dom'
 import styled from 'styled-components'
-
 import { Form, Icon, Input, Button, TimePicker } from 'antd'
+
+import { duration as durationFormat } from 'constants/timeFormats'
 
 let s // styled components will be defined in this variable
 
@@ -116,8 +117,8 @@ class RoutineForm extends React.Component {
         initialValue: initValues.duration,
       })(
         <TimePicker
-          format='HH:mm:ss'
-          defaultOpenValue={moment('00:00:00', 'HH:mm:ss')}
+          format={durationFormat}
+          defaultOpenValue={moment('00:00:00', durationFormat)}
           placeholder='hh:mm:ss'
           name='duration'
         />

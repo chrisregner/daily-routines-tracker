@@ -5,6 +5,7 @@ import moment from 'moment'
 import styled from 'styled-components'
 import c from 'services/convertVirtualClassNames'
 import { Icon, Button } from 'antd'
+import { duration as durationFormat } from 'constants/timeFormats'
 
 let s // styled components will be defined in this variable
 
@@ -119,7 +120,7 @@ class RoutineItem extends React.Component {
                 durationToShow &&
                 <div className='flex items-center'>
                   <Icon type='clock-circle-o' className='self-grow-1 tl' />
-                  <div className='duration'>{durationToShow.format(durationToShow.creationData().format)}</div>
+                  <div className='duration'>{durationToShow.format(durationFormat)}</div>
                 </div>
               }
             </s.DurationDiv>
