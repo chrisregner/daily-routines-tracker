@@ -30,6 +30,10 @@ class HomePage extends React.Component {
     isSorting: false
   }
 
+  componentDidMount = () => {
+    document.title = 'Daily Routines Tracker'
+  }
+
   getMenu = (
     <Menu selectable={false}>
       <Menu.Item>

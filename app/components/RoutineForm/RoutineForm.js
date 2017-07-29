@@ -32,6 +32,15 @@ class RoutineForm extends React.Component {
     initialValues: {},
   }
 
+  componentDidMount = () => {
+    const hasInitValues = Object.keys(this.props.initialValues).length > 0
+
+    if (hasInitValues)
+      document.title = 'Edit Routine'
+    else
+      document.title = 'Add New Routine'
+  }
+
   shouldDisableSubmit = () => {
     const { getFieldsValue, getFieldsError } = this.props.form
     const hasTruthyProp = (obj) => Object.values(obj).some(prop => !!prop)
@@ -123,8 +132,7 @@ class RoutineForm extends React.Component {
     } = this.props
     const hasInitValues = Object.keys(initialValues).length > 0
 
-    if (notFound)
-      return (
+    return (notFound) ? (
         <div className='pa3'>
           <div className='pb3 f4 lh-title'>
             <Link to='/'><Icon type='arrow-left' /></Link>
@@ -133,9 +141,7 @@ class RoutineForm extends React.Component {
             Sorry, the routine you requested doesn’t exist.
           </div>
         </div>
-      )
-    else
-      return (
+      ) : (
         <Form className='pa3' onSubmit={this.handleSubmit}>
           <div className='relative flex items-center mb3 cf f4 lh-title'>
             <Link to='/' className='self-grow-1 dib fl'><Icon type='arrow-left' /></Link>

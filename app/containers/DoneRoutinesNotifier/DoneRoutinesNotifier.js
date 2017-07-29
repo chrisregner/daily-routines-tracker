@@ -39,20 +39,35 @@ class PureDoneRoutinesNotifier extends React.Component {
 
     if (notifSound) {
       if (RoutinesThatShouldNotify && RoutinesThatShouldNotify.length > 0) {
+        const routineName = RoutinesThatShouldNotify[0].routineName
 
         if (!isPlaying) {
           notifSound.play()
           this.setState({ isPlaying: true })
 
+          this.origDocTitle = document.title
+          const title1 = 'Routine Completed:'
+          const title2 = `“${routineName}”`
+
+          document.title = title1
+          this.docTitleInterval = setInterval(() => {
+            console.log('DocTitleInterval!')
+
+            if (document.title === title1)
+              document.title = title2
+            else
+              document.title = title1
+          }, 2500)
+
           Modal.success({
             title: (
               <div>
                 You completed a routine: <br />
-                {RoutinesThatShouldNotify[0].routineName}
+                {routineName}
               </div>
             ),
             okText: 'Dismiss',
-            onOk: handleClearNotifs
+            onOk: this.handleModalDismiss
           })
         }
       } else if (isPlaying) {
@@ -60,6 +75,12 @@ class PureDoneRoutinesNotifier extends React.Component {
         notifSound.stop()
       }
     }
+  }
+
+  handleModalDismiss = () => {
+    this.props.handleClearNotifs()
+    document.title = this.origDocTitle
+    clearInterval(this.docTitleInterval)
   }
 
   render = () => (null)

@@ -3,6 +3,7 @@ import { expect } from 'chai'
 import { shallow, mount } from 'enzyme'
 import td from 'testdouble'
 import merge from 'lodash/merge'
+import lolex from 'lolex'
 
 import configureMockStore  from 'redux-mock-store'
 
@@ -158,12 +159,15 @@ describe('CONTAINER: DoneRoutinesNotifier', () => {
         td.verify(fakePlay(), { times: 0 })
         extractedComponentDidUpdate()
         td.verify(fakePlay(), { times: 1 })
+
+        // teardown
+        clearInterval(wrapper.instance().docTitleInterval)
       }
     )
 
     it(
       'when the sound is loaded, one or more routines should notify, and the sound is not ' +
-      'playing yet, show a modal with the routineName of first routine that should notify',
+      'playing yet, it should show a modal with the routineName of first routine that should notify',
       () => {
         const wrapper = createUnconnectedWrapper(
           {
@@ -184,6 +188,50 @@ describe('CONTAINER: DoneRoutinesNotifier', () => {
         expect(document.body.innerHTML).to.equal('')
         extractedComponentDidUpdate()
         expect(document.body.innerHTML).to.contain('Unique Routine Name')
+
+        // teardown
+        clearInterval(wrapper.instance().docTitleInterval)
+      }
+    )
+
+    it(
+      'when the sound is loaded, one or more routines should notify, and the sound is not ' +
+      'playing yet, it should change the document title in an interval',
+      () => {
+        const fakeClock = lolex.install()
+        const wrapper = createUnconnectedWrapper(
+          {
+            RoutinesThatShouldNotify: [
+              { routineName: 'Unique Routine Name' },
+            ]
+          }
+        )
+
+        const extractedComponentDidUpdate = wrapper.instance().componentDidUpdate
+        td.replace(wrapper.instance(), 'componentDidUpdate')
+
+        wrapper.setState({
+          notifSound: { play: () => {} }
+        })
+
+        const title1 = 'Routine Completed'
+        const title2 = 'Unique Routine Name'
+
+        document.title = ''
+        extractedComponentDidUpdate()
+        expect(document.title).to.contain(title1)
+        fakeClock.tick(2400)
+        expect(document.title).to.contain(title1)
+        fakeClock.tick(200)
+        expect(document.title).to.contain(title2)
+        fakeClock.tick(2500)
+        expect(document.title).to.contain(title1)
+        fakeClock.tick(2500)
+        expect(document.title).to.contain(title2)
+
+        // teardown
+        clearInterval(wrapper.instance().docTitleInterval)
+        fakeClock.uninstall()
       }
     )
 
@@ -195,13 +243,14 @@ describe('CONTAINER: DoneRoutinesNotifier', () => {
      * td.replace() seems to have its own problem with the babel-plugin-import module which we
      * need for Antd.
      *
-     * (2) We can't also test it by (2) clicking on actual DOM inserted by AntD Modal renderer
-     * into JSDOM because React (as used by AntD) has its own problems with fake DOM of JSDOM.
+     * (2) We can't also test it by clicking on actual DOM inserted by AntD Modal renderer into
+     * JSDOM because React (as used by AntD) has its own problems with fake DOM of JSDOM.
      */
     it.skip(
       'when the sound is loaded, one or more routines should notify, and the sound is not ' +
-      'playing yet, show a modal that calls the handleClearNotifs() prop when its dismiss button ' +
-      'is pressed',
+      'playing yet, it should show a modal that (1) calls the handleClearNotifs() prop, ' +
+      '(2) clears the page title change interval, and (3) restores the original page title when ' +
+      'its dismiss button is pressed',
       () => {
 
         const getDismissButton = () => {
@@ -232,6 +281,9 @@ describe('CONTAINER: DoneRoutinesNotifier', () => {
         td.verify(FakeHandleClearNotifs(), { times: 0, ignoreExtraArgs: true })
         getDismissButton().click()
         td.verify(FakeHandleClearNotifs(), { times: 1, ignoreExtraArgs: true })
+
+        // teardown
+        clearInterval(wrapper.instance().docTitleInterval)
       }
     )
 
@@ -265,6 +317,9 @@ describe('CONTAINER: DoneRoutinesNotifier', () => {
 
         // call times should still be 1 since it is playing already
         td.verify(fakePlay(), { times: 1 })
+
+        // teardown
+        clearInterval(wrapper.instance().docTitleInterval)
       }
     )
 
@@ -296,6 +351,9 @@ describe('CONTAINER: DoneRoutinesNotifier', () => {
 
       // it should call the fake stop
       td.verify(fakeNotifSound.stop(), { times: 1 })
+
+      // teardown
+      clearInterval(wrapper.instance().docTitleInterval)
     })
   })
 })

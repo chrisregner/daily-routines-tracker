@@ -23,9 +23,20 @@ describe('Page: HomePagePure', () => {
       : requiredProps
   }
 
+  after(() => {
+    document.title = ''
+  })
+
   it('should have <div /> as its root component', () => {
     const wrapper = shallow(<HomePagePure {...getRequiredProps()} />)
     expect(wrapper).to.match('div')
+  })
+
+  it('should set the page title on mount', () => {
+    expect(document.title).to.not.equal('Daily Routines Tracker')
+    const wrapper = shallow(<HomePagePure {...getRequiredProps()} />)
+    wrapper.instance().componentDidMount()
+    expect(document.title).to.equal('Daily Routines Tracker')
   })
 
   it('should render a PopulatedRoutineList with isSorting prop as false by default', () => {

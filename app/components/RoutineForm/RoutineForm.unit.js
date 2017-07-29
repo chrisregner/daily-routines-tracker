@@ -26,6 +26,41 @@ describe('COMPONENT: RoutineForm', () => {
     props,
   )
 
+  // Get to the renderer's actual root component
+  // by diving past the AntD's decoration layers
+  const diveThruAntDHOC = (wrpr) => wrpr.dive().dive()
+
+  afterEach(() => {
+    document.title = ''
+  })
+
+  it('should set the page title to \'Add New Routine\' if initialValues prop is not passed', () => {
+    expect(document.title).to.not.equal('Add New Routine')
+
+    const hocWrapper = shallow(<RoutineForm {...getRequiredProps()} />)
+    const wrapper = diveThruAntDHOC(hocWrapper)
+
+    wrapper.instance().componentDidMount()
+    expect(document.title).to.equal('Add New Routine')
+  })
+
+
+  it('should set the page title to \'Edit Routine\' if initialValues prop is passed', () => {
+    expect(document.title).to.not.equal('Edit Routine')
+
+    const hocWrapper = shallow(
+      <RoutineForm {...getRequiredProps({
+        initialValues: {
+          routineName: 'Initial Routine Name'
+        }
+      })} />
+    )
+    const wrapper = diveThruAntDHOC(hocWrapper)
+
+    wrapper.instance().componentDidMount()
+    expect(document.title).to.equal('Edit Routine')
+  })
+
   it('should render', () => {
     const routineForm = shallow(<RoutineForm {...getRequiredProps()} />)
     expect(routineForm).to.be.present()
@@ -34,10 +69,6 @@ describe('COMPONENT: RoutineForm', () => {
   /* ===============================
   =            The Form            =
   =============================== */
-
-  // Get to the renderer's actual root component
-  // by diving past the AntD's decoration layers
-  const diveThruAntDHOC = (wrpr) => wrpr.dive().dive()
 
   it('the render an AntD Form', () => {
     const routineForm = shallow(<RoutineForm {...getRequiredProps()} />)
