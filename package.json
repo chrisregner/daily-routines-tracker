@@ -33,6 +33,7 @@
     "eslint-plugin-promise": "^3.5.0",
     "eslint-plugin-react": "^7.1.0",
     "eslint-plugin-standard": "^3.0.1",
+    "howler": "^2.0.4",
     "jsdom": "^11.1.0",
     "lodash": "^4.17.4",
     "lolex": "^2.1.1",

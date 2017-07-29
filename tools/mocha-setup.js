@@ -3,6 +3,7 @@ import { JSDOM } from 'jsdom'
 import chai from 'chai'
 import chaiEnzyme from 'chai-enzyme'
 import chaiDeepMatch from 'chai-deep-match'
+import { HowlerGlobal } from 'howler'
 
 /* Setup virtual DOM */
 
@@ -19,6 +20,7 @@ const copyProps = (src, target) => {
 global.window = window
 global.document = window.document
 global.navigator = { userAgent: 'node.js' }
+global.HowlerGlobal = HowlerGlobal
 
 copyProps(window, global)
 
@@ -38,6 +40,8 @@ require.extensions['.svg'] = noop
 require.extensions['.jpg'] = noop
 require.extensions['.jpeg'] = noop
 require.extensions['.gif'] = noop
+// require.extensions['.mp3'] = noop
+// require.extensions['.ogg'] = noop
 
 /**
  * Temporary fix for chai

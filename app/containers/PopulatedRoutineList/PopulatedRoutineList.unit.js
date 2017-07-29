@@ -16,6 +16,7 @@ describe('CONTAINER: PopulatedRoutineList', () => {
     const initialState = { routines: [] }
     const requiredProps = {
       store: getMockStore(initialState),
+      isSorting: false,
     }
 
     const finalProps = passedProps

@@ -4,7 +4,7 @@ import moment from 'moment'
 import lolex from 'lolex'
 
 describe('ACTION: creators', () => {
-  let actions
+  let actions, fakeClock
 
   beforeEach(() => {
     actions = require('./actions')
@@ -13,6 +13,11 @@ describe('ACTION: creators', () => {
   afterEach(() => {
     td.reset()
     clearInterval(actions.getLastIntervalId())
+
+    if (fakeClock && fakeClock.uninstall) {
+      fakeClock.uninstall()
+      fakeClock = null
+    }
   })
 
   /*===================================================================
@@ -203,7 +208,7 @@ describe('ACTION: creators', () => {
       })
 
       it('should call dispatch (from second set of argument) the result of tickTracker right when its called, and then every 100ms after that', () => {
-        const clock = lolex.install()
+        fakeClock = lolex.install()
         const fakeGetState = () => ({ routines: [{ id: '123' }] })
         const fakeDispatch = td.function()
         actions.startTracker('123')(fakeDispatch, fakeGetState)
@@ -211,20 +216,17 @@ describe('ACTION: creators', () => {
         const expectedArg = actions.tickTracker()
 
         td.verify(fakeDispatch(expectedArg), { times: 0 })
-        clock.tick(50)
+        fakeClock.tick(50)
         td.verify(fakeDispatch(expectedArg), { times: 0 })
-        clock.tick(60)
+        fakeClock.tick(60)
         td.verify(fakeDispatch(expectedArg), { times: 1 })
-        clock.tick(300)
+        fakeClock.tick(300)
         td.verify(fakeDispatch(expectedArg), { times: 4 })
-
-        // teardown
-        clock.uninstall()
       })
 
       context('when 100ms is past after the target routine\'s timeLeft is set to 00:00:00.100', () => {
         it('should call clearInterval again with the last interval ID', () => {
-          const clock = lolex.install()
+          fakeClock = lolex.install()
           const clearInterval = td.replace(global, 'clearInterval')
           const fakeDispatch = () => {}
           const fakeGetState = () => ({
@@ -235,17 +237,14 @@ describe('ACTION: creators', () => {
           })
 
           actions.startTracker('123')(fakeDispatch, fakeGetState)
-          clock.tick(90)
+          fakeClock.tick(90)
           td.verify(clearInterval(actions.getLastIntervalId()), { times: 0 })
-          clock.tick(20)
+          fakeClock.tick(20)
           td.verify(clearInterval(actions.getLastIntervalId()), { times: 1 })
-
-          // teardown
-          clock.uninstall()
         })
 
         it('should dispatch tickTracker once again but no more after that', () => {
-          const clock = lolex.install()
+          fakeClock = lolex.install()
           const fakeDispatch = td.function()
           const fakeGetState = () => ({
             routines: [{
@@ -255,15 +254,12 @@ describe('ACTION: creators', () => {
           })
 
           actions.startTracker('123')(fakeDispatch, fakeGetState)
-          clock.tick(90)
+          fakeClock.tick(90)
           td.verify(fakeDispatch(actions.tickTracker()), { times: 0 })
-          clock.tick(20)
+          fakeClock.tick(20)
           td.verify(fakeDispatch(actions.tickTracker()), { times: 1 })
-          clock.tick(1000)
+          fakeClock.tick(1000)
           td.verify(fakeDispatch(actions.tickTracker()), { times: 1 })
-
-          // teardown
-          clock.uninstall()
         })
       })
 
@@ -405,6 +401,17 @@ describe('ACTION: creators', () => {
       payload: {
         routines: passedRoutines
       }
+    }
+
+    expect(actual).to.deep.equal(expected)
+  })
+
+  it('has action for clearing notification', () => {
+    const passedRoutines = 'passedRoutines'
+
+    const actual = actions.clearNotifs(passedRoutines)
+    const expected = {
+      type: 'CLEAR_NOTIFS'
     }
 
     expect(actual).to.deep.equal(expected)

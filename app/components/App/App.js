@@ -9,21 +9,27 @@ import {
 import HomePage from 'pages/HomePage'
 import AddNewRoutineForm from 'containers/AddNewRoutineForm'
 import EditRoutineForm from 'containers/EditRoutineForm'
+import DoneRoutinesNotifier from 'containers/DoneRoutinesNotifier'
 
 let StyledDiv
 
-const App = () => (<Router>
-  <StyledDiv>
-    <Switch>
-      <Route exact path='/' component={HomePage} />
-      <Route path='/routines/new' component={AddNewRoutineForm} />
-      <Route path='/routines/:id' component={EditRoutineForm} />
-    </Switch>
-  </StyledDiv>
-</Router>)
+class App extends React.Component {
+  render = () => (
+    <StyledDiv>
+        <Router>
+          <Switch>
+            <Route exact path='/' component={HomePage} />
+            <Route path='/routines/new' component={AddNewRoutineForm} />
+            <Route path='/routines/:id' component={EditRoutineForm} />
+          </Switch>
+        </Router>
+      <DoneRoutinesNotifier />
+    </StyledDiv>
+  )
+}
 
 StyledDiv = styled.div`
-  min-width: 310px;
+  min-width: 310px
 `
 
 export default App

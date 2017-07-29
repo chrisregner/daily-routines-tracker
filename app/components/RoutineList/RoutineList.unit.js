@@ -12,6 +12,7 @@ describe('COMPONENT: RoutineList', () => {
     handlers: {
       sampleHandler: () => {},
     },
+    isSorting: false,
     routines: [],
   }, props)
 

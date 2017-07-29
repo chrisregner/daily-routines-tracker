@@ -6,6 +6,7 @@ import td from 'testdouble'
 import moment from 'moment'
 import { Icon } from 'antd'
 
+import * as actions from 'duck/actions'
 import { PureRoutineItem as RoutineItem } from './RoutineItem'
 
 describe('COMPONENT: RoutineList/RoutineItem', () => {
@@ -26,6 +27,7 @@ describe('COMPONENT: RoutineList/RoutineItem', () => {
 
   after(() => {
     td.reset()
+    clearInterval(actions.getLastIntervalId())
   })
 
 

@@ -58,7 +58,10 @@ export const startTracker = (routineId) => (dispatch, getState) => {
   clearInterval(timer)
 
   timer = setInterval(() => {
-    const timeLeft = getRoutineById(getState(), routineId).timeLeft
+    let timeLeft
+
+    if (typeof getState === 'function')
+      timeLeft = getRoutineById(getState(), routineId).timeLeft
 
     dispatch(tickTracker())
 
@@ -117,5 +120,9 @@ export const setRoutines = (routines) => ({
   payload: {
     routines,
   }
+})
+
+export const clearNotifs = () => ({
+  type: actionTypes.CLEAR_NOTIFS
 })
 

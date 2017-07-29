@@ -1,6 +1,11 @@
 import loadRc from 'rc-config-loader'
 import { resolve } from 'path'
 
+console.log([
+  resolve(__dirname, '../public'),
+  resolve(__dirname, 'assets'),
+])
+
 let babelPlugins
 const babelConfig = loadRc('babel', {
   configFileName: resolve(__dirname, '../app/.babelrc'),

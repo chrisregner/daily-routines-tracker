@@ -13,7 +13,11 @@ const initialRoutinesState = [{
   duration: moment('00:00:01', 'HH:mm:ss'),
 }, {
   id: id.generate(),
-  routineName: 'pneumonoultramicroscopicsilicovolcanoconiosis',
+  routineName: 'Jog again',
+  duration: moment('00:00:01', 'HH:mm:ss'),
+}, {
+  id: id.generate(),
+  routineName: 'Treat my pneumonoultramicroscopicsilicovolcanoconiosis',
   duration: moment('08:00:00', 'HH:mm:ss'),
 }]
 
@@ -93,6 +97,7 @@ const routines = (state = initialRoutinesState, { type, payload }) => {
                 timeLeft: null,
                 isTracking: false,
                 isDone: true,
+                shouldNotify: true,
               }
             )
 
@@ -130,6 +135,7 @@ const routines = (state = initialRoutinesState, { type, payload }) => {
               timeLeft: null,
               isTracking: false,
               isDone: false,
+              shouldNotify: false,
             }
           )
 
@@ -161,6 +167,18 @@ const routines = (state = initialRoutinesState, { type, payload }) => {
             timeLeft: null,
             isTracking: false,
             isDone: false,
+            shouldNotify: false,
+          }
+        )
+      ))
+
+    case actionTypes.CLEAR_NOTIFS:
+      return state.map(routineObj => (
+        Object.assign(
+          {},
+          routineObj,
+          {
+            shouldNotify: false,
           }
         )
       ))
