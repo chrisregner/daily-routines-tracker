@@ -132,6 +132,23 @@ describe('Component: ActionBar', () => {
         })
       })
     })
+
+    describe('the \'export data\' button', () => {
+      it('should render one of it in the menu', () => {
+        const wrapper = getMenu()
+        expect(wrapper).to.have.exactly(1).descendants('.jsExportData')
+      })
+
+      it('should set visibleModal state to \'exportData\'')
+
+      describe('the \'export data\' modal', () => {
+        it('should render when visibleModal is set to \'exportData\'')
+        it('should NOT render when visibleModal is set not to \'exportData\'')
+        it('should have copy to clipboard button')
+        it('should contain the stateInJson prop')
+        it('should have dismiss button')
+      })
+    })
   })
 
 

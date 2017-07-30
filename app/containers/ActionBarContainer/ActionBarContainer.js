@@ -11,6 +11,7 @@ const mapDispatchToProps = dispatch => ({
 })
 
 const mapStateToProps = state => ({
+  stateInJson: JSON.stringify(state),
   isSorting: state.isSorting,
 })
 

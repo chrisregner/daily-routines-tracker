@@ -1,7 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import { Link } from 'react-router-dom'
-import { Icon, Button, Dropdown, Menu } from 'antd'
+import { Icon, Button, Dropdown, Menu, Modal } from 'antd'
 
 import c from 'services/convertVirtualClassNames'
 import { nonEmptyObjOfFunc } from 'services/customPropTypes'
@@ -13,6 +13,19 @@ class ActionBar extends React.Component {
     isSorting: PropTypes.bool,
   }
 
+  state = {
+    visibleModal: null,
+  }
+
+  handleShowModal = (e) => {
+    e.preventDefault()
+
+    const btnClassName = e.currentTarget.className
+
+    if (btnClassName.includes('jsExportData'))
+      this.setState({ visibleModal: 'exportData' })
+  }
+  handleDismissModal = () => { this.setState({ visibleModal: null }) }
   handleResetAllRoutines = () => { this.props.handlers.handleResetAllRoutines() }
   handleToggleSort = () => { this.props.handlers.handleToggleSort() }
 
@@ -75,6 +88,17 @@ class ActionBar extends React.Component {
           )
         }
       </div>
+
+      {/*<Modal
+        title="Basic Modal"
+        visible={this.state.visible}
+        onOk={this.handleOk}
+        onCancel={this.handleCancel}
+      >
+        <p>Some contents...</p>
+        <p>Some contents...</p>
+        <p>Some contents...</p>
+      </Modal>*/}
     </div>
   )
 }

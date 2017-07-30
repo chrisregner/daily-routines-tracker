@@ -64,6 +64,37 @@ describe('CONTAINER: ActionBar', () => {
       testWithIsSortingSetTo(false)
     })
 
+    it('should receive stateInJson that is the whole state in JSON format', () => {
+        const initialState = {
+          isSorting: true,
+          routines: [
+            {
+              id: '1',
+              routineName: 'Routine One',
+              duration: new Date(),
+              timeLeft: null,
+              isTracking: false,
+              isDone: false,
+            },
+            {
+              id: '2',
+              routineName: 'Routine Two',
+              duration: new Date(),
+              timeLeft: null,
+              isDone: true,
+            }
+          ]
+        }
+        const wrapper = createInstance({
+          store: getMockStore(initialState),
+        })
+
+        const expected = JSON.stringify(initialState)
+        const actual = wrapper.dive().prop('stateInJson')
+
+        expect(actual).to.equal(expected)
+    })
+
     describe('handlers {} prop', () => {
       it('should be an object passed to <RoutineList />', () => {
         const wrapper = createInstance()
