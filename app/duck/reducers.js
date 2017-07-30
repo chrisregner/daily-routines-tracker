@@ -200,10 +200,21 @@ const routines = (state = initialRoutinesState, { type, payload }) => {
   }
 }
 
-const rootReducer = combineReducers({ routines })
+const isSorting = (state = false, { type, payload }) => {
+  switch (type) {
+    case actionTypes.TOGGLE_SORT:
+      return !state
+
+    default:
+      return state
+  }
+}
+
+const rootReducer = combineReducers({ routines, isSorting })
 
 
 export default rootReducer
 export {
-  routines
+  routines,
+  isSorting,
 }

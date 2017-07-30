@@ -5,6 +5,7 @@ import RoutineList from 'components/RoutineList'
 
 const mapStateToProps = state => ({
   routines: state.routines,
+  isSorting: state.isSorting,
 })
 
 const mapDispatchToProps = dispatch => ({

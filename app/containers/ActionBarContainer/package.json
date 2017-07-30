@@ -1,0 +1,6 @@
+{
+  "name:": "ActionBarContainer",
+  "version": "0.0.0",
+  "private": true,
+  "main": "./ActionBarContainer.js"
+}

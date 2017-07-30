@@ -13,10 +13,12 @@ describe('CONTAINER: PopulatedRoutineList', () => {
   let PopulatedRoutineList
   const getMockStore = configureMockStore()
   const createInstance = (passedProps) => {
-    const initialState = { routines: [] }
+    const initialState = {
+      isSorting: false,
+      routines: []
+    }
     const requiredProps = {
       store: getMockStore(initialState),
-      isSorting: false,
     }
 
     const finalProps = passedProps
@@ -46,7 +48,8 @@ describe('CONTAINER: PopulatedRoutineList', () => {
     it('should receive the routines from state as props', () => {
       const testSpecWithRoutines = (routines) => {
         const initialState = {
-          routines
+          routines,
+          isSorting: false,
         }
 
         const wrapper = createInstance({
@@ -64,6 +67,26 @@ describe('CONTAINER: PopulatedRoutineList', () => {
         { id: '456' },
         { id: '143' },
       ])
+    })
+
+    it('should receive isSorting from state as prop', () => {
+      const testWithIsSortingSetTo = (isSorting) => {
+        const initialState = {
+          routines: [],
+          isSorting: isSorting,
+        }
+
+        const wrapper = createInstance({
+          store: getMockStore(initialState),
+        })
+
+        const wrappedComponent = wrapper.dive()
+
+        expect(wrappedComponent).to.have.prop('isSorting', isSorting)
+      }
+
+      testWithIsSortingSetTo(true)
+      testWithIsSortingSetTo(false)
     })
 
     describe('handlers {} prop', () => {
@@ -92,7 +115,11 @@ describe('CONTAINER: PopulatedRoutineList', () => {
 
           PopulatedRoutineList = require('./PopulatedRoutineList').default
 
-          const initialState = { routines: [] }
+          const initialState = {
+            routines: [],
+            isSorting: false
+          }
+
           const mockStore = getMockStore(initialState)
           const dispatch = td.replace(mockStore, 'dispatch')
 
@@ -123,7 +150,11 @@ describe('CONTAINER: PopulatedRoutineList', () => {
 
           PopulatedRoutineList = require('./PopulatedRoutineList').default
 
-          const initialState = { routines: [] }
+          const initialState = {
+            routines: [],
+            isSorting: false
+          }
+
           const mockStore = getMockStore(initialState)
           const dispatch = td.replace(mockStore, 'dispatch')
 
@@ -154,7 +185,11 @@ describe('CONTAINER: PopulatedRoutineList', () => {
 
           PopulatedRoutineList = require('./PopulatedRoutineList').default
 
-          const initialState = { routines: [] }
+          const initialState = {
+            routines: [],
+            isSorting: false
+          }
+
           const mockStore = getMockStore(initialState)
           const dispatch = td.replace(mockStore, 'dispatch')
 
@@ -186,7 +221,11 @@ describe('CONTAINER: PopulatedRoutineList', () => {
 
           PopulatedRoutineList = require('./PopulatedRoutineList').default
 
-          const initialState = { routines: [] }
+          const initialState = {
+            routines: [],
+            isSorting: false
+          }
+
           const mockStore = getMockStore(initialState)
           const dispatch = td.replace(mockStore, 'dispatch')
 

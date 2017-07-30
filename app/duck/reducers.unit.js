@@ -955,4 +955,16 @@ describe('REDUCER: routines', () => {
 
     expect(actualState).to.deep.equal(expectedState)
   })
+
+  /*===================================================
+  =            Misc Actions for Root State            =
+  ===================================================*/
+
+  it('can handle TOGGLE_SORT', () => {
+    const actual1 = reducers.isSorting(true, { type: 'TOGGLE_SORT' })
+    expect(actual1).to.deep.equal(false)
+
+    const actual2 = reducers.isSorting(false, { type: 'TOGGLE_SORT' })
+    expect(actual2).to.deep.equal(true)
+  })
 })

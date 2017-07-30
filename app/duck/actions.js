@@ -132,3 +132,10 @@ export const clearNotifs = () => ({
   type: actionTypes.CLEAR_NOTIFS
 })
 
+/*===================================================
+=            Misc Actions for Root State            =
+===================================================*/
+
+export const toggleSort = () => ({
+  type: actionTypes.TOGGLE_SORT
+})

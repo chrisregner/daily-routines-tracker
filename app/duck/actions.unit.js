@@ -475,5 +475,18 @@ describe('ACTION: creators', () => {
 
     expect(actual).to.deep.equal(expected)
   })
+
+  /*===================================================
+  =            Misc Actions for Root State            =
+  ===================================================*/
+
+  it('has action for toggling sort', () => {
+    const actual = actions.toggleSort()
+    const expected = {
+      type: 'TOGGLE_SORT'
+    }
+
+    expect(actual).to.deep.equal(expected)
+  })
 })
 

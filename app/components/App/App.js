@@ -6,7 +6,7 @@ import {
   Switch,
 } from 'react-router-dom'
 
-import HomePage from 'pages/HomePage'
+import HomePage from 'components/HomePage'
 import AddNewRoutineForm from 'containers/AddNewRoutineForm'
 import EditRoutineForm from 'containers/EditRoutineForm'
 import DoneRoutinesNotifier from 'containers/DoneRoutinesNotifier'
