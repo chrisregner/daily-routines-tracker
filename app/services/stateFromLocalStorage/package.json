@@ -1,6 +1,0 @@
-{
-  "name:": "stateFromLocalStorage",
-  "version": "0.0.0",
-  "private": true,
-  "main": "./stateFromLocalStorage.js"
-}

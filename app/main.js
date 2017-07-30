@@ -7,10 +7,15 @@ import moment from 'moment'
 
 import App from 'components/App'
 import configureStore from 'duck/store'
-import stateFromLocalStorage from 'services/stateFromLocalStorage'
+import deriveStateFromLocalData from 'services/deriveStateFromLocalData'
 import './styles/main.css'
 
-const store = configureStore(stateFromLocalStorage)
+const stateFromLocalData = deriveStateFromLocalData(
+    window.localStorage.getItem('state'),
+    window.localStorage.getItem('timeLastOpen'),
+  )
+
+const store = configureStore(stateFromLocalData)
 
 const render = Component => {
   ReactDOM.render(

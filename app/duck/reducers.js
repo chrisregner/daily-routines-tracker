@@ -66,12 +66,15 @@ const routines = (state = initialRoutinesState, { type, payload }) => {
     case actionTypes.START_TRACKER:
       return state.map(routineObj => {
         if (routineObj.id === payload.id) {
-          if (!routineObj.isTracking)
-            return Object.assign(
-              {},
-              routineObj,
-              { isTracking: true }
-            )
+          const { duration, timeLeft } = routineObj
+          return Object.assign(
+            {},
+            routineObj,
+            { isTracking: true },
+            timeLeft
+              ? {}
+              : { timeLeft: duration.clone() }
+          )
         } else if (routineObj.isTracking) {
           return Object.assign(
             {},
@@ -88,11 +91,13 @@ const routines = (state = initialRoutinesState, { type, payload }) => {
         if (routineObj.isTracking) {
           const { timeLeft, duration } = routineObj
           const timeToSubtract = timeLeft || duration
-          const oneHundredMsBeforeZero = moment('00:00:00.100', durationWithMsFormat)
 
           if (
             timeLeft
-            && timeLeft.format(durationWithMsFormat) === oneHundredMsBeforeZero.format(durationWithMsFormat)
+            && (
+              timeLeft.format('HH:mm:ss.S') === '00:00:00.1'
+              || timeLeft.format('HH:mm:ss.S') === '00:00:00.0'
+            )
           )
             return Object.assign(
               {},

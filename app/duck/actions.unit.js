@@ -5,12 +5,7 @@ import lolex from 'lolex'
 
 describe('ACTION: creators', () => {
   let actions, fakeClock
-
-  beforeEach(() => {
-    actions = require('./actions')
-  })
-
-  afterEach(() => {
+  const teardown = () => {
     td.reset()
     clearInterval(actions.getLastIntervalId())
 
@@ -18,6 +13,15 @@ describe('ACTION: creators', () => {
       fakeClock.uninstall()
       fakeClock = null
     }
+  }
+
+  beforeEach(() => {
+    actions = require('./actions')
+  })
+
+
+  afterEach(() => {
+    teardown()
   })
 
   /*===================================================================
@@ -224,42 +228,97 @@ describe('ACTION: creators', () => {
         td.verify(fakeDispatch(expectedArg), { times: 4 })
       })
 
-      context('when 100ms is past after the target routine\'s timeLeft is set to 00:00:00.100', () => {
+      context('when 100ms is past after the target routine\'s timeLeft value was equal or less than 00:00:00.100', () => {
         it('should call clearInterval again with the last interval ID', () => {
-          fakeClock = lolex.install()
-          const clearInterval = td.replace(global, 'clearInterval')
-          const fakeDispatch = () => {}
-          const fakeGetState = () => ({
-            routines: [{
-              id: '123',
-              timeLeft: moment('00:00:00.100', 'HH:mm:ss.SSS'),
-            }]
-          })
+          const testWhereTimeLeftWasEqual100ms = () => {
+            fakeClock = lolex.install()
+            const clearInterval = td.replace(global, 'clearInterval')
+            const fakeDispatch = () => {}
+            const fakeGetState = () => ({
+              routines: [{
+                id: '123',
+                timeLeft: moment('00:00:00.100', 'HH:mm:ss.SSS'),
+              }]
+            })
 
-          actions.startTracker('123')(fakeDispatch, fakeGetState)
-          fakeClock.tick(90)
-          td.verify(clearInterval(actions.getLastIntervalId()), { times: 0 })
-          fakeClock.tick(20)
-          td.verify(clearInterval(actions.getLastIntervalId()), { times: 1 })
+            actions.startTracker('123')(fakeDispatch, fakeGetState)
+            fakeClock.tick(90)
+            td.verify(clearInterval(actions.getLastIntervalId()), { times: 0 })
+            fakeClock.tick(20)
+            td.verify(clearInterval(actions.getLastIntervalId()), { times: 1 })
+
+            teardown()
+          }
+
+          const testWhereTimeLeftWasLessThan100ms = () => {
+            fakeClock = lolex.install()
+            const clearInterval = td.replace(global, 'clearInterval')
+            const fakeDispatch = () => {}
+            const fakeGetState = () => ({
+              routines: [{
+                id: '123',
+                timeLeft: moment('00:00:00.010', 'HH:mm:ss.SSS'),
+              }]
+            })
+
+            actions.startTracker('123')(fakeDispatch, fakeGetState)
+            fakeClock.tick(90)
+            td.verify(clearInterval(actions.getLastIntervalId()), { times: 0 })
+            fakeClock.tick(20)
+            td.verify(clearInterval(actions.getLastIntervalId()), { times: 1 })
+
+            teardown()
+          }
+
+          testWhereTimeLeftWasEqual100ms()
+          testWhereTimeLeftWasLessThan100ms()
         })
 
         it('should dispatch tickTracker once again but no more after that', () => {
-          fakeClock = lolex.install()
-          const fakeDispatch = td.function()
-          const fakeGetState = () => ({
-            routines: [{
-              id: '123',
-              timeLeft: moment('00:00:00.100', 'HH:mm:ss.SSS'),
-            }]
-          })
+          const testWhereTimeLeftWasEqual100ms = () => {
+            fakeClock = lolex.install()
+            const fakeDispatch = td.function()
+            const fakeGetState = () => ({
+              routines: [{
+                id: '123',
+                timeLeft: moment('00:00:00.100', 'HH:mm:ss.SSS'),
+              }]
+            })
 
-          actions.startTracker('123')(fakeDispatch, fakeGetState)
-          fakeClock.tick(90)
-          td.verify(fakeDispatch(actions.tickTracker()), { times: 0 })
-          fakeClock.tick(20)
-          td.verify(fakeDispatch(actions.tickTracker()), { times: 1 })
-          fakeClock.tick(1000)
-          td.verify(fakeDispatch(actions.tickTracker()), { times: 1 })
+            actions.startTracker('123')(fakeDispatch, fakeGetState)
+            fakeClock.tick(90)
+            td.verify(fakeDispatch(actions.tickTracker()), { times: 0 })
+            fakeClock.tick(20)
+            td.verify(fakeDispatch(actions.tickTracker()), { times: 1 })
+            fakeClock.tick(1000)
+            td.verify(fakeDispatch(actions.tickTracker()), { times: 1 })
+
+            teardown()
+          }
+
+          const testWhereTimeLeftWasLessThan100ms = () => {
+            fakeClock = lolex.install()
+            const fakeDispatch = td.function()
+            const fakeGetState = () => ({
+              routines: [{
+                id: '123',
+                timeLeft: moment('00:00:00.100', 'HH:mm:ss.SSS'),
+              }]
+            })
+
+            actions.startTracker('123')(fakeDispatch, fakeGetState)
+            fakeClock.tick(90)
+            td.verify(fakeDispatch(actions.tickTracker()), { times: 0 })
+            fakeClock.tick(20)
+            td.verify(fakeDispatch(actions.tickTracker()), { times: 1 })
+            fakeClock.tick(1000)
+            td.verify(fakeDispatch(actions.tickTracker()), { times: 1 })
+
+            teardown()
+          }
+
+          testWhereTimeLeftWasEqual100ms()
+          testWhereTimeLeftWasLessThan100ms()
         })
       })
 

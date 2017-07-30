@@ -45,7 +45,9 @@ TODO
     - apply
   - search and apply other important types of test
 - misc
-  - acknowledge for used notif audio file
+  - acknowledgement for used notif audio file
+    - https://freesound.org/people/hykenfreak/sounds/202029/
+    - https://freesound.org/people/hykenfreak/
   - maybe rethink of the name
   - file Ant Design issues
     - decorated componet's display name isn't preserved
@@ -80,7 +82,7 @@ Features To do list
   - [done] Resetting all trackers
 - [done] Toggling a routine completed
 - Routines data
-  - Persisting the data in local storage
+  - [done] Persisting the data in local storage
   - Exporting data
   - Importing data
 - UX
