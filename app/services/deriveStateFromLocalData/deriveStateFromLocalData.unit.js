@@ -3,6 +3,7 @@ import td from 'testdouble'
 import moment from 'moment'
 import lolex from 'lolex'
 
+import createMomentDerivedFromIso from 'services/createMomentDerivedFromIso'
 import deriveStateFromLocalData from './deriveStateFromLocalData'
 
 describe('deriveStateFromLocalData', () => {
@@ -16,8 +17,8 @@ describe('deriveStateFromLocalData', () => {
   })
 
   /*
-   * Note: Read this if you wonder why we needed code like
-   * `moment(moment('2013-02-08 09:30:26.123').toJSON())` in here
+   * Note: Read this if you wonder why we needed to use createMomentDerivedFromIso() instead of
+   *   moment()
    *
    * Moment object values of the actual result is expected to be derived from ISO 8601 string,
    * and the fact that it is created from ISO 8601 is saved will be saved on those moment
@@ -26,7 +27,7 @@ describe('deriveStateFromLocalData', () => {
    * the deep comparison will fail.
    *
    * Because of that we need it to campare it to an object whose moment object values are also
-   * derived from ISO 8601, thus we use this function:
+   * derived from ISO 8601, thus we createMomentDerivedFromIso() that does this:
    *
    *     moment( moment('<moment friendly string here>').toJSON() )
    *       ^                                                ^
@@ -35,9 +36,6 @@ describe('deriveStateFromLocalData', () => {
    *       ^
    *     and this would derive **from an ISO 8601** string
    */
-  const createMomentDerivedFromIso = (...argsForMoment) => (
-    moment(moment(...argsForMoment).toJSON())
-  )
 
   it('should be a function', () => {
     expect(deriveStateFromLocalData).to.be.a('function')

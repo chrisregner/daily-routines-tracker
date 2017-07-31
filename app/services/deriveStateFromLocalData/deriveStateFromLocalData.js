@@ -1,18 +1,15 @@
 import deepMap from 'deep-map'
 import moment from 'moment'
-import { isoRegex } from 'constants/timeFormats'
 import merge from 'lodash/merge'
+
+import momentifyObject from 'services/momentifyObject'
 
 export default (localStateJson, timeLastTrackedJson) => {
   if (localStateJson) {
     const localState = JSON.parse(localStateJson)
 
     // momentifiedState... cause we will convert any ISO 8601 string into moment
-    const momentifiedState = deepMap(localState, (val) => (
-      (typeof val === 'string' && isoRegex.test(val))
-      ? moment(val)
-      : val
-    ))
+    const momentifiedState = momentifyObject(localState)
 
     return merge(
       {},

@@ -1,7 +1,8 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import { Link } from 'react-router-dom'
-import { Icon, Button, Dropdown, Menu, Modal } from 'antd'
+import { Alert, Icon, Button, Dropdown, Menu, Modal, Input } from 'antd'
+import CopyToClipboard from 'react-copy-to-clipboard'
 
 import c from 'services/convertVirtualClassNames'
 import { nonEmptyObjOfFunc } from 'services/customPropTypes'
@@ -11,21 +12,21 @@ class ActionBar extends React.Component {
   static propTypes = {
     handlers: nonEmptyObjOfFunc,
     isSorting: PropTypes.bool,
+    stateInJson: PropTypes.string,
   }
 
   state = {
     visibleModal: null,
   }
 
-  handleShowModal = (e) => {
-    e.preventDefault()
-
-    const btnClassName = e.currentTarget.className
-
-    if (btnClassName.includes('jsExportData'))
-      this.setState({ visibleModal: 'exportData' })
+  handleCopy = () => { this.setState({ hasCopied: true }) }
+  handleShowExportModal = (e) => { this.setState({ visibleModal: 'exportData' }) }
+  handleDismissModal = () => {
+    this.setState({
+      hasCopied: false,
+      visibleModal: null,
+    })
   }
-  handleDismissModal = () => { this.setState({ visibleModal: null }) }
   handleResetAllRoutines = () => { this.props.handlers.handleResetAllRoutines() }
   handleToggleSort = () => { this.props.handlers.handleToggleSort() }
 
@@ -74,7 +75,7 @@ class ActionBar extends React.Component {
                     </button>
                   </Menu.Item>
                   <Menu.Item>
-                    <button className={c('-btn-reset')}>
+                    <button className={c('jsExportDataBtn -btn-reset')} onClick={this.handleShowExportModal}>
                       Export Routines
                     </button>
                   </Menu.Item>
@@ -89,16 +90,46 @@ class ActionBar extends React.Component {
         }
       </div>
 
-      {/*<Modal
-        title="Basic Modal"
-        visible={this.state.visible}
-        onOk={this.handleOk}
-        onCancel={this.handleCancel}
+      <Modal
+        className='jsExportDataModal'
+        style={{ top: 70 }}
+        title="Export Data"
+        visible={this.state.visibleModal === 'exportData'}
+        onCancel={this.handleDismissModal}
+        footer={(
+          <div>
+            <Button className='jsExportDataDismiss' onClick={this.handleDismissModal}>
+              Dismiss
+            </Button>
+            <CopyToClipboard
+              text={this.props.stateInJson}
+              onCopy={this.handleCopy}
+            >
+              <Button
+                className='jsExportDataCopy'
+                type="primary"
+              >
+                Copy to Clipboard
+              </Button>
+            </CopyToClipboard>
+          </div>
+        )}
       >
-        <p>Some contents...</p>
-        <p>Some contents...</p>
-        <p>Some contents...</p>
-      </Modal>*/}
+        {
+          this.state.hasCopied
+          && <Alert
+            className='mb2'
+            message="Copied to clipboard"
+            type="success"
+            showIcon
+          />
+        }
+        <p className='mb3 f6 lh-copy'>
+          Please copy the text below. You can use it by clicking ‘Import Data’ button (just below
+          the ‘Export Data’ button) and pasting the text in the textbox that will appear.
+        </p>
+        <Input.TextArea value={this.props.stateInJson} rows={4} readOnly />
+      </Modal>
     </div>
   )
 }

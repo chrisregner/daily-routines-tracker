@@ -64,7 +64,9 @@ class RoutineItem extends React.Component {
       <s.RootDiv
         role='listitem'
         className={c(
-          isDone ? 'isDone green' : 'dark-gray'
+          isDone && 'isDone green',
+          isTracking && 'gold',
+          (!isDone && !isTracking) && 'dark-gray',
         )}
       >
         <div
