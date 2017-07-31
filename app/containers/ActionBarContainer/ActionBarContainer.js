@@ -14,23 +14,21 @@ const mapDispatchToProps = dispatch => ({
       const dataParsed = JSON.parse(dataInJson)
       const dataMomentified = momentifyObject(dataParsed)
 
-      const objWithRoutinesSchema = Joi.object().keys({
-        routines: Joi.array().items(
-          Joi.object().keys({
-            id: Joi.string().required(),
-            routineName: Joi.string().required(),
-            isTracking: Joi.boolean(),
-            isDone: Joi.boolean(),
-            shouldNotify: Joi.boolean(),
-            duration: Joi.alternatives().try(Joi.any().allow(null), Joi.object().type(moment)),
-            timeLeft: Joi.alternatives().try(Joi.any().allow(null), Joi.object().type(moment)),
-          }).required()
-        )
-      })
+      const routinesSchema = Joi.array().items(
+        Joi.object().keys({
+          id: Joi.string().required(),
+          routineName: Joi.string().required(),
+          isTracking: Joi.boolean(),
+          isDone: Joi.boolean(),
+          shouldNotify: Joi.boolean(),
+          duration: Joi.alternatives().try(Joi.any().allow(null), Joi.object().type(moment)),
+          timeLeft: Joi.alternatives().try(Joi.any().allow(null), Joi.object().type(moment)),
+        })
+      ).required()
 
-      objWithRoutinesSchema.validate(dataMomentified, (err, value) => {
+      routinesSchema.validate(dataMomentified, (err, value) => {
         if (err)
-          throw err
+          throw new Error(err)
         else
           dispatch(actions.setRoutines(value))
       })

@@ -17,7 +17,8 @@ describe('Component: ActionBar', () => {
       isSorting: false,
       stateInJson: 'fallBackStateInJson',
       handlers: {
-        handleResetAllRoutines: () => {}
+        handleResetAllRoutines: () => {},
+        handleImportData: () => {},
       }
     }
 
@@ -265,7 +266,7 @@ describe('Component: ActionBar', () => {
       })
     })
 
-    describe.skip('the \'import data\' button', () => {
+    describe('the \'import data\' button', () => {
       it('should render one of it in the menu', () => {
         const wrapper = getMenu()
         expect(wrapper).to.have.exactly(1).descendants('.jsImportDataBtn')
@@ -282,30 +283,165 @@ describe('Component: ActionBar', () => {
 
       describe('the \'import data\' modal', () => {
         it('should contain an AntD <Input.TextArea />', () => {
-          const wrapper = shallow(
-            <ActionBar {...getRequiredProps({ stateInJson: passedStateInJson })} />
-          )
+          const wrapper = shallow(<ActionBar {...getRequiredProps()} />)
 
-          expect(wrapper).to.have.exactly(1).descendants(Input.TextArea)
+          expect(wrapper.find('.jsImportDataModal')).to.have.exactly(1).descendants(Input.TextArea)
         })
 
-        describe('the \'onOk\' event of \'import data\'', () => {
-          it('should call the handlers.handleImport() prop with the TextArea value')
+        describe('the Antd <Input.TextArea />', () => {
+          it('should be a controlled input', () => {
+            const wrapper = shallow(<ActionBar {...getRequiredProps()} />)
+            const inputData = 'Unique Input Data'
 
-          context('when handlers.handleImport() prop returns true', () => {
-            it('should display the import success modal')
+            wrapper.find('.jsImportDataField').simulate('change', {
+              target: {
+                value: inputData
+              }
+            })
+
+            expect(wrapper.find('.jsImportDataField')).to.have.prop('value', inputData)
+          })
+        })
+
+        describe('the \'onCancel\' handler of \'import data\' modal', () => {
+          const rootWrapper = shallow(<ActionBar {...getRequiredProps()} />)
+          const menuWrapper = getMenu(rootWrapper)
+
+          menuWrapper.find('.jsImportDataBtn').simulate('click')
+          expect(rootWrapper.find('.jsImportDataModal')).to.have.prop('visible', true)
+          rootWrapper.find('.jsImportDataModal').prop('onCancel')()
+          expect(rootWrapper.find('.jsImportDataModal')).to.have.prop('visible', false)
+        })
+
+        describe('the \'onOk\' handler of \'import data\' modal', () => {
+          it('should call the handlers.handleImport() prop with the TextArea value', () => {
+            const fakeHandleImportData = td.function()
+            const wrapper = shallow(
+              <ActionBar {...getRequiredProps({
+                handlers: {
+                  handleImportData: fakeHandleImportData,
+                }
+              })} />
+            )
+            const inputData = 'Unique Input Data'
+
+            wrapper.find('.jsImportDataField').simulate('change', {
+              target: {
+                value: inputData
+              }
+            })
+
+
+            td.verify(fakeHandleImportData(inputData), { times: 0 })
+            wrapper.find('.jsImportDataModal').prop('onOk')()
+
+            td.verify(fakeHandleImportData(inputData), { times: 1 })
+          })
+
+          context('when handlers.handleImport()', () => {
+            it('should display the import success alert', () => {
+              const fakeHandleImportData = td.function()
+              const wrapper = shallow(
+                <ActionBar {...getRequiredProps({
+                  handlers: {
+                    handleImportData: fakeHandleImportData,
+                  }
+                })} />
+              )
+              const inputData = 'Unique Input Data'
+
+              wrapper.find('.jsImportDataField').simulate('change', {
+                target: {
+                  value: inputData
+                }
+              })
+
+              const findAlert = (wrpr) => wrpr.find('.jsImportDataModal').find(Alert)
+
+              expect(findAlert(wrapper)).to.have.lengthOf(0)
+              wrapper.find('.jsImportDataModal').prop('onOk')()
+              expect(findAlert(wrapper)).to.have.lengthOf(1)
+              expect(findAlert(wrapper)).to.have.prop('type', 'success')
+            })
+
+            it('should hide the alert on modal dismiss', () => {
+              const fakeHandleImportData = td.function()
+              const wrapper = shallow(
+                <ActionBar {...getRequiredProps({
+                  handlers: {
+                    handleImportData: fakeHandleImportData,
+                  }
+                })} />
+              )
+              const inputData = 'Unique Input Data'
+
+              wrapper.find('.jsImportDataField').simulate('change', {
+                target: {
+                  value: inputData
+                }
+              })
+
+              wrapper.find('.jsImportDataModal').prop('onOk')()
+              expect(wrapper.find('.jsImportDataModal')).to.have.exactly(1).descendants(Alert)
+              wrapper.find('.jsImportDataModal').prop('onCancel')()
+              expect(wrapper.find('.jsImportDataModal')).to.have.exactly(0).descendants(Alert)
+            })
           })
 
           context('when handlers.handleImport() prop throws an error', () => {
-            it('should display the import fail message')
+            it('should display the import error alert', () => {
+              const fakeHandleImportData = td.function()
+              td.when(fakeHandleImportData(td.matchers.anything())).thenThrow(new Error())
+
+              const wrapper = shallow(
+                <ActionBar {...getRequiredProps({
+                  handlers: {
+                    handleImportData: fakeHandleImportData,
+                  }
+                })} />
+              )
+              const inputData = 'Unique Input Data'
+
+              wrapper.find('.jsImportDataField').simulate('change', {
+                target: {
+                  value: inputData
+                }
+              })
+
+              const findAlert = (wrpr) => wrpr.find('.jsImportDataModal').find(Alert)
+
+              expect(findAlert(wrapper)).to.have.lengthOf(0)
+              wrapper.find('.jsImportDataModal').prop('onOk')()
+              expect(findAlert(wrapper)).to.have.lengthOf(1)
+              expect(findAlert(wrapper)).to.have.prop('type', 'error')
+            })
+
+            it('should hide the alert on modal dismiss', () => {
+              const fakeHandleImportData = td.function()
+              const wrapper = shallow(
+                <ActionBar {...getRequiredProps({
+                  handlers: {
+                    handleImportData: fakeHandleImportData,
+                  }
+                })} />
+              )
+              const inputData = 'Unique Input Data'
+
+              wrapper.find('.jsImportDataField').simulate('change', {
+                target: {
+                  value: inputData
+                }
+              })
+
+              td.when(fakeHandleImportData(td.matchers.anything())).thenThrow(new Error())
+              wrapper.find('.jsImportDataModal').prop('onOk')()
+              expect(wrapper.find('.jsImportDataModal')).to.have.exactly(1).descendants(Alert)
+              wrapper.find('.jsImportDataModal').prop('onCancel')()
+              expect(wrapper.find('.jsImportDataModal')).to.have.exactly(0).descendants(Alert)
+            })
           })
         })
       })
-    })
-
-    describe('success modal', () => {
-      it('should render one of itself')
-      it('should have a working dismiss prop')
     })
   })
 

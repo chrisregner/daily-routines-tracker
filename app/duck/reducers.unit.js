@@ -54,29 +54,27 @@ describe('REDUCER: routines', () => {
   =            Actions for routines' basic CRUD operations            =
   ===================================================================*/
 
-  it.skip('should return the initial state', () => {
-    const expectedStatePart = [{
-      routineName: 'Jog',
-      duration: moment('00:00:01', 'HH:mm:ss'),
+  it('should return the initial state', () => {
+    const expected = [{
+      id: '1',
+      routineName: 'Click that --->',
+      duration: moment('00:00:03', 'HH:mm:ss'),
     }, {
-      routineName: 'pneumonoultramicroscopicsilicovolcanoconiosis',
+      id: '2',
+      routineName: 'Code',
       duration: moment('08:00:00', 'HH:mm:ss'),
+    }, {
+      id: '3',
+      routineName: 'Read',
     }]
 
-    const actualState = reducers.routines(undefined, {})
-    const noOfDiffThatIsOnlyId = diffThatIsIdOnly(expectedStatePart, actualState)
-    const expectedNoOfDiff = 2
+    const actual = reducers.routines(undefined, {})
 
-    expect(noOfDiffThatIsOnlyId).to.equal(expectedNoOfDiff)
+    expect(actual).to.deep.equal(actual)
   })
 
   it('can handle ADD_ROUTINE', () => {
     const testAddingOneRoutineToTwo = () => {
-      const payload = {
-        routineName: 'Do something new',
-        duration: moment('03:33:33', 'HH:mm:ss'),
-      }
-
       const initialState = [
         {
           id: '1',
@@ -90,43 +88,58 @@ describe('REDUCER: routines', () => {
         },
       ]
 
-      const action = {
-        type: 'ADD_ROUTINE',
-        payload,
-      }
-
-      const expectedState = [
-        payload,
-        ...initialState,
+      const expected = [
+        {
+          routineName: 'Do something new',
+          duration: moment('03:33:33', 'HH:mm:ss'),
+        },
+        {
+          id: '1',
+          routineName: 'Do something',
+          duration: moment('11:11:11', 'HH:mm:ss'),
+        },
+        {
+          id: '2',
+          routineName: 'Do another thing',
+          duration: moment('22:22:22', 'HH:mm:ss'),
+        },
       ]
 
-      const actualState = reducers.routines(initialState, action)
-      const noOfDiffThatIsOnlyId = diffThatIsIdOnly(expectedState, actualState)
-      const expectedNoOfIdAdded = 1
+      const actual = reducers.routines(initialState, {
+        type: 'ADD_ROUTINE',
+        payload: {
+          routineName: 'Do something new',
+          duration: moment('03:33:33', 'HH:mm:ss'),
+        },
+      })
 
-      expect(noOfDiffThatIsOnlyId).to.equal(expectedNoOfIdAdded)
+      expect(actual).to.deep.match(expected)
     }
 
     const testAddingOneRoutineToZero = () => {
       const payload = {
-        routineName: 'This will be the only thing to do.',
+        routineName: 'Do something new',
         duration: moment('03:33:33', 'HH:mm:ss'),
       }
 
       const initialState = []
 
-      const action = {
+      const expected = [
+        {
+          routineName: 'Do something new',
+          duration: moment('03:33:33', 'HH:mm:ss'),
+        }
+      ]
+
+      const actual = reducers.routines(initialState, {
         type: 'ADD_ROUTINE',
-        payload,
-      }
+        payload: {
+          routineName: 'Do something new',
+          duration: moment('03:33:33', 'HH:mm:ss'),
+        },
+      })
 
-      const expectedState = [payload]
-
-      const actualState = reducers.routines(initialState, action)
-      const noOfDiffThatIsOnlyId = diffThatIsIdOnly(expectedState, actualState)
-      const expectedNoOfIdAdded = 1
-
-      expect(noOfDiffThatIsOnlyId).to.equal(expectedNoOfIdAdded)
+      expect(actual).to.deep.match(expected)
     }
 
     testAddingOneRoutineToTwo()

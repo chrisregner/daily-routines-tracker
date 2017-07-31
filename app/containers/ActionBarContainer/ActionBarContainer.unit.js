@@ -180,25 +180,23 @@ describe('CONTAINER: ActionBar', () => {
             () => {
               const setRoutines = td.function()
               td.replace('duck/actions', { setRoutines })
-              const setRoutinesArg = {
-                routines: [
-                  {
-                    id: '1',
-                    routineName: 'Routine One',
-                    duration: createMomentDerivedFromIso('12:34:56.789', 'HH:mm:ss.SSS'),
-                    isTracking: false,
-                    timeLeft: null,
-                    isDone: false,
-                    shouldNotify: false
-                  },
-                  {
-                    id: '2',
-                    routineName: 'Routine Two',
-                    duration: null,
-                    timeLeft: null,
-                  }
-                ]
-              }
+              const setRoutinesArg = [
+                {
+                  id: '1',
+                  routineName: 'Routine One',
+                  duration: createMomentDerivedFromIso('12:34:56.789', 'HH:mm:ss.SSS'),
+                  isTracking: false,
+                  timeLeft: null,
+                  isDone: false,
+                  shouldNotify: false
+                },
+                {
+                  id: '2',
+                  routineName: 'Routine Two',
+                  duration: null,
+                  timeLeft: null,
+                }
+              ]
               const setRoutinesRes = 'setRoutinesRes'
               td.when(setRoutines(setRoutinesArg)).thenReturn(setRoutinesRes)
 

@@ -12,17 +12,16 @@ import * as actionTypes from './actionTypes'
 moment('00:15:00', 'HH:mm:ss')
 
 const initialRoutinesState = [{
-  id: id.generate(),
-  routineName: 'Jog',
-  duration: moment('00:00:01', 'HH:mm:ss'),
+  id: '1',
+  routineName: 'Click that --->',
+  duration: moment('00:00:03', 'HH:mm:ss'),
 }, {
-  id: id.generate(),
-  routineName: 'Jog again',
-  duration: moment('00:00:01', 'HH:mm:ss'),
-}, {
-  id: id.generate(),
-  routineName: 'Treat my pneumonoultramicroscopicsilicovolcanoconiosis',
+  id: '2',
+  routineName: 'Code',
   duration: moment('08:00:00', 'HH:mm:ss'),
+}, {
+  id: '3',
+  routineName: 'Read',
 }]
 
 const routines = (state = initialRoutinesState, { type, payload }) => {

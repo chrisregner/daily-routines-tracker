@@ -17,13 +17,32 @@ class ActionBar extends React.Component {
 
   state = {
     visibleModal: null,
+    importDataFieldVal: '',
+    importState: null,
   }
 
+  handleImportData = (ev) => {
+    let err
+
+    try {
+      this.props.handlers.handleImportData(this.state.importDataFieldVal)
+    } catch (theErr) {
+      err = theErr
+    }
+
+    if (err)
+      this.setState({ importState: 'error' })
+    else
+      this.setState({ importState: 'success' })
+  }
+  handleImportDataFieldChange = (ev) => { this.setState({ importDataFieldVal: ev.target.value }) }
   handleCopy = () => { this.setState({ hasCopied: true }) }
-  handleShowExportModal = (e) => { this.setState({ visibleModal: 'exportData' }) }
+  handleShowExportModal = (ev) => { this.setState({ visibleModal: 'exportData' }) }
+  handleShowImportModal = (ev) => { this.setState({ visibleModal: 'importData' }) }
   handleDismissModal = () => {
     this.setState({
       hasCopied: false,
+      importState: null,
       visibleModal: null,
     })
   }
@@ -70,7 +89,7 @@ class ActionBar extends React.Component {
                     </button>
                   </Menu.Item>
                   <Menu.Item>
-                    <button className={c('-btn-reset')}>
+                    <button className={c('jsImportDataBtn -btn-reset')} onClick={this.handleShowImportModal}>
                       Import Routines
                     </button>
                   </Menu.Item>
@@ -129,6 +148,48 @@ class ActionBar extends React.Component {
           the ‘Export Data’ button) and pasting the text in the textbox that will appear.
         </p>
         <Input.TextArea value={this.props.stateInJson} rows={4} readOnly />
+      </Modal>
+
+      <Modal
+        className='jsImportDataModal'
+        style={{ top: 70 }}
+        title="Import Data"
+        visible={this.state.visibleModal === 'importData'}
+        onOk={this.handleImportData}
+        onCancel={this.handleDismissModal}
+        okText='Import'
+        cancelText='Dismiss'
+      >
+        {
+          this.state.importState === 'success'
+          && <Alert
+            className='mb2'
+            message="Data import success"
+            type="success"
+            showIcon
+          />
+        }
+        {
+          this.state.importState === 'error'
+          && <Alert
+            className='mb2'
+            message="Data import failed. Please ensure that the export data is copied properly"
+            type="error"
+            showIcon
+          />
+        }
+        {<p className='mb3 f6 lh-copy'>
+          Please paste the exported data text below. You access the exported data by clicking Export Data’ button (just above
+          the ‘Export Data’ button)
+        </p>}
+        <div className={c(this.state.importState === 'error' && 'has-error')}>
+          <Input.TextArea
+            className='jsImportDataField'
+            value={this.state.importDataFieldVal}
+            onChange={this.handleImportDataFieldChange}
+            rows={4}
+          />
+        </div>
       </Modal>
     </div>
   )
