@@ -139,7 +139,8 @@ class RoutineForm extends React.Component {
             <Link to='/'><Icon type='arrow-left' /></Link>
           </div>
           <div className='mt6 f3 lh-copy'>
-            Sorry, the routine you requested doesn’t exist.
+            Sorry, the routine you requested doesn’t exist. <br />
+            <Link to='/'>Go to home page</Link>
           </div>
         </div>
       ) : (

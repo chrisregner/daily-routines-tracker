@@ -8,6 +8,7 @@ import {
 } from 'react-router-dom'
 
 import HomePage from 'components/HomePage'
+import NotFound from 'components/NotFound'
 import AddNewRoutineForm from 'containers/AddNewRoutineForm'
 import EditRoutineForm from 'containers/EditRoutineForm'
 import DoneRoutinesNotifier from 'containers/DoneRoutinesNotifier'
@@ -28,6 +29,7 @@ describe('COMPONENT: App', () => {
           <Route exact path='/' component={HomePage} />
           <Route path='/routines/new' component={AddNewRoutineForm} />
           <Route path='/routines/:id' component={EditRoutineForm} />
+          <Route path="*" component={NotFound} />
         </Switch>
       </Router>
     ))

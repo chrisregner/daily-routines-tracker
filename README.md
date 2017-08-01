@@ -12,52 +12,21 @@ TODO
     - [done] use buttons instead of link in RoutineItem controls and correct the usage of buttons and links elsewhere as applicable
     - [done] test two of my custom proptypes
     - [done] add the virtual class library
-  - the rest of the functionality
-- final design/theming
-  - buttons should animate when pressed
-  - add page transitions for mobile
-- optimization
-  - install accessibility eslint rules
-  - review implemented features and specified features
-  - lookout for unnecessary updates
-  - override browser back and forward button to use history object
-  - warn when attempting to refresh/back/forward in instances that may delete the state
-  - do something about flash of loading fonts
-  - remove unused stylesheets
-  - code splitting
-  - caching
-  - ensure tree shaking
+- prod build
   - css minification
+  - gzip
+  - ensure tree shaking
 - final tests
-  - test routes (?)
-  - integration test?
-  - test coverage
   - xbrowser test
-    - placeholders appearance behavior
-  - perf test
-    - research
-      - how to
-      - recommended
-    - apply
-    - ensure tree shaking
-  - accessibility test
-    - research how to
-    - apply
-  - search and apply other important types of test
+  - check page load
+  - ensure flash of loading fonts is no more
 - misc
-  - acknowledgement for used notif audio file
-    - https://freesound.org/people/hykenfreak/sounds/202029/
-    - https://freesound.org/people/hykenfreak/
-  - maybe rethink of the name
-  - file Ant Design issues
-    - decorated componet's display name isn't preserved
-    - error when explicitly adding name property to class that are decorated
-    - possibly unecessarily doubled layer when decorated with form creator
+  - [done] add footer
   - delete older micromanage.me versions
-  - resolve unmet dependencies in npm
-  - remove unused packages
-  - remove unused modules
   - update README.md
+    - acknowledgement for used notif audio file
+      - https://freesound.org/people/hykenfreak/sounds/202029/
+      - https://freesound.org/people/hykenfreak/
 
 
 Features To do list
@@ -85,16 +54,6 @@ Features To do list
   - [done] Persisting the data in local storage
   - Exporting data
   - Importing data
-- UX
-  - introductory page
-  - prompt when deleting a routine
-  - prompt when resetting an incomplete routine that has already tracked some time
-  - page transition animation
-  - animation when routine is finished
-    - by tracking
-    - by manual toggling
-  - button/link hover animaitons
-  - button/link press animations
 
 ### Issues
 
@@ -121,9 +80,6 @@ Done
   - [done] style it
   - lint js and css
 - [done] after studies
-  - learnings
-    - use proptypes for props received from HOCs
-    - decorators
   - [done] fix the propType lint errors
   - [done] evaluate the function composition of current code
   - [done] evaluate the tests of current code, especially on HOC/decorator-relation aspect

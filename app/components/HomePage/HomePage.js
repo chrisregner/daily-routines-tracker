@@ -12,10 +12,10 @@ class HomePage extends React.Component {
   }
 
   render = () => (
-    <div className='relative vh-100'>
+    <div>
       <ActionBarContainer />
       <PopulatedRoutineList />
-      <div className={'absolute right-2 bottom-2'}>
+      <div className={'absolute right-1 bottom-1 pa3 bg-white-80'}>
         <Link to='/routines/new'>
           <Button type='primary' size='large' icon='plus' shape='circle' />
         </Link>

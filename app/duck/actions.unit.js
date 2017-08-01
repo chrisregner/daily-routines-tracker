@@ -13,6 +13,9 @@ describe('ACTION: creators', () => {
       fakeClock.uninstall()
       fakeClock = null
     }
+
+    // TODO: determine if the next line helps with slow testing issue
+    clearInterval(actions.getLastIntervalId())
   }
 
   beforeEach(() => {
