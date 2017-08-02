@@ -9,6 +9,7 @@ import { resolve } from 'path'
 // DISCLAIMER: some parts are copied from kriasoft's react-starter-kit
 
 const isProd = process.env.NODE_ENV === 'production'
+const publicPathBase = isProd ? '/daily-routines-tracker' : ''
 
 const babelConfigOrig = loadRc('babel', {
   configFileName: resolve(__dirname, '../app/.babelrc'),
@@ -46,7 +47,7 @@ export default {
   output: {
     filename: '[name].js',
     path: resolve(__dirname, '../public/dist'),
-    publicPath: '/dist/', // The URL of output.path from the view of the HTML page
+    publicPath: publicPathBase + '/dist/', // The URL of output.path from the view of the HTML page
   },
 
   /* Resolvers */
@@ -67,7 +68,7 @@ export default {
     contentBase: resolve(__dirname, '../public'), // Location of static assets (e.g. HTML file)
     // Recommended to be the same as output.publicPath and
     // needs to be absolute for HMR
-    publicPath: '/dist/',
+    publicPath: publicPathBase + '/dist/',
   },
 
   /* Loaders */
@@ -140,7 +141,7 @@ export default {
     // https://webpack.js.org/plugins/define-plugin/
     new webpack.DefinePlugin({
       'process.env.NODE_ENV': isProd ? "'production'" : "'development'",
-      'process.env.PUBLIC_URL': isProd ? "'https://chrisregner.github.io/daily-routines-tracker/'" : "''",
+      'process.env.PUBLIC_URL': `'${publicPathBase}'`,
     }),
 
     new HtmlWebpackPlugin({
