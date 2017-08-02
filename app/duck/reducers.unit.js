@@ -1,58 +1,12 @@
 import { expect } from 'chai'
 import moment from 'moment'
-import getDiff from 'deep-diff'
 
 import * as reducers from './reducers'
-import * as actionTypes from './actionTypes'
-
-const diffThatIsIdOnly = (expected, actual) => {
-  let hasNonIdDiff
-  let noOfDiff = 0
-  const diff = getDiff(expected, actual)
-
-  diff.find((statePartDiff) => {
-    if (statePartDiff.path[1] === 'id') {
-      noOfDiff++
-
-      return
-    }
-
-    const { lhs, rhs } = statePartDiff
-
-    /**
-     * For some reason, the first time the test scripts are run after
-     * entering the command in console, pairs of Moment objects (one from
-     * expected param, another from actual param) are different by date. This
-     * issue doesn't persist through re-runs (when test scripts are watched and
-     * a file is changed).
-     *
-     * To resolve that issue, we'll specifically re-compare the duration Moment
-     * objects as a whole whenever they differ, and then treat them as equal if
-     * the case is just the one described above.
-     */
-    if (statePartDiff.path[1] === 'duration') {
-      const path = statePartDiff.path
-      const momentOne = expected[path[0]][path[1]]
-      const momentTwo = actual[path[0]][path[1]]
-      const momentOneFormatted = momentOne.format(momentOne.creationData().format)
-      const momentTwoFormatted = momentTwo.format(momentTwo.creationData().format)
-
-      if (momentOneFormatted === momentTwoFormatted)
-        return
-    }
-
-    hasNonIdDiff = true
-
-    return true
-  })
-
-  return hasNonIdDiff ? false : noOfDiff
-}
 
 describe('REDUCER: routines', () => {
-  /*===================================================================
+  /* ===================================================================
   =            Actions for routines' basic CRUD operations            =
-  ===================================================================*/
+  =================================================================== */
 
   it('should return the initial state', () => {
     const expected = [{
@@ -70,7 +24,7 @@ describe('REDUCER: routines', () => {
 
     const actual = reducers.routines(undefined, {})
 
-    expect(actual).to.deep.equal(actual)
+    expect(actual).to.deep.equal(expected)
   })
 
   it('can handle ADD_ROUTINE', () => {
@@ -117,18 +71,13 @@ describe('REDUCER: routines', () => {
     }
 
     const testAddingOneRoutineToZero = () => {
-      const payload = {
-        routineName: 'Do something new',
-        duration: moment('03:33:33', 'HH:mm:ss'),
-      }
-
       const initialState = []
 
       const expected = [
         {
           routineName: 'Do something new',
           duration: moment('03:33:33', 'HH:mm:ss'),
-        }
+        },
       ]
 
       const actual = reducers.routines(initialState, {
@@ -391,10 +340,9 @@ describe('REDUCER: routines', () => {
     })
   })
 
-
-  /*============================================================
+  /* ============================================================
   =            Actions for routine tracking feature            =
-  ============================================================*/
+  ============================================================ */
 
   describe('handling START_TRACKER', () => {
     it('should set the target routine\'s isTracking property to true, and all others\' to false', () => {
@@ -584,7 +532,7 @@ describe('REDUCER: routines', () => {
         ]
 
         const actualState = reducers.routines(initialState, {
-          type: 'TICK_TRACKER'
+          type: 'TICK_TRACKER',
         })
 
         expect(actualState).to.deep.equal(expectedState)
@@ -624,7 +572,7 @@ describe('REDUCER: routines', () => {
         ]
 
         const actualState = reducers.routines(initialState, {
-          type: 'TICK_TRACKER'
+          type: 'TICK_TRACKER',
         })
 
         expect(actualState).to.deep.equal(expectedState)
@@ -667,7 +615,7 @@ describe('REDUCER: routines', () => {
           ]
 
           const actualState = reducers.routines(initialState, {
-            type: 'TICK_TRACKER'
+            type: 'TICK_TRACKER',
           })
 
           expect(actualState).to.deep.equal(expectedState)
@@ -707,7 +655,7 @@ describe('REDUCER: routines', () => {
           ]
 
           const actualState = reducers.routines(initialState, {
-            type: 'TICK_TRACKER'
+            type: 'TICK_TRACKER',
           })
 
           expect(actualState).to.deep.equal(expectedState)
@@ -749,7 +697,7 @@ describe('REDUCER: routines', () => {
     ]
 
     const actualState = reducers.routines(initialState, {
-      type: 'STOP_TRACKER'
+      type: 'STOP_TRACKER',
     })
 
     expect(actualState).to.deep.equal(expectedState)
@@ -791,8 +739,8 @@ describe('REDUCER: routines', () => {
       const actualState = reducers.routines(initialState, {
         type: 'RESET_TRACKER',
         payload: {
-          id: '2'
-        }
+          id: '2',
+        },
       })
 
       expect(actualState).to.deep.equal(expectedState)
@@ -834,17 +782,17 @@ describe('REDUCER: routines', () => {
       const actualState = reducers.routines(initialState, {
         type: 'MARK_DONE',
         payload: {
-          id: '2'
-        }
+          id: '2',
+        },
       })
 
       expect(actualState).to.deep.equal(expectedState)
     })
   })
 
-  /*=================================================
+  /* =================================================
   =            Misc Actions for Routines            =
-  =================================================*/
+  ================================================= */
 
   describe('handling RESET_ALL_ROUTINES', () => {
     it('should set all routine\'s timeLeft to null, isTracking to false, isDone to false, and shouldNotify to false', () => {
@@ -888,8 +836,8 @@ describe('REDUCER: routines', () => {
       const actualState = reducers.routines(initialState, {
         type: 'RESET_ALL_ROUTINES',
         payload: {
-          id: '2'
-        }
+          id: '2',
+        },
       })
 
       expect(actualState).to.deep.equal(expectedState)
@@ -921,8 +869,8 @@ describe('REDUCER: routines', () => {
     const actualState = reducers.routines([], {
       type: 'SET_ROUTINES',
       payload: {
-        routines: passedRoutines
-      }
+        routines: passedRoutines,
+      },
     })
 
     expect(actualState).to.deep.equal(expectedState)
@@ -962,16 +910,16 @@ describe('REDUCER: routines', () => {
         },
       ],
       {
-        type: 'CLEAR_NOTIFS'
+        type: 'CLEAR_NOTIFS',
       }
     )
 
     expect(actualState).to.deep.equal(expectedState)
   })
 
-  /*===================================================
+  /* ===================================================
   =            Misc Actions for Root State            =
-  ===================================================*/
+  =================================================== */
 
   it('can handle TOGGLE_SORT', () => {
     const actual1 = reducers.isSorting(true, { type: 'TOGGLE_SORT' })

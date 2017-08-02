@@ -1,10 +1,9 @@
 import React from 'react'
 import { expect } from 'chai'
 import { shallow } from 'enzyme'
-import moment from 'moment'
 import td from 'testdouble'
 
-import RoutineList, { customPropTypes } from './RoutineList'
+import RoutineList from './RoutineList'
 import RoutineItem from './subcomponents/RoutineItem'
 
 describe('COMPONENT: RoutineList', () => {
@@ -152,7 +151,7 @@ describe('COMPONENT: RoutineList', () => {
             {
               id: '2',
               routineName: 'Second Routine',
-            }
+            },
           ]
           const wrapper = shallow(
             <RoutineList {...getRequiredProps({
@@ -163,13 +162,13 @@ describe('COMPONENT: RoutineList', () => {
 
           const firstExpected = {
             index: 0,
-            routineData: passedRoutines[0]
+            routineData: passedRoutines[0],
           }
           const firstActual = itsSortableItems.at(0).props()
 
           const secondExpected = {
             index: 1,
-            routineData: passedRoutines[1]
+            routineData: passedRoutines[1],
           }
           const secondActual = itsSortableItems.at(1).props()
 
@@ -193,7 +192,7 @@ describe('COMPONENT: RoutineList', () => {
             {
               id: '2',
               routineName: 'Second Routine',
-            }
+            },
           ]
           const wrapper = shallow(
             (
@@ -242,7 +241,7 @@ describe('COMPONENT: RoutineList', () => {
       const wrapper = shallow(
         <RoutineList {...getRequiredProps({
           handlers: {
-            handleSetRoutines
+            handleSetRoutines,
           },
           routines: [
             {

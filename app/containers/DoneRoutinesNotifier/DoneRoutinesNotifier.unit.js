@@ -5,7 +5,7 @@ import td from 'testdouble'
 import merge from 'lodash/merge'
 import lolex from 'lolex'
 
-import configureMockStore  from 'redux-mock-store'
+import configureMockStore from 'redux-mock-store'
 
 describe('CONTAINER: DoneRoutinesNotifier', () => {
   let DoneRoutinesNotifier, PureDoneRoutinesNotifier
@@ -71,8 +71,8 @@ describe('CONTAINER: DoneRoutinesNotifier', () => {
             routineName: 'Third routine',
             shouldNotify: true,
           },
-        ]
-      })
+        ],
+      }),
     }
     const wrapper = createWrapper(props)
 
@@ -120,7 +120,6 @@ describe('CONTAINER: DoneRoutinesNotifier', () => {
         }
       }
 
-      const Howl = () => HowlRes
       td.replace('howler', { Howl: FakeHowl })
       PureDoneRoutinesNotifier = require('./DoneRoutinesNotifier').PureDoneRoutinesNotifier
 
@@ -145,15 +144,15 @@ describe('CONTAINER: DoneRoutinesNotifier', () => {
         const wrapper = createUnconnectedWrapper({
           RoutinesThatShouldNotify: [
             { routineName: 'Routine One' },
-            { routineName: 'Routine Two' }
-          ]
+            { routineName: 'Routine Two' },
+          ],
         })
 
         const extractedComponentDidUpdate = wrapper.instance().componentDidUpdate
         td.replace(wrapper.instance(), 'componentDidUpdate')
 
         wrapper.setState({
-          notifSound: { play: fakePlay }
+          notifSound: { play: fakePlay },
         })
 
         td.verify(fakePlay(), { times: 0 })
@@ -173,8 +172,8 @@ describe('CONTAINER: DoneRoutinesNotifier', () => {
           {
             RoutinesThatShouldNotify: [
               { routineName: 'Unique Routine Name' },
-              { routineName: 'Routine Two' }
-            ]
+              { routineName: 'Routine Two' },
+            ],
           }
         )
 
@@ -182,7 +181,7 @@ describe('CONTAINER: DoneRoutinesNotifier', () => {
         td.replace(wrapper.instance(), 'componentDidUpdate')
 
         wrapper.setState({
-          notifSound: { play: () => {} }
+          notifSound: { play: () => {} },
         })
 
         expect(document.body.innerHTML).to.equal('')
@@ -203,7 +202,7 @@ describe('CONTAINER: DoneRoutinesNotifier', () => {
           {
             RoutinesThatShouldNotify: [
               { routineName: 'Unique Routine Name' },
-            ]
+            ],
           }
         )
 
@@ -211,7 +210,7 @@ describe('CONTAINER: DoneRoutinesNotifier', () => {
         td.replace(wrapper.instance(), 'componentDidUpdate')
 
         wrapper.setState({
-          notifSound: { play: () => {} }
+          notifSound: { play: () => {} },
         })
 
         const title1 = 'Routine Completed'
@@ -235,7 +234,6 @@ describe('CONTAINER: DoneRoutinesNotifier', () => {
       }
     )
 
-
     /**
      * Skip this test, so far it seems to be too much of work.
      *
@@ -252,7 +250,6 @@ describe('CONTAINER: DoneRoutinesNotifier', () => {
       '(2) clears the page title change interval, and (3) restores the original page title when ' +
       'its dismiss button is pressed',
       () => {
-
         const getDismissButton = () => {
           const buttonEls = Object.values(document.getElementsByTagName('button'))
 
@@ -265,8 +262,8 @@ describe('CONTAINER: DoneRoutinesNotifier', () => {
             handleClearNotifs: FakeHandleClearNotifs,
             RoutinesThatShouldNotify: [
               { routineName: 'Unique Routine Name' },
-              { routineName: 'Routine Two' }
-            ]
+              { routineName: 'Routine Two' },
+            ],
           }
         )
 
@@ -274,7 +271,7 @@ describe('CONTAINER: DoneRoutinesNotifier', () => {
         td.replace(wrapper.instance(), 'componentDidUpdate')
 
         wrapper.setState({
-          notifSound: { play: () => {} }
+          notifSound: { play: () => {} },
         })
 
         extractedComponentDidUpdate()
@@ -295,8 +292,8 @@ describe('CONTAINER: DoneRoutinesNotifier', () => {
         const wrapper = createUnconnectedWrapper({
           RoutinesThatShouldNotify: [
             { routineName: 'Routine One' },
-            { routineName: 'Routine Two' }
-          ]
+            { routineName: 'Routine Two' },
+          ],
         })
 
         const extractedComponentDidUpdate = wrapper.instance().componentDidUpdate
@@ -305,7 +302,7 @@ describe('CONTAINER: DoneRoutinesNotifier', () => {
 
         wrapper.setState({
           isPlaying: false,
-          notifSound: { play: fakePlay }
+          notifSound: { play: fakePlay },
         })
 
         // after the next line, the sound is considered playing already
@@ -328,8 +325,8 @@ describe('CONTAINER: DoneRoutinesNotifier', () => {
       const wrapper = createUnconnectedWrapper({
         RoutinesThatShouldNotify: [
           { routineName: 'Routine One' },
-          { routineName: 'Routine Two' }
-        ]
+          { routineName: 'Routine Two' },
+        ],
       })
 
       const extractedComponentDidUpdate = wrapper.instance().componentDidUpdate
@@ -338,7 +335,7 @@ describe('CONTAINER: DoneRoutinesNotifier', () => {
 
       wrapper.setState({
         isPlaying: false,
-        notifSound: fakeNotifSound
+        notifSound: fakeNotifSound,
       })
 
       // after the next line, fake play should be called (i.e. it is 'playing')

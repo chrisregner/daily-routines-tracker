@@ -3,12 +3,11 @@ import { MemoryRouter } from 'react-router-dom'
 import { expect } from 'chai'
 import { shallow } from 'enzyme'
 import td from 'testdouble'
-import configureMockStore  from 'redux-mock-store'
+import configureMockStore from 'redux-mock-store'
 import merge from 'lodash/merge'
 
 import createMomentDerivedFromIso from 'services/createMomentDerivedFromIso'
 import ActionBar from 'components/ActionBar'
-import { resetAllRoutines, toggleSort } from 'duck/actions'
 
 describe('CONTAINER: ActionBar', () => {
   let ActionBarContainer
@@ -16,7 +15,7 @@ describe('CONTAINER: ActionBar', () => {
   const createInstance = (passedProps) => {
     const initialState = {
       isSorting: false,
-      routines: []
+      routines: [],
     }
     const requiredProps = {
       store: getMockStore(initialState),
@@ -49,7 +48,7 @@ describe('CONTAINER: ActionBar', () => {
     it('should receive isSorting from state as prop', () => {
       const testWithIsSortingSetTo = (isSorting) => {
         const initialState = {
-          isSorting: isSorting
+          isSorting: isSorting,
         }
 
         const wrapper = createInstance({
@@ -66,34 +65,34 @@ describe('CONTAINER: ActionBar', () => {
     })
 
     it('should receive stateInJson that is the routines in JSON format', () => {
-        const initialState = {
-          isSorting: true,
-          routines: [
-            {
-              id: '1',
-              routineName: 'Routine One',
-              duration: new Date(),
-              timeLeft: null,
-              isTracking: false,
-              isDone: false,
-            },
-            {
-              id: '2',
-              routineName: 'Routine Two',
-              duration: new Date(),
-              timeLeft: null,
-              isDone: true,
-            }
-          ]
-        }
-        const wrapper = createInstance({
-          store: getMockStore(initialState),
-        })
+      const initialState = {
+        isSorting: true,
+        routines: [
+          {
+            id: '1',
+            routineName: 'Routine One',
+            duration: new Date(),
+            timeLeft: null,
+            isTracking: false,
+            isDone: false,
+          },
+          {
+            id: '2',
+            routineName: 'Routine Two',
+            duration: new Date(),
+            timeLeft: null,
+            isDone: true,
+          },
+        ],
+      }
+      const wrapper = createInstance({
+        store: getMockStore(initialState),
+      })
 
-        const expected = JSON.stringify(initialState.routines)
-        const actual = wrapper.dive().prop('stateInJson')
+      const expected = JSON.stringify(initialState.routines)
+      const actual = wrapper.dive().prop('stateInJson')
 
-        expect(actual).to.equal(expected)
+      expect(actual).to.equal(expected)
     })
 
     describe('handlers {} prop', () => {
@@ -188,14 +187,14 @@ describe('CONTAINER: ActionBar', () => {
                   isTracking: false,
                   timeLeft: null,
                   isDone: false,
-                  shouldNotify: false
+                  shouldNotify: false,
                 },
                 {
                   id: '2',
                   routineName: 'Routine Two',
                   duration: null,
                   timeLeft: null,
-                }
+                },
               ]
               const setRoutinesRes = 'setRoutinesRes'
               td.when(setRoutines(setRoutinesArg)).thenReturn(setRoutinesRes)
@@ -204,13 +203,12 @@ describe('CONTAINER: ActionBar', () => {
 
               const mockStore = getMockStore({
                 routines: [],
-                isSorting: false
+                isSorting: false,
               })
 
               const dispatch = td.replace(mockStore, 'dispatch')
               const wrapper = createInstance({ store: mockStore })
               const wrappedComponent = wrapper.dive()
-              const passedArg = setRoutinesArg
 
               td.verify(dispatch(), { times: 0, ignoreExtraArgs: true })
               wrappedComponent.prop('handlers').handleImportData(JSON.stringify(setRoutinesArg))
@@ -230,18 +228,18 @@ describe('CONTAINER: ActionBar', () => {
                   isTracking: false,
                   timeLeft: null,
                   isDone: false,
-                  shouldNotify: false
+                  shouldNotify: false,
                 },
                 {
                   id: '2',
                   routineName: 123,
-                }
-              ]
+                },
+              ],
             }
 
             const mockStore = getMockStore({
               routines: [],
-              isSorting: false
+              isSorting: false,
             })
 
             const dispatch = td.replace(mockStore, 'dispatch')
@@ -257,6 +255,5 @@ describe('CONTAINER: ActionBar', () => {
         })
       })
     })
-
   })
 })

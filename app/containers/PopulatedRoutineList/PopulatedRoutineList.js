@@ -15,7 +15,7 @@ const mapDispatchToProps = dispatch => ({
     handleResetTracker: (routineId) => { dispatch(actions.resetTracker(routineId)) },
     handleMarkDone: (routineId) => { dispatch(actions.markDone(routineId)) },
     handleSetRoutines: (routines) => { dispatch(actions.setRoutines(routines)) },
-  }
+  },
 })
 
 const PopulatedRoutineList = connect(mapStateToProps, mapDispatchToProps)(RoutineList)

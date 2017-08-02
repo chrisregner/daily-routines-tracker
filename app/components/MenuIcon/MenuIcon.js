@@ -4,8 +4,8 @@ import styled from 'styled-components'
 let s
 
 const MenuIcon = () => (
-  <s.Dots className="dots">
-    <div className="dot"></div>
+  <s.Dots className='dots'>
+    <div className='dot' />
   </s.Dots>
 )
 

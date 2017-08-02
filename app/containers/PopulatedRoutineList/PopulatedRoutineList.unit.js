@@ -3,11 +3,10 @@ import { MemoryRouter } from 'react-router-dom'
 import { expect } from 'chai'
 import { shallow } from 'enzyme'
 import td from 'testdouble'
-import configureMockStore  from 'redux-mock-store'
+import configureMockStore from 'redux-mock-store'
 import merge from 'lodash/merge'
 
 import RoutineList from 'components/RoutineList'
-import { startTracker } from 'duck/actions'
 
 describe('CONTAINER: PopulatedRoutineList', () => {
   let PopulatedRoutineList
@@ -15,7 +14,7 @@ describe('CONTAINER: PopulatedRoutineList', () => {
   const createInstance = (passedProps) => {
     const initialState = {
       isSorting: false,
-      routines: []
+      routines: [],
     }
     const requiredProps = {
       store: getMockStore(initialState),
@@ -117,7 +116,7 @@ describe('CONTAINER: PopulatedRoutineList', () => {
 
           const initialState = {
             routines: [],
-            isSorting: false
+            isSorting: false,
           }
 
           const mockStore = getMockStore(initialState)
@@ -125,7 +124,6 @@ describe('CONTAINER: PopulatedRoutineList', () => {
 
           const wrapper = createInstance({ store: mockStore })
           const wrappedComponent = wrapper.dive()
-          const passedArg = startTrackerArg
 
           td.verify(dispatch(), { times: 0, ignoreExtraArgs: true })
           wrappedComponent.prop('handlers').handleStartTracker(startTrackerArg)
@@ -152,7 +150,7 @@ describe('CONTAINER: PopulatedRoutineList', () => {
 
           const initialState = {
             routines: [],
-            isSorting: false
+            isSorting: false,
           }
 
           const mockStore = getMockStore(initialState)
@@ -187,7 +185,7 @@ describe('CONTAINER: PopulatedRoutineList', () => {
 
           const initialState = {
             routines: [],
-            isSorting: false
+            isSorting: false,
           }
 
           const mockStore = getMockStore(initialState)
@@ -195,7 +193,6 @@ describe('CONTAINER: PopulatedRoutineList', () => {
 
           const wrapper = createInstance({ store: mockStore })
           const wrappedComponent = wrapper.dive()
-          const passedArg = resetTrackerArg
 
           td.verify(dispatch(), { times: 0, ignoreExtraArgs: true })
           wrappedComponent.prop('handlers').handleResetTracker(resetTrackerArg)
@@ -223,7 +220,7 @@ describe('CONTAINER: PopulatedRoutineList', () => {
 
           const initialState = {
             routines: [],
-            isSorting: false
+            isSorting: false,
           }
 
           const mockStore = getMockStore(initialState)
@@ -231,7 +228,6 @@ describe('CONTAINER: PopulatedRoutineList', () => {
 
           const wrapper = createInstance({ store: mockStore })
           const wrappedComponent = wrapper.dive()
-          const passedArg = setRoutinesArg
 
           td.verify(dispatch(), { times: 0, ignoreExtraArgs: true })
           wrappedComponent.prop('handlers').handleSetRoutines(setRoutinesArg)
@@ -239,6 +235,5 @@ describe('CONTAINER: PopulatedRoutineList', () => {
         })
       })
     })
-
   })
 })

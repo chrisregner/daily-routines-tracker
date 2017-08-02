@@ -24,7 +24,7 @@ describe('REDUX: selectors', () => {
             id: '3',
             routineName: 'Third routine',
           },
-        ]
+        ],
       },
       '2'
     )
@@ -63,7 +63,7 @@ describe('REDUX: selectors', () => {
             routineName: 'Third routine',
             shouldNotify: true,
           },
-        ]
+        ],
       },
       '2'
     )

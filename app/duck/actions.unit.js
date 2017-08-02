@@ -22,14 +22,13 @@ describe('ACTION: creators', () => {
     actions = require('./actions')
   })
 
-
   afterEach(() => {
     teardown()
   })
 
-  /*===================================================================
+  /* ===================================================================
   =            Actions for routines' basic CRUD operations            =
-  ===================================================================*/
+  =================================================================== */
 
   it('has action creator for adding a routine', () => {
     const formData = {
@@ -57,7 +56,6 @@ describe('ACTION: creators', () => {
       context('when target routine is tracking and duration will change', () => {
         it('should call clearInterval with the last interval ID', () => {
           const clearInterval = td.replace(global, 'clearInterval')
-          const dispatch = () => {}
           const idOfTrackingRoutine = '2'
           const fakeDispatch = () => {}
           const fakeGetState = () => ({
@@ -69,7 +67,7 @@ describe('ACTION: creators', () => {
                 isTracking: true,
               },
               { id: '3' },
-            ]
+            ],
           })
           const formData = {
             id: idOfTrackingRoutine,
@@ -87,7 +85,6 @@ describe('ACTION: creators', () => {
       context('when target routine is tracking but duration will not change', () => {
         it('should NOT call clearInterval', () => {
           const clearInterval = td.replace(global, 'clearInterval')
-          const dispatch = () => {}
           const idOfTrackingRoutine = '2'
           const fakeDispatch = () => {}
           const fakeGetState = () => ({
@@ -99,7 +96,7 @@ describe('ACTION: creators', () => {
                 isTracking: true,
               },
               { id: '3' },
-            ]
+            ],
           })
           const formData = {
             id: idOfTrackingRoutine,
@@ -117,7 +114,6 @@ describe('ACTION: creators', () => {
       context('when target routine is not tracking', () => {
         it('should NOT call clearInterval', () => {
           const clearInterval = td.replace(global, 'clearInterval')
-          const dispatch = () => {}
           const idOfNonTrackingRoutine = '2'
           const fakeDispatch = () => {}
           const fakeGetState = () => ({
@@ -125,7 +121,7 @@ describe('ACTION: creators', () => {
               { id: '1', isTracking: true },
               { id: idOfNonTrackingRoutine, isTracking: false },
               { id: '3' },
-            ]
+            ],
           })
           const formData = {
             id: idOfNonTrackingRoutine,
@@ -149,7 +145,7 @@ describe('ACTION: creators', () => {
         }
         const fakeDispatch = td.function()
         const fakeGetState = () => ({
-          routines: [{ id: '123' }]
+          routines: [{ id: '123' }],
         })
 
         actions.editRoutine(formData)(fakeDispatch, fakeGetState)
@@ -178,9 +174,9 @@ describe('ACTION: creators', () => {
     expect(actual).to.deep.equal(expected)
   })
 
-  /*============================================================
+  /* ============================================================
   =            Actions for routine tracking feature            =
-  ============================================================*/
+  ============================================================ */
 
   it('has action creator for ticking tracker', () => {
     const actual = actions.tickTracker()
@@ -197,7 +193,7 @@ describe('ACTION: creators', () => {
       expect(res).to.be.a('function')
     })
 
-    describe('the returned function of the action for starting tracker',  () => {
+    describe('the returned function of the action for starting tracker', () => {
       it('should call dispatch (from second set of argument) with the correct action derived from its first set of argument', () => {
         const passedId = '123'
         const dispatch = td.function()
@@ -241,7 +237,7 @@ describe('ACTION: creators', () => {
               routines: [{
                 id: '123',
                 timeLeft: moment('00:00:00.100', 'HH:mm:ss.SSS'),
-              }]
+              }],
             })
 
             actions.startTracker('123')(fakeDispatch, fakeGetState)
@@ -261,7 +257,7 @@ describe('ACTION: creators', () => {
               routines: [{
                 id: '123',
                 timeLeft: moment('00:00:00.010', 'HH:mm:ss.SSS'),
-              }]
+              }],
             })
 
             actions.startTracker('123')(fakeDispatch, fakeGetState)
@@ -285,7 +281,7 @@ describe('ACTION: creators', () => {
               routines: [{
                 id: '123',
                 timeLeft: moment('00:00:00.100', 'HH:mm:ss.SSS'),
-              }]
+              }],
             })
 
             actions.startTracker('123')(fakeDispatch, fakeGetState)
@@ -306,7 +302,7 @@ describe('ACTION: creators', () => {
               routines: [{
                 id: '123',
                 timeLeft: moment('00:00:00.100', 'HH:mm:ss.SSS'),
-              }]
+              }],
             })
 
             actions.startTracker('123')(fakeDispatch, fakeGetState)
@@ -327,8 +323,8 @@ describe('ACTION: creators', () => {
 
       it('should call clearInterval with the previous interval ID', () => {
         const clearInterval = td.replace(global, 'clearInterval')
-        const dispatch = () => {}
-        actions.startTracker()(dispatch)
+        const fakeDispatch = () => {}
+        actions.startTracker()(fakeDispatch)
 
         /**
          * We have no means of getting the previous interval ID (we've only exposed the latest one)
@@ -342,7 +338,6 @@ describe('ACTION: creators', () => {
   describe('action creator for stopping tracker', () => {
     it('should call clearInterval with the last interval ID', () => {
       const clearInterval = td.replace(global, 'clearInterval')
-      const dispatch = () => {}
       actions.stopTracker()
 
       td.verify(clearInterval(actions.getLastIntervalId()), { times: 1 })
@@ -370,7 +365,6 @@ describe('ACTION: creators', () => {
       context('when target routine is tracking', () => {
         it('should call clearInterval with the last interval ID', () => {
           const clearInterval = td.replace(global, 'clearInterval')
-          const dispatch = () => {}
           const idOfTrackingRoutine = '2'
           const fakeDispatch = () => {}
           const fakeGetState = () => ({
@@ -378,7 +372,7 @@ describe('ACTION: creators', () => {
               { id: '1', isTracking: false },
               { id: idOfTrackingRoutine, isTracking: true },
               { id: '3' },
-            ]
+            ],
           })
 
           actions.resetTracker(idOfTrackingRoutine)(fakeDispatch, fakeGetState)
@@ -390,7 +384,6 @@ describe('ACTION: creators', () => {
       context('when target routine is not tracking', () => {
         it('should NOT call clearInterval', () => {
           const clearInterval = td.replace(global, 'clearInterval')
-          const dispatch = () => {}
           const idOfNonTrackingRoutine = '2'
           const fakeDispatch = () => {}
           const fakeGetState = () => ({
@@ -398,7 +391,7 @@ describe('ACTION: creators', () => {
               { id: '1', isTracking: true },
               { id: idOfNonTrackingRoutine, isTracking: false },
               { id: '3' },
-            ]
+            ],
           })
 
           actions.resetTracker(idOfNonTrackingRoutine)(fakeDispatch, fakeGetState)
@@ -410,7 +403,7 @@ describe('ACTION: creators', () => {
       it('should call dispatch with an action for resetting a tracker', () => {
         const passedId = '123'
         const fakeGetState = () => ({
-          routines: [{ id: '123' }]
+          routines: [{ id: '123' }],
         })
         const fakeDispatch = td.function()
 
@@ -434,16 +427,15 @@ describe('ACTION: creators', () => {
       type: 'MARK_DONE',
       payload: {
         id: '123',
-      }
+      },
     }
 
     expect(actual).to.deep.equal(expected)
   })
 
-
-  /*=================================================
+  /* =================================================
   =            Misc Actions for Routines            =
-  =================================================*/
+  ================================================= */
 
   it('has action creator for resetting all routines', () => {
     const actual = actions.resetAllRoutines()
@@ -461,8 +453,8 @@ describe('ACTION: creators', () => {
     const expected = {
       type: 'SET_ROUTINES',
       payload: {
-        routines: passedRoutines
-      }
+        routines: passedRoutines,
+      },
     }
 
     expect(actual).to.deep.equal(expected)
@@ -473,23 +465,22 @@ describe('ACTION: creators', () => {
 
     const actual = actions.clearNotifs(passedRoutines)
     const expected = {
-      type: 'CLEAR_NOTIFS'
+      type: 'CLEAR_NOTIFS',
     }
 
     expect(actual).to.deep.equal(expected)
   })
 
-  /*===================================================
+  /* ===================================================
   =            Misc Actions for Root State            =
-  ===================================================*/
+  =================================================== */
 
   it('has action for toggling sort', () => {
     const actual = actions.toggleSort()
     const expected = {
-      type: 'TOGGLE_SORT'
+      type: 'TOGGLE_SORT',
     }
 
     expect(actual).to.deep.equal(expected)
   })
 })
-

@@ -13,7 +13,7 @@ class DataPersistor extends React.Component {
           id: PropTypes.string,
           isTracking: PropTypes.bool,
         })
-      ).isRequired
+      ).isRequired,
     }).isRequired,
     handleStartTracker: PropTypes.func.isRequired,
   }
@@ -48,11 +48,11 @@ class DataPersistor extends React.Component {
 }
 
 const mapStateToProps = (state) => ({
-  state: state
+  state: state,
 })
 
 const mapDispatchToProps = (dispatch) => ({
-  handleStartTracker: (routineId) => { dispatch(startTracker(routineId)) }
+  handleStartTracker: (routineId) => { dispatch(startTracker(routineId)) },
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(DataPersistor)

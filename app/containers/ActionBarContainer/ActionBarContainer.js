@@ -32,9 +32,8 @@ const mapDispatchToProps = dispatch => ({
         else
           dispatch(actions.setRoutines(value))
       })
-
     },
-  }
+  },
 })
 
 const mapStateToProps = state => ({

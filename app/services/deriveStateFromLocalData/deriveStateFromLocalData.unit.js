@@ -50,20 +50,19 @@ describe('deriveStateFromLocalData', () => {
           {
             id: '1',
             routineName: 'Routine One',
-            duration: createMomentDerivedFromIso('2013-02-08 09:30:26.123')
+            duration: createMomentDerivedFromIso('2013-02-08 09:30:26.123'),
           },
           {
             id: '2',
             routineName: 'Routine One',
-            duration: createMomentDerivedFromIso()
+            duration: createMomentDerivedFromIso(),
           },
-        ]
+        ],
       }
       const stringifiedSampleData = JSON.stringify(sampleData)
 
       const expected = sampleData
       const actual = deriveStateFromLocalData(stringifiedSampleData)
-
 
       expect(actual).to.deep.equal(expected)
     }
@@ -84,7 +83,7 @@ describe('deriveStateFromLocalData', () => {
             {
               id: '1',
               routineName: 'Routine One',
-              duration: createMomentDerivedFromIso('2013-02-08 12:00:00.000')
+              duration: createMomentDerivedFromIso('2013-02-08 12:00:00.000'),
             },
             {
               id: '2',
@@ -93,7 +92,7 @@ describe('deriveStateFromLocalData', () => {
               duration: createMomentDerivedFromIso('2013-02-08 12:00:00.000'),
               timeLeft: createMomentDerivedFromIso('2013-02-08 01:30:30.500'),
             },
-          ]
+          ],
         }
         const stringifiedSampleData = JSON.stringify(sampleData)
 
@@ -102,7 +101,7 @@ describe('deriveStateFromLocalData', () => {
             {
               id: '1',
               routineName: 'Routine One',
-              duration: createMomentDerivedFromIso('2013-02-08 12:00:00.000')
+              duration: createMomentDerivedFromIso('2013-02-08 12:00:00.000'),
             },
             {
               id: '2',
@@ -111,7 +110,7 @@ describe('deriveStateFromLocalData', () => {
               duration: createMomentDerivedFromIso('2013-02-08 12:00:00.000'),
               timeLeft: createMomentDerivedFromIso('2013-02-08 01:00:00.000'),
             },
-          ]
+          ],
         }
         const actual = deriveStateFromLocalData(stringifiedSampleData, timeLastTracked)
 
@@ -134,7 +133,7 @@ describe('deriveStateFromLocalData', () => {
             {
               id: '1',
               routineName: 'Routine One',
-              duration: createMomentDerivedFromIso('2013-02-08 12:00:00.000')
+              duration: createMomentDerivedFromIso('2013-02-08 12:00:00.000'),
             },
             {
               id: '2',
@@ -143,7 +142,7 @@ describe('deriveStateFromLocalData', () => {
               duration: createMomentDerivedFromIso('2013-02-08 12:00:00.000'),
               timeLeft: createMomentDerivedFromIso('2013-02-08 01:30:30.500'),
             },
-          ]
+          ],
         }
         const stringifiedSampleData = JSON.stringify(sampleData)
 
@@ -152,7 +151,7 @@ describe('deriveStateFromLocalData', () => {
             {
               id: '1',
               routineName: 'Routine One',
-              duration: createMomentDerivedFromIso('2013-02-08 12:00:00.000')
+              duration: createMomentDerivedFromIso('2013-02-08 12:00:00.000'),
             },
             {
               id: '2',
@@ -163,7 +162,7 @@ describe('deriveStateFromLocalData', () => {
               timeLeft: null,
               shouldNotify: true,
             },
-          ]
+          ],
         }
         const actual = deriveStateFromLocalData(stringifiedSampleData, timeLastTracked)
 
@@ -183,7 +182,7 @@ describe('deriveStateFromLocalData', () => {
             {
               id: '1',
               routineName: 'Routine One',
-              duration: createMomentDerivedFromIso('2013-02-08 12:00:00.000')
+              duration: createMomentDerivedFromIso('2013-02-08 12:00:00.000'),
             },
             {
               id: '2',
@@ -192,7 +191,7 @@ describe('deriveStateFromLocalData', () => {
               duration: createMomentDerivedFromIso('2013-02-08 12:00:00.000'),
               timeLeft: createMomentDerivedFromIso('2013-02-08 01:30:30.500'),
             },
-          ]
+          ],
         }
         const stringifiedSampleData = JSON.stringify(sampleData)
 
@@ -201,7 +200,7 @@ describe('deriveStateFromLocalData', () => {
             {
               id: '1',
               routineName: 'Routine One',
-              duration: createMomentDerivedFromIso('2013-02-08 12:00:00.000')
+              duration: createMomentDerivedFromIso('2013-02-08 12:00:00.000'),
             },
             {
               id: '2',
@@ -212,7 +211,7 @@ describe('deriveStateFromLocalData', () => {
               timeLeft: null,
               shouldNotify: true,
             },
-          ]
+          ],
         }
         const actual = deriveStateFromLocalData(stringifiedSampleData, timeLastTracked)
 

@@ -29,7 +29,7 @@ describe('COMPONENT: App', () => {
           <Route exact path='/' component={HomePage} />
           <Route path='/routines/new' component={AddNewRoutineForm} />
           <Route path='/routines/:id' component={EditRoutineForm} />
-          <Route path="*" component={NotFound} />
+          <Route path='*' component={NotFound} />
         </Switch>
       </Router>
     ))

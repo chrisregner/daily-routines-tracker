@@ -13,8 +13,8 @@ describe('momentifyObject()', () => {
       etc: null,
       obj: {
         isoStr: moment('2017-06-15 12:34:56.789', 'YYYY-MM-DD HH:mm:ss.SSS').toJSON(),
-        arrWithIsoStr: [moment().toJSON()]
-      }
+        arrWithIsoStr: [moment().toJSON()],
+      },
     }
 
     const actual = momentifyObject(arg)
@@ -25,8 +25,8 @@ describe('momentifyObject()', () => {
       etc: null,
       obj: {
         isoStr: createMomentDerivedFromIso('2017-06-15 12:34:56.789', 'YYYY-MM-DD HH:mm:ss.SSS'),
-        arrWithIsoStr: [createMomentDerivedFromIso()]
-      }
+        arrWithIsoStr: [createMomentDerivedFromIso()],
+      },
     }
 
     expect(actual).to.deep.equal(expected)

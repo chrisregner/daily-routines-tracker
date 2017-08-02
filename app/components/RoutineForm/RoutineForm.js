@@ -8,7 +8,14 @@ import { Form, Icon, Input, Button, TimePicker } from 'antd'
 
 import { duration as durationFormat } from 'constants/timeFormats'
 
-let s // styled components will be defined in this variable
+const s = {
+  CenteredH2: styled.div`
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+  `,
+}
 
 class RoutineForm extends React.Component {
   static propTypes = {
@@ -55,7 +62,6 @@ class RoutineForm extends React.Component {
   handleSubmit = (e) => {
     e.preventDefault()
 
-    let isTracking
     const {
       handleSubmit,
       form: { validateFields },
@@ -63,7 +69,6 @@ class RoutineForm extends React.Component {
     } = this.props
 
     validateFields((err, formValues) => {
-
       if (!err) {
         const valuesToPass = Object.assign(
           {},
@@ -134,15 +139,15 @@ class RoutineForm extends React.Component {
     const hasInitValues = Object.keys(initialValues).length > 0
 
     return (notFound) ? (
-        <div className='pa3'>
-          <div className='pb3 f4 lh-title'>
-            <Link to='/'><Icon type='arrow-left' /></Link>
-          </div>
-          <div className='mt6 f3 lh-copy'>
-            Sorry, the routine you requested doesn’t exist. <br />
-            <Link to='/'>Go to home page</Link>
-          </div>
+      <div className='pa3'>
+        <div className='pb3 f4 lh-title'>
+          <Link to='/'><Icon type='arrow-left' /></Link>
         </div>
+        <div className='mt6 f3 lh-copy'>
+            Sorry, the routine you requested doesn’t exist. <br />
+          <Link to='/'>Go to home page</Link>
+        </div>
+      </div>
       ) : (
         <Form className='pa3' onSubmit={this.handleSubmit}>
           <div className='relative flex items-center mb3 cf f4 lh-title'>
@@ -184,15 +189,6 @@ class RoutineForm extends React.Component {
         </Form>
       )
   }
-}
-
-s = {
-  CenteredH2: styled.div`
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-  `,
 }
 
 const DecoratedRoutineForm = Form.create()(RoutineForm)

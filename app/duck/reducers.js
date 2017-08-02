@@ -3,10 +3,7 @@ import id from 'shortid'
 import merge from 'lodash/merge'
 import { combineReducers } from 'redux'
 
-import {
-  duration as durationFormat,
-  durationWithMs as durationWithMsFormat,
-} from 'constants/timeFormats'
+import { duration as durationFormat } from 'constants/timeFormats'
 import * as actionTypes from './actionTypes'
 
 moment('00:15:00', 'HH:mm:ss')
@@ -74,15 +71,14 @@ const routines = (state = initialRoutinesState, { type, payload }) => {
               ? {}
               : { timeLeft: duration.clone() }
           )
-        } else if (routineObj.isTracking) {
+        } else if (routineObj.isTracking)
           return Object.assign(
             {},
             routineObj,
             { isTracking: false }
           )
-        } else {
+        else
           return routineObj
-        }
       })
 
     case actionTypes.TICK_TRACKER:
@@ -92,10 +88,10 @@ const routines = (state = initialRoutinesState, { type, payload }) => {
           const timeToSubtract = timeLeft || duration
 
           if (
-            timeLeft
-            && (
-              timeLeft.format('HH:mm:ss.S') === '00:00:00.1'
-              || timeLeft.format('HH:mm:ss.S') === '00:00:00.0'
+            timeLeft &&
+            (
+              timeLeft.format('HH:mm:ss.S') === '00:00:00.1' ||
+              timeLeft.format('HH:mm:ss.S') === '00:00:00.0'
             )
           )
             return Object.assign(
@@ -113,12 +109,11 @@ const routines = (state = initialRoutinesState, { type, payload }) => {
             {},
             routineObj,
             {
-              timeLeft: moment(timeToSubtract).subtract('100', 'milliseconds')
+              timeLeft: moment(timeToSubtract).subtract('100', 'milliseconds'),
             }
           )
-        } else {
+        } else
           return routineObj
-        }
       })
 
     case actionTypes.STOP_TRACKER:
@@ -210,7 +205,6 @@ const isSorting = (state = false, { type, payload }) => {
 }
 
 const rootReducer = combineReducers({ routines, isSorting })
-
 
 export default rootReducer
 export {

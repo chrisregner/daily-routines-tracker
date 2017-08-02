@@ -1,7 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import { Link } from 'react-router-dom'
-import { Alert, Icon, Button, Dropdown, Menu, Modal, Input } from 'antd'
+import { Alert, Button, Dropdown, Menu, Modal, Input } from 'antd'
 import CopyToClipboard from 'react-copy-to-clipboard'
 
 import c from 'services/convertVirtualClassNames'
@@ -112,7 +112,7 @@ class ActionBar extends React.Component {
       <Modal
         className='jsExportDataModal'
         style={{ top: 70 }}
-        title="Export Data"
+        title='Export Data'
         visible={this.state.visibleModal === 'exportData'}
         onCancel={this.handleDismissModal}
         footer={(
@@ -126,7 +126,7 @@ class ActionBar extends React.Component {
             >
               <Button
                 className='jsExportDataCopy'
-                type="primary"
+                type='primary'
               >
                 Copy to Clipboard
               </Button>
@@ -135,11 +135,11 @@ class ActionBar extends React.Component {
         )}
       >
         {
-          this.state.hasCopied
-          && <Alert
+          this.state.hasCopied &&
+          <Alert
             className='mb2'
-            message="Copied to clipboard"
-            type="success"
+            message='Copied to clipboard'
+            type='success'
             showIcon
           />
         }
@@ -153,7 +153,7 @@ class ActionBar extends React.Component {
       <Modal
         className='jsImportDataModal'
         style={{ top: 70 }}
-        title="Import Data"
+        title='Import Data'
         visible={this.state.visibleModal === 'importData'}
         onOk={this.handleImportData}
         onCancel={this.handleDismissModal}
@@ -161,20 +161,20 @@ class ActionBar extends React.Component {
         cancelText='Dismiss'
       >
         {
-          this.state.importState === 'success'
-          && <Alert
+          this.state.importState === 'success' &&
+          <Alert
             className='mb2'
-            message="Data import success"
-            type="success"
+            message='Data import success'
+            type='success'
             showIcon
           />
         }
         {
-          this.state.importState === 'error'
-          && <Alert
+          this.state.importState === 'error' &&
+          <Alert
             className='mb2'
-            message="Data import failed. Please ensure that the export data is copied properly"
-            type="error"
+            message='Data import failed. Please ensure that the export data is copied properly'
+            type='error'
             showIcon
           />
         }

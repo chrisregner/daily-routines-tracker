@@ -32,7 +32,7 @@ class RoutineList extends React.Component {
     handlers.handleSetRoutines(reOrderedRoutines)
   }
 
-  render() {
+  render () {
     const { routines, isSorting } = this.props
 
     return (

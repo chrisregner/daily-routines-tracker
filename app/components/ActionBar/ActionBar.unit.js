@@ -3,13 +3,11 @@ import { expect } from 'chai'
 import { shallow } from 'enzyme'
 import td from 'testdouble'
 import { Link, MemoryRouter } from 'react-router-dom'
-import { Provider } from 'react-redux'
 import { Alert, Dropdown, Input } from 'antd'
 import merge from 'lodash/merge'
 import CopyToClipboard from 'react-copy-to-clipboard'
 
 import ActionBar from './ActionBar'
-import PopulatedRoutineList from 'containers/PopulatedRoutineList'
 
 describe('Component: ActionBar', () => {
   const getRequiredProps = (passedProps) => {
@@ -19,7 +17,7 @@ describe('Component: ActionBar', () => {
       handlers: {
         handleResetAllRoutines: () => {},
         handleImportData: () => {},
-      }
+      },
     }
 
     return passedProps
@@ -46,8 +44,8 @@ describe('Component: ActionBar', () => {
     wrpr
       .find('.jsExportDataModal')
       .findWhere((_wrpr) => (
-        _wrpr.is(Alert)
-        && _wrpr.prop('message').includes('Copied')
+        _wrpr.is(Alert) &&
+        _wrpr.prop('message').includes('Copied')
       ))
   )
 
@@ -75,7 +73,6 @@ describe('Component: ActionBar', () => {
   })
 
   describe('action overflow menu', () => {
-
     it('should render and should be an AntD Dropdown', () => {
       const wrapper = shallow(<ActionBar {...getRequiredProps()} />)
       expect(wrapper.find('.jsActionOverflow')).to.match(Dropdown)
@@ -102,8 +99,8 @@ describe('Component: ActionBar', () => {
         const rootCompWrapper = shallow(
           <ActionBar {...getRequiredProps({
             handlers: {
-              handleResetAllRoutines: fakeHandleResetAllRoutines
-            }
+              handleResetAllRoutines: fakeHandleResetAllRoutines,
+            },
           })} />
         )
         const menuWrapper = getMenu(rootCompWrapper)
@@ -114,7 +111,7 @@ describe('Component: ActionBar', () => {
           preventDefault: () => {},
           currentTarget: {
             className: 'jsResetAllRoutines',
-          }
+          },
         }
 
         td.verify(fakeHandleResetAllRoutines(), { times: 0, ignoreExtraArgs: 0 })
@@ -135,8 +132,8 @@ describe('Component: ActionBar', () => {
           const rootCompWrapper = shallow(
             <ActionBar {...getRequiredProps({
               handlers: {
-                handleToggleSort: fakeHandleToggleSort
-              }
+                handleToggleSort: fakeHandleToggleSort,
+              },
             })} />
           )
           const menuWrapper = getMenu(rootCompWrapper)
@@ -147,7 +144,7 @@ describe('Component: ActionBar', () => {
             preventDefault: () => {},
             currentTarget: {
               className: 'jsStartSort',
-            }
+            },
           }
 
           td.verify(fakeHandleToggleSort(), { times: 0, ignoreExtraArgs: 0 })
@@ -196,7 +193,6 @@ describe('Component: ActionBar', () => {
               <ActionBar {...getRequiredProps({ stateInJson: passedStateInJson })} />
             )
             const wrapper = getExportDataModalFooter(rootWrapper)
-            const targetButton = wrapper.find('.jsExportDataCopy')
             const expectedParent = wrapper.findWhere((wrpr) => (
               wrpr.is(CopyToClipboard) && wrpr.prop('text') === passedStateInJson
             ))
@@ -238,8 +234,6 @@ describe('Component: ActionBar', () => {
           it('should hide the modal', () => {
             const rootWrapper = shallow(<ActionBar {...getRequiredProps()} />)
             const menuWrapper = getMenu(rootWrapper)
-            const modalFooterWrapper = getExportDataModalFooter(rootWrapper)
-            const copyToClipboardComp = modalFooterWrapper.find('.jsExportDataCopy').parent()
 
             menuWrapper.find('.jsExportDataBtn').simulate('click')
             expect(rootWrapper.find('.jsExportDataModal')).to.have.prop('visible', true)
@@ -295,8 +289,8 @@ describe('Component: ActionBar', () => {
 
             wrapper.find('.jsImportDataField').simulate('change', {
               target: {
-                value: inputData
-              }
+                value: inputData,
+              },
             })
 
             expect(wrapper.find('.jsImportDataField')).to.have.prop('value', inputData)
@@ -320,17 +314,16 @@ describe('Component: ActionBar', () => {
               <ActionBar {...getRequiredProps({
                 handlers: {
                   handleImportData: fakeHandleImportData,
-                }
+                },
               })} />
             )
             const inputData = 'Unique Input Data'
 
             wrapper.find('.jsImportDataField').simulate('change', {
               target: {
-                value: inputData
-              }
+                value: inputData,
+              },
             })
-
 
             td.verify(fakeHandleImportData(inputData), { times: 0 })
             wrapper.find('.jsImportDataModal').prop('onOk')()
@@ -345,15 +338,15 @@ describe('Component: ActionBar', () => {
                 <ActionBar {...getRequiredProps({
                   handlers: {
                     handleImportData: fakeHandleImportData,
-                  }
+                  },
                 })} />
               )
               const inputData = 'Unique Input Data'
 
               wrapper.find('.jsImportDataField').simulate('change', {
                 target: {
-                  value: inputData
-                }
+                  value: inputData,
+                },
               })
 
               const findAlert = (wrpr) => wrpr.find('.jsImportDataModal').find(Alert)
@@ -370,15 +363,15 @@ describe('Component: ActionBar', () => {
                 <ActionBar {...getRequiredProps({
                   handlers: {
                     handleImportData: fakeHandleImportData,
-                  }
+                  },
                 })} />
               )
               const inputData = 'Unique Input Data'
 
               wrapper.find('.jsImportDataField').simulate('change', {
                 target: {
-                  value: inputData
-                }
+                  value: inputData,
+                },
               })
 
               wrapper.find('.jsImportDataModal').prop('onOk')()
@@ -397,15 +390,15 @@ describe('Component: ActionBar', () => {
                 <ActionBar {...getRequiredProps({
                   handlers: {
                     handleImportData: fakeHandleImportData,
-                  }
+                  },
                 })} />
               )
               const inputData = 'Unique Input Data'
 
               wrapper.find('.jsImportDataField').simulate('change', {
                 target: {
-                  value: inputData
-                }
+                  value: inputData,
+                },
               })
 
               const findAlert = (wrpr) => wrpr.find('.jsImportDataModal').find(Alert)
@@ -422,15 +415,15 @@ describe('Component: ActionBar', () => {
                 <ActionBar {...getRequiredProps({
                   handlers: {
                     handleImportData: fakeHandleImportData,
-                  }
+                  },
                 })} />
               )
               const inputData = 'Unique Input Data'
 
               wrapper.find('.jsImportDataField').simulate('change', {
                 target: {
-                  value: inputData
-                }
+                  value: inputData,
+                },
               })
 
               td.when(fakeHandleImportData(td.matchers.anything())).thenThrow(new Error())
@@ -444,7 +437,6 @@ describe('Component: ActionBar', () => {
       })
     })
   })
-
 
   context('when isSorting prop is false', () => {
     it('should set the h1\'s text to \'Daily Routines Tracker\'', () => {
@@ -478,7 +470,7 @@ describe('Component: ActionBar', () => {
       const wrapper = shallow(
         <ActionBar {...getRequiredProps({
           handlers: {
-            handleToggleSort: fakeHandleToggleSort
+            handleToggleSort: fakeHandleToggleSort,
           },
           isSorting: true,
         })} />
@@ -490,7 +482,7 @@ describe('Component: ActionBar', () => {
         preventDefault: () => {},
         currentTarget: {
           className: 'jsFinishSort',
-        }
+        },
       }
 
       td.verify(fakeHandleToggleSort(), { times: 0, ignoreExtraArgs: 0 })

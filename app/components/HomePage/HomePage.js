@@ -2,7 +2,6 @@ import React from 'react'
 import { Link } from 'react-router-dom'
 import { Button } from 'antd'
 
-import c from 'services/convertVirtualClassNames'
 import PopulatedRoutineList from 'containers/PopulatedRoutineList'
 import ActionBarContainer from 'containers/ActionBarContainer'
 

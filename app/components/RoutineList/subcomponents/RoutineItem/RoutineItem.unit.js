@@ -1,7 +1,6 @@
 import React from 'react'
 import { expect } from 'chai'
 import { shallow } from 'enzyme'
-import { Link } from 'react-router-dom'
 import td from 'testdouble'
 import moment from 'moment'
 import { Icon } from 'antd'
@@ -30,19 +29,18 @@ describe('COMPONENT: RoutineList/RoutineItem', () => {
     clearInterval(actions.getLastIntervalId())
   })
 
-
-  /*==================================
+  /* ==================================
   =            As a whole            =
-  ==================================*/
+  ================================== */
 
   it('should render without crashing', () => {
     const wrapper = shallow(<RoutineItem {...getRequiredProps()} />)
     expect(wrapper).to.be.present()
   })
 
-  /*=========================================
+  /* =========================================
   =            Edit Routine Link            =
-  =========================================*/
+  ========================================= */
 
   it('should render an element that calls the history.push() prop with the routine\'s editing page URL when clicked', () => {
     const push = td.function()
@@ -51,17 +49,16 @@ describe('COMPONENT: RoutineList/RoutineItem', () => {
     const getEditRoutineLink = () => wrapper.find('.edit-routine')
     const wantedUrlArg = '/routines/' + passsedId
 
-    wrapper.setProps({ history: { push }})
+    wrapper.setProps({ history: { push } })
 
     td.verify(push(), { times: 0, ignoreExtraArgs: true })
     getEditRoutineLink().prop('onClick')()
     td.verify(push(wantedUrlArg), { times: 1 })
   })
 
-
-  /*=====================================
+  /* =====================================
   =            Routine Infos            =
-  =====================================*/
+  ===================================== */
 
   it('should render the routine name', () => {
     const routineName = 'The Routine'
@@ -119,15 +116,15 @@ describe('COMPONENT: RoutineList/RoutineItem', () => {
     })
   })
 
-  /*========================================
+  /* ========================================
   =            Routine Controls            =
-  ========================================*/
+  ======================================== */
   /* FIXME: double check all nesting specs regarding the conditional rendering */
 
   describe('the Routine Controls', () => {
-    /*==============================================
+    /* ==============================================
     =            'Start Tracker' Button            =
-    ==============================================*/
+    ============================================== */
 
     describe('the \'start tracker\' button', () => {
       context('when duration prop is passed', () => {
@@ -145,7 +142,7 @@ describe('COMPONENT: RoutineList/RoutineItem', () => {
           it('should NOT render a \'start tracker\' button', () => {
             const wrapper = shallow(<RoutineItem {...getRequiredProps({
               duration: moment('12:34:56', 'HH:mm:ss'),
-              isTracking: true
+              isTracking: true,
             })} />)
 
             expect(wrapper).to.have.exactly(0).descendants('.start-tracker')
@@ -156,7 +153,7 @@ describe('COMPONENT: RoutineList/RoutineItem', () => {
           it('should NOT render a \'start tracker\' button', () => {
             const wrapper = shallow(<RoutineItem {...getRequiredProps({
               duration: moment('12:34:56', 'HH:mm:ss'),
-              isDone: true
+              isDone: true,
             })} />)
 
             expect(wrapper).to.have.exactly(0).descendants('.start-tracker')
@@ -188,7 +185,7 @@ describe('COMPONENT: RoutineList/RoutineItem', () => {
             stopPropagation: () => {},
             currentTarget: {
               className: 'start-tracker',
-            }
+            },
           }
 
           const expectedArg = passedId
@@ -200,10 +197,9 @@ describe('COMPONENT: RoutineList/RoutineItem', () => {
       })
     })
 
-
-    /*=============================================
+    /* =============================================
     =            'Stop Tracker' Button            =
-    =============================================*/
+    ============================================= */
 
     describe('the \'stop tracker\' button', () => {
       context('when duration prop is passed', () => {
@@ -211,7 +207,7 @@ describe('COMPONENT: RoutineList/RoutineItem', () => {
           it('should render a \'stop tracker\' button', () => {
             const wrapper = shallow(<RoutineItem {...getRequiredProps({
               duration: moment('12:34:56', 'HH:mm:ss'),
-              isTracking: true
+              isTracking: true,
             })} />)
 
             expect(wrapper).to.have.exactly(1).descendants('.stop-tracker')
@@ -237,7 +233,7 @@ describe('COMPONENT: RoutineList/RoutineItem', () => {
             routineName: 'The Routine',
             duration: moment('12:34:56', 'HH:mm:ss'),
             handleStopTracker,
-            isTracking: true
+            isTracking: true,
           })} />)
           const trackerLink = wrapper.find('.stop-tracker')
           const fakeEv = {
@@ -245,7 +241,7 @@ describe('COMPONENT: RoutineList/RoutineItem', () => {
             stopPropagation: () => {},
             currentTarget: {
               className: 'stop-tracker',
-            }
+            },
           }
 
           td.verify(handleStopTracker(), { times: 0, ignoreExtraArgs: 0 })
@@ -255,9 +251,9 @@ describe('COMPONENT: RoutineList/RoutineItem', () => {
       })
     })
 
-    /*============================================
+    /* ============================================
     =            Reset Routine Button            =
-    ============================================*/
+    ============================================ */
 
     describe('the \'reset tracker\' button', () => {
       context('when (duration) prop', () => {
@@ -338,7 +334,7 @@ describe('COMPONENT: RoutineList/RoutineItem', () => {
             stopPropagation: () => {},
             currentTarget: {
               className: 'reset-tracker',
-            }
+            },
           }
 
           const expectedArg = passedId
@@ -350,9 +346,9 @@ describe('COMPONENT: RoutineList/RoutineItem', () => {
       })
     })
 
-    /*============================================
+    /* ============================================
     =            Toggle isDone Button            =
-    ============================================*/
+    ============================================ */
 
     describe('isDone button', () => {
       it('there should be one', () => {
@@ -390,7 +386,7 @@ describe('COMPONENT: RoutineList/RoutineItem', () => {
             stopPropagation: () => {},
             currentTarget: {
               className: 'toggleIsDone',
-            }
+            },
           }
 
           const expectedArg = passedId
@@ -413,7 +409,7 @@ describe('COMPONENT: RoutineList/RoutineItem', () => {
             stopPropagation: () => {},
             currentTarget: {
               className: 'toggleIsDone',
-            }
+            },
           }
 
           trackerLink.prop('onClick')(fakeEv)
@@ -449,7 +445,7 @@ describe('COMPONENT: RoutineList/RoutineItem', () => {
             stopPropagation: () => {},
             currentTarget: {
               className: 'toggleIsDone',
-            }
+            },
           }
 
           const expectedArg = passedId
@@ -473,7 +469,7 @@ describe('COMPONENT: RoutineList/RoutineItem', () => {
             stopPropagation: () => {},
             currentTarget: {
               className: 'toggleIsDone',
-            }
+            },
           }
 
           trackerLink.prop('onClick')(fakeEv)
@@ -481,6 +477,5 @@ describe('COMPONENT: RoutineList/RoutineItem', () => {
         })
       })
     })
-
   })
 })

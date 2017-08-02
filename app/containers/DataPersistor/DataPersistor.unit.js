@@ -2,7 +2,7 @@ import React from 'react'
 import { expect } from 'chai'
 import { shallow } from 'enzyme'
 import td from 'testdouble'
-import configureMockStore  from 'redux-mock-store'
+import configureMockStore from 'redux-mock-store'
 import merge from 'lodash/merge'
 import moment from 'moment'
 import lolex from 'lolex'
@@ -11,7 +11,6 @@ describe('Container: DataPersistor', () => {
   let PureDataPersistor, DataPersistor, fakeClock
   const createMockStore = configureMockStore()
   const createInstance = (passedProps, shouldUsePure) => {
-    const mockStore = createMockStore()
     const requiredPropsForPure = {
       state: {
         routines: [],
@@ -22,8 +21,8 @@ describe('Container: DataPersistor', () => {
     const requiredProps = shouldUsePure
       ? requiredPropsForPure
       : {
-          store: createMockStore(requiredPropsForPure.state)
-        }
+        store: createMockStore(requiredPropsForPure.state),
+      }
 
     const finalProps = passedProps
       ? merge({}, requiredProps, passedProps)
@@ -58,10 +57,10 @@ describe('Container: DataPersistor', () => {
       routines: [{
         id: 'myUniqueRoutineId',
         routineName: 'myUniqueRoutineName',
-      }]
+      }],
     }
     const passedProps = {
-      store: createMockStore(initialState)
+      store: createMockStore(initialState),
     }
     const wrapper = createInstance(passedProps)
 
@@ -86,7 +85,7 @@ describe('Container: DataPersistor', () => {
 
   describe('handleTabClose() method', () => {
     it('should call windows.localStorage.setItem() twice with the correct arguments', () => {
-      const fakeClock = lolex.install()
+      fakeClock = lolex.install()
       const origLocalStorage = window.localStorage
       const fakeSetItem = td.function()
       window.localStorage = { setItem: fakeSetItem }
@@ -96,8 +95,8 @@ describe('Container: DataPersistor', () => {
           routines: [{
             id: '1',
             routineName: 'The Routine',
-          }]
-        }
+          }],
+        },
       }
       const wrapper = createInstance(passedProp, true)
       const fakeEv = { preventDefault: () => {} }
@@ -134,9 +133,9 @@ describe('Container: DataPersistor', () => {
               routineName: 'The Tracking Routine',
               duration: moment(),
               isTracking: true,
-            }
-          ]
-        }
+            },
+          ],
+        },
       }
 
       const wrapper = createInstance(passedProp, true)
@@ -165,9 +164,9 @@ describe('Container: DataPersistor', () => {
               id: '2',
               routineName: 'The Tracking Routine',
               duration: moment(),
-            }
-          ]
-        }
+            },
+          ],
+        },
       }
 
       const wrapper = createInstance(passedProp, true)
@@ -192,7 +191,6 @@ describe('Container: DataPersistor', () => {
       DataPersistor = require('./DataPersistor').default
 
       const wrapper = createInstance({ store: mockStore })
-      const passedArg = startTrackerArg
 
       td.verify(fakeDispatch(), { times: 0, ignoreExtraArgs: true })
       wrapper.prop('handleStartTracker')(startTrackerArg)

@@ -4,7 +4,7 @@ import reduxThunk from 'redux-thunk'
 import { expect } from 'chai'
 import { shallow } from 'enzyme'
 import td from 'testdouble'
-import configureMockStore  from 'redux-mock-store'
+import configureMockStore from 'redux-mock-store'
 import merge from 'lodash/merge'
 
 import RoutineForm from 'components/RoutineForm'
@@ -57,7 +57,7 @@ describe('CONTAINER: EditRoutineForm', () => {
         }
 
         const initialState = {
-          routines: [mockRoutine]
+          routines: [mockRoutine],
         }
 
         const wrapper = createInstance({
@@ -106,7 +106,7 @@ describe('CONTAINER: EditRoutineForm', () => {
           const push = td.function()
           const idThatShouldMatch = '123'
           const initialState = {
-            routines: [{ id: idThatShouldMatch }]
+            routines: [{ id: idThatShouldMatch }],
           }
           const wrapper = createInstance(
             { history: { push } },
@@ -172,7 +172,7 @@ describe('CONTAINER: EditRoutineForm', () => {
     context('when route id does not match any routine', () => {
       it('should receive true as notFound prop', () => {
         const initialState = {
-          routines: []
+          routines: [],
         }
 
         const wrapper = createInstance({

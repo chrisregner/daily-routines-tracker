@@ -7,8 +7,8 @@ export const nonEmptyObjOfFunc = (props, propName, componentName) => {
   const handlerEntries = isObject && Object.entries(handlers)
   const hasAtleastOneProp = handlerEntries.length > 0
 
-  const nonFuncHandler = handlerEntries
-    && handlerEntries.find((handler) => typeof handler[1] !== 'function')
+  const nonFuncHandler = handlerEntries &&
+    handlerEntries.find((handler) => typeof handler[1] !== 'function')
   const allValuesAreFunc = nonFuncHandler === undefined
 
   if (!isObject || !hasAtleastOneProp || !allValuesAreFunc)

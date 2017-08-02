@@ -1,10 +1,7 @@
 import React from 'react'
 import { expect } from 'chai'
 import { shallow } from 'enzyme'
-import td from 'testdouble'
-import { Link, MemoryRouter } from 'react-router-dom'
-import { Provider } from 'react-redux'
-import { Dropdown } from 'antd'
+import { Link } from 'react-router-dom'
 import merge from 'lodash/merge'
 
 import HomePage from './HomePage'
@@ -15,8 +12,8 @@ describe('Page: HomePage', () => {
   const getRequiredProps = (passedProps) => {
     const requiredProps = {
       handlers: {
-        handleResetAllRoutines: () => {}
-      }
+        handleResetAllRoutines: () => {},
+      },
     }
 
     return passedProps

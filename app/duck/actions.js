@@ -6,9 +6,9 @@ let timer
 // convenient for clearing intervals in tests
 export const getLastIntervalId = () => timer
 
-/*===================================================================
+/* ===================================================================
 =            Actions for routines' basic CRUD operations            =
-===================================================================*/
+=================================================================== */
 
 export const addRoutine = (formData) => ({
   type: actionTypes.ADD_ROUTINE,
@@ -31,7 +31,6 @@ export const editRoutine = (formData) => (dispatch, getState) => {
     }
   }
 
-
   dispatch({
     type: actionTypes.EDIT_ROUTINE,
     payload: formData,
@@ -45,13 +44,12 @@ export const deleteRoutine = (routineId) => ({
   },
 })
 
-
-/*============================================================
+/* ============================================================
 =            Actions for routine tracking feature            =
-============================================================*/
+============================================================ */
 
 export const tickTracker = () => ({
-  type: actionTypes.TICK_TRACKER
+  type: actionTypes.TICK_TRACKER,
 })
 
 export const startTracker = (routineId) => (dispatch, getState) => {
@@ -66,15 +64,13 @@ export const startTracker = (routineId) => (dispatch, getState) => {
     dispatch(tickTracker())
 
     if (
-      timeLeft
-      && (
-        timeLeft.format('HH:mm:ss.S') === '00:00:00.1'
-        || timeLeft.format('HH:mm:ss.S') === '00:00:00.0'
+      timeLeft &&
+      (
+        timeLeft.format('HH:mm:ss.S') === '00:00:00.1' ||
+        timeLeft.format('HH:mm:ss.S') === '00:00:00.0'
         )
       )
       clearInterval(timer)
-
-    console.log('Tick!')
   }, 100)
 
   dispatch({
@@ -96,12 +92,11 @@ export const resetTracker = (routineId) => (dispatch, getState) => {
   if (targetRoutine.isTracking)
     clearInterval(timer)
 
-
   dispatch({
     type: actionTypes.RESET_TRACKER,
     payload: {
       id: routineId,
-    }
+    },
   })
 }
 
@@ -109,33 +104,33 @@ export const markDone = (routineId) => ({
   type: actionTypes.MARK_DONE,
   payload: {
     id: routineId,
-  }
+  },
 })
 
-/*=================================================
+/* =================================================
 =            Misc Actions for Routines            =
-=================================================*/
+================================================= */
 
 // TODO: make it clear the last interval as well
 export const resetAllRoutines = () => ({
-  type: actionTypes.RESET_ALL_ROUTINES
+  type: actionTypes.RESET_ALL_ROUTINES,
 })
 
 export const setRoutines = (routines) => ({
   type: actionTypes.SET_ROUTINES,
   payload: {
     routines,
-  }
+  },
 })
 
 export const clearNotifs = () => ({
-  type: actionTypes.CLEAR_NOTIFS
+  type: actionTypes.CLEAR_NOTIFS,
 })
 
-/*===================================================
+/* ===================================================
 =            Misc Actions for Root State            =
-===================================================*/
+=================================================== */
 
 export const toggleSort = () => ({
-  type: actionTypes.TOGGLE_SORT
+  type: actionTypes.TOGGLE_SORT,
 })

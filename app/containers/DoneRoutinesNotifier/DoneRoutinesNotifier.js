@@ -16,10 +16,10 @@ class PureDoneRoutinesNotifier extends React.Component {
   static propTypes = {
     RoutinesThatShouldNotify: PropTypes.arrayOf(
       PropTypes.shape({
-        routineName: PropTypes.string.isRequired
+        routineName: PropTypes.string.isRequired,
       })
     ),
-    handleClearNotifs: PropTypes.func.isRequired
+    handleClearNotifs: PropTypes.func.isRequired,
   }
 
   componentDidMount = () => {
@@ -35,9 +35,9 @@ class PureDoneRoutinesNotifier extends React.Component {
 
   componentDidUpdate = () => {
     const { notifSound, isPlaying } = this.state
-    const { RoutinesThatShouldNotify, handleClearNotifs } = this.props
+    const { RoutinesThatShouldNotify } = this.props
 
-    if (notifSound) {
+    if (notifSound)
       if (RoutinesThatShouldNotify && RoutinesThatShouldNotify.length > 0) {
         const routineName = RoutinesThatShouldNotify[0].routineName
 
@@ -51,8 +51,6 @@ class PureDoneRoutinesNotifier extends React.Component {
 
           document.title = title1
           this.docTitleInterval = setInterval(() => {
-            console.log('DocTitleInterval!')
-
             if (document.title === title1)
               document.title = title2
             else
@@ -67,14 +65,13 @@ class PureDoneRoutinesNotifier extends React.Component {
               </div>
             ),
             okText: 'Dismiss',
-            onOk: this.handleModalDismiss
+            onOk: this.handleModalDismiss,
           })
         }
       } else if (isPlaying) {
         this.setState({ isPlaying: false })
         notifSound.stop()
       }
-    }
   }
 
   handleModalDismiss = () => {

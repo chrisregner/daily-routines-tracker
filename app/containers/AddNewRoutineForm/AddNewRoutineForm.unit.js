@@ -3,7 +3,7 @@ import { MemoryRouter } from 'react-router-dom'
 import { expect } from 'chai'
 import { shallow } from 'enzyme'
 import td from 'testdouble'
-import configureMockStore  from 'redux-mock-store'
+import configureMockStore from 'redux-mock-store'
 
 import RoutineForm from 'components/RoutineForm'
 

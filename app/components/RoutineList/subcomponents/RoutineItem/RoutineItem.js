@@ -1,13 +1,13 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { Link, withRouter } from 'react-router-dom'
+import { withRouter } from 'react-router-dom'
 import moment from 'moment'
 import styled from 'styled-components'
 import c from 'services/convertVirtualClassNames'
-import { Icon, Button } from 'antd'
+import { Icon } from 'antd'
 import { duration as durationFormat } from 'constants/timeFormats'
 
-let s // styled components will be defined in this variable
+let s
 
 class RoutineItem extends React.Component {
   static propTypes = {
@@ -34,28 +34,27 @@ class RoutineItem extends React.Component {
 
     const {
       handleStartTracker, handleStopTracker, handleResetTracker, handleMarkDone,
-      id, isDone
+      id, isDone,
     } = this.props
     const btnClassName = e.currentTarget.className
 
-    if (btnClassName.includes('start-tracker')) {
+    if (btnClassName.includes('start-tracker'))
       handleStartTracker(id)
-    } else if (btnClassName.includes('stop-tracker')) {
+    else if (btnClassName.includes('stop-tracker'))
       handleStopTracker()
-    } else if (btnClassName.includes('reset-tracker')) {
+    else if (btnClassName.includes('reset-tracker'))
       handleResetTracker(id)
-    } else if (btnClassName.includes('toggleIsDone')) {
+    else if (btnClassName.includes('toggleIsDone'))
       if (isDone) {
         handleResetTracker(id)
       } else {
         handleMarkDone(id)
       }
-    }
   }
 
   render = () => {
     const {
-      history, id, routineName, reminder,
+      history, id, routineName,
       duration, timeLeft, isTracking, isDone,
     } = this.props
     const durationToShow = timeLeft || duration

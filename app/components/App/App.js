@@ -13,11 +13,13 @@ import EditRoutineForm from 'containers/EditRoutineForm'
 import DoneRoutinesNotifier from 'containers/DoneRoutinesNotifier'
 import DataPersistor from 'containers/DataPersistor'
 
+import 'tachyons/css/tachyons.css'
+
 let s
 
 class App extends React.Component {
   render = () => (
-    <s.Container className='bg-moon-gray vh-100'>
+    <div className='bg-moon-gray vh-100 pa3-ns'>
       <s.AppContainer className='relative center h-100'>
         <div className='w-100 h-100 bg-white overflow-auto'>
           <Router>
@@ -25,7 +27,7 @@ class App extends React.Component {
               <Route exact path='/' component={HomePage} />
               <Route path='/routines/new' component={AddNewRoutineForm} />
               <Route path='/routines/:id' component={EditRoutineForm} />
-              <Route path="*" component={NotFound} />
+              <Route path='*' component={NotFound} />
             </Switch>
           </Router>
           <DoneRoutinesNotifier />
@@ -35,16 +37,11 @@ class App extends React.Component {
           </div>
         </div>
       </s.AppContainer>
-    </s.Container>
+    </div>
   )
 }
 
 s = {
-  Container: styled.div`
-    @media (min-width: 481px) {
-      padding: var(--spacing-medium);
-    }
-  `,
   AppContainer: styled.div`
     min-width: 310px;
     max-width: 480px;

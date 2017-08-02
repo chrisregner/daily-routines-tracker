@@ -44,15 +44,14 @@ describe('COMPONENT: RoutineForm', () => {
     expect(document.title).to.equal('Add New Routine')
   })
 
-
   it('should set the page title to \'Edit Routine\' if initialValues prop is passed', () => {
     expect(document.title).to.not.equal('Edit Routine')
 
     const hocWrapper = shallow(
       <RoutineForm {...getRequiredProps({
         initialValues: {
-          routineName: 'Initial Routine Name'
-        }
+          routineName: 'Initial Routine Name',
+        },
       })} />
     )
     const wrapper = diveThruAntDHOC(hocWrapper)
@@ -497,13 +496,12 @@ describe('COMPONENT: RoutineForm', () => {
       const actualText = routineForm.text()
       const doesInclude = (text) => actualText.includes(text)
 
-
       expect(
-        doesInclude('404')
-        || doesInclude('not found')
-        || doesInclude('not exist')
-        || doesInclude('doesn’t exist')
-        || doesInclude('doesn&rsquo;t exist')
+        doesInclude('404') ||
+        doesInclude('not found') ||
+        doesInclude('not exist') ||
+        doesInclude('doesn’t exist') ||
+        doesInclude('doesn&rsquo;t exist')
       )
         .to.equal(true)
     })

@@ -1,6 +1,6 @@
 import { connect } from 'react-redux'
 
-import { editRoutine, deleteRoutine, stopTracker, resetTracker } from 'duck/actions'
+import { editRoutine, deleteRoutine } from 'duck/actions'
 import RoutineForm from 'components/RoutineForm'
 
 const mapStateToProps = (state, ownProps) => {

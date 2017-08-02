@@ -23,11 +23,8 @@ describe('convertVirtualClassNamesBasic()', () => {
   )
 
   it('just returns the input if no virtual class is found', () => {
-    const arg = 'virtualCnD cnA'
-    const expected = arg
-    const actual = cvcnBasic(arg)
-
-    expect(expected).to.equal(actual)
+    const res = cvcnBasic('virtualCnD cnA')
+    expect(res).to.equal('virtualCnD cnA')
   })
 
   it('converts all virtual class names that are found into actual class names', () => {
