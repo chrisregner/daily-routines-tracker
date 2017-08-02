@@ -24,7 +24,10 @@ class PureDoneRoutinesNotifier extends React.Component {
 
   componentDidMount = () => {
     const notifSound = new Howl({
-      src: ['/assets/notif.ogg', '/assets/notif.mp3'],
+      src: [
+        process.env.PUBLIC_URL + '/assets/notif.ogg',
+        process.env.PUBLIC_URL + '/assets/notif.mp3',
+      ],
       loop: true,
     })
 
