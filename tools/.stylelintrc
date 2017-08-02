@@ -1,4 +1,0 @@
-{
-  extends: 'stylelint-config-standard',
-  ignoreFiles: '../app/styles/vendor/**/*.css'
-}
