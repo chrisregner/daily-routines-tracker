@@ -140,6 +140,7 @@ export default {
     // https://webpack.js.org/plugins/define-plugin/
     new webpack.DefinePlugin({
       'process.env.NODE_ENV': isProd ? "'production'" : "'development'",
+      'process.env.PUBLIC_URL': isProd ? "'https://chrisregner.github.io/daily-routines-tracker/'" : "''",
     }),
 
     new HtmlWebpackPlugin({
@@ -149,26 +150,26 @@ export default {
 
     ...(isProd
       ? [
-          // Extract CSS to a different file instead of inlining it with js
+        // Extract CSS to a different file instead of inlining it with js
         new ExtractTextPlugin('styles.css'),
 
-          // Decrease script evaluation time
-          // https://github.com/webpack/webpack/blob/master/examples/scope-hoisting/README.md
+        // Decrease script evaluation time
+        // https://github.com/webpack/webpack/blob/master/examples/scope-hoisting/README.md
         new webpack.optimize.ModuleConcatenationPlugin(),
 
-          // Minimize all JavaScript output of chunks
+        // Minimize all JavaScript output of chunks
         new webpack.optimize.UglifyJsPlugin(),
 
-          // Gzip it
-          new CompressionPlugin({
-            asset: '[path].gz[query]',
-            algorithm: 'gzip',
-            test: /\.js$|\.css$|\.html$/,
-            threshold: 10240,
-            minRatio: 0.8,
-          }),
+        // Gzip it
+        new CompressionPlugin({
+          asset: '[path].gz[query]',
+          algorithm: 'gzip',
+          test: /\.js$|\.css$|\.html$/,
+          threshold: 10240,
+          minRatio: 0.8,
+        }),
 
-          // Create a report of plugin sizes
+        // Create a report of plugin sizes
         new BundleAnalyzerPlugin({
           analyzerMode: 'static',
         }),

@@ -2,7 +2,7 @@ import React from 'react'
 import { expect } from 'chai'
 import { shallow } from 'enzyme'
 import {
-  BrowserRouter as Router,
+  BrowserRouter,
   Route,
   Switch,
 } from 'react-router-dom'
@@ -21,17 +21,20 @@ describe('COMPONENT: App', () => {
     expect(wrapper).to.be.present()
   })
 
+  it('should have <BrowserRouter /> as root component', () => {
+    const wrapper = shallow(<App />)
+    expect(wrapper).to.match(BrowserRouter)
+  })
+
   it('should render the correct routes', () => {
     const wrapper = shallow(<App />)
     expect(wrapper).to.containMatchingElement((
-      <Router>
-        <Switch>
-          <Route exact path='/' component={HomePage} />
-          <Route path='/routines/new' component={AddNewRoutineForm} />
-          <Route path='/routines/:id' component={EditRoutineForm} />
-          <Route path='*' component={NotFound} />
-        </Switch>
-      </Router>
+      <Switch>
+        <Route exact path='/' component={HomePage} />
+        <Route path='/routines/new' component={AddNewRoutineForm} />
+        <Route path='/routines/:id' component={EditRoutineForm} />
+        <Route path='*' component={NotFound} />
+      </Switch>
     ))
   })
 

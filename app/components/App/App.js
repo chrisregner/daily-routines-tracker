@@ -1,7 +1,7 @@
 import React from 'react'
 import styled from 'styled-components'
 import {
-  BrowserRouter as Router,
+  BrowserRouter,
   Route,
   Switch,
 } from 'react-router-dom'
@@ -19,25 +19,25 @@ let s
 
 class App extends React.Component {
   render = () => (
-    <div className='bg-moon-gray vh-100 pa3-ns'>
-      <s.AppContainer className='relative center h-100'>
-        <div className='w-100 h-100 bg-white overflow-auto'>
-          <Router>
+    <BrowserRouter basename={process.env.PUBLIC_URL}>
+      <div className='bg-moon-gray vh-100 pa3-ns'>
+        <s.AppContainer className='relative center h-100'>
+          <div className='w-100 h-100 bg-white overflow-auto'>
             <Switch>
               <Route exact path='/' component={HomePage} />
               <Route path='/routines/new' component={AddNewRoutineForm} />
               <Route path='/routines/:id' component={EditRoutineForm} />
               <Route path='*' component={NotFound} />
             </Switch>
-          </Router>
-          <DoneRoutinesNotifier />
-          <DataPersistor />
-          <div className={'absolute left-0 bottom-1 pa3 bg-white-80 gray'}>
-            Created by <s.A className='gray underline' href='https://github.com/chrisregner/'>Chris Regner</s.A>
+            <DoneRoutinesNotifier />
+            <DataPersistor />
+            <div className={'absolute left-0 bottom-1 pa3 bg-white-80 gray'}>
+              Created by <s.A className='gray underline' href='https://github.com/chrisregner/'>Chris Regner</s.A>
+            </div>
           </div>
-        </div>
-      </s.AppContainer>
-    </div>
+        </s.AppContainer>
+      </div>
+    </BrowserRouter>
   )
 }
 
