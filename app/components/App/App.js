@@ -33,10 +33,10 @@ class App extends React.Component {
             </Switch>
             <DoneRoutinesNotifier />
             <DataPersistor />
-            <s.Footer className='fixed bottom-0'>
-              <div className='relative flex items-center pa3 bg-white-80 gray'>
+            <s.Footer className='fixed bottom-0 silver'>
+              <div className='relative flex items-center pa3 bg-white-80'>
                 <div className='self-grow-1'>
-                  Created by <s.A className='gray underline' href='https://github.com/chrisregner/'>Chris Regner</s.A>
+                  By <s.A className='silver underline' href='https://github.com/chrisregner/'>Chris Regner</s.A>. View <s.A className='silver underline' href='https://github.com/chrisregner/daily-routines-tracker'>source</s.A>.
                 </div>
                 <div className='pa2 bg-white-80'>
                   <s.AddNewRoutineBtnContainer>

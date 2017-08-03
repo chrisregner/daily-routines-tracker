@@ -44,8 +44,7 @@ class RoutineItem extends React.Component {
     if (this.props.isSorting) return
 
     const {
-      handleStartTracker, handleStopTracker, handleResetTracker, handleMarkDone,
-      id, isDone, isSorting
+      handleStartTracker, handleStopTracker, handleResetTracker, handleMarkDone, id, isDone,
     } = this.props
     const btnClassName = e.currentTarget.className
 

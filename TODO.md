@@ -11,13 +11,7 @@ TODO
   - [done] xbrowser test
   - [done] check page load
   - [done] ensure flash of loading fonts is no more
-- misc
-  - [done] add footer
-  - delete older micromanage.me versions
-  - update README.md
-    - acknowledgement for used notif audio file
-      - https://freesound.org/people/hykenfreak/sounds/202029/
-      - https://freesound.org/people/hykenfreak/
+  - [done] update README.md
 
 
 TODO (Features)
