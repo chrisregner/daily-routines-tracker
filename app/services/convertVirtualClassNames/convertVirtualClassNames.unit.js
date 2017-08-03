@@ -11,9 +11,9 @@ describe('convertVirtualClassNames()', () => {
   afterEach(() => { td.reset() })
 
   it(
-    'should return the result of convertVirtualClassNamesBasic()' +
-    'when called with the result of classname()' +
-    'when called with the passed arguments',
+    'should return the result of convertVirtualClassNamesBasic()'
+    + 'when called with the result of classname()'
+    + 'when called with the passed arguments',
     () => {
       const classnameArgs = ['classnameArg1', 'classnameArg2']
       const classnameRes = 'classnameRes'

@@ -16,6 +16,7 @@
   "rules": {
     "no-console": "warn",
     "comma-dangle": ["error", "always-multiline"],
-    "curly": ["error", "multi"]
+    "curly": ["error", "multi"],
+    "operator-linebreak": ["error", "before"],
   }
 }

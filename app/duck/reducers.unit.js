@@ -11,7 +11,7 @@ describe('REDUCER: routines', () => {
   it('should return the initial state', () => {
     const expected = [{
       id: '1',
-      routineName: 'Click that --->',
+      routineName: 'Press that --->',
       duration: moment('00:00:03', 'HH:mm:ss'),
     }, {
       id: '2',

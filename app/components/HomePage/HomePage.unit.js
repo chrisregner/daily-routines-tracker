@@ -1,7 +1,6 @@
 import React from 'react'
 import { expect } from 'chai'
 import { shallow } from 'enzyme'
-import { Link } from 'react-router-dom'
 import merge from 'lodash/merge'
 
 import HomePage from './HomePage'
@@ -45,14 +44,5 @@ describe('Page: HomePage', () => {
   it('should render an <ActionBarContainer />', () => {
     const wrapper = shallow(<HomePage {...getRequiredProps()} />)
     expect(wrapper).to.have.exactly(1).descendants(ActionBarContainer)
-  })
-
-  it('should render a react router Link to the page for adding new routine', () => {
-    const wrapper = shallow(<HomePage {...getRequiredProps()} />)
-    const expectedComponent = wrapper.findWhere(wrpr => (
-      wrpr.is(Link) &&
-      wrpr.prop('to') === '/routines/new')
-    )
-    expect(expectedComponent).to.have.lengthOf(1)
   })
 })

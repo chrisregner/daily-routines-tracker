@@ -10,7 +10,7 @@ moment('00:15:00', 'HH:mm:ss')
 
 const initialRoutinesState = [{
   id: '1',
-  routineName: 'Click that --->',
+  routineName: 'Press that --->',
   duration: moment('00:00:03', 'HH:mm:ss'),
 }, {
   id: '2',
@@ -88,10 +88,10 @@ const routines = (state = initialRoutinesState, { type, payload }) => {
           const timeToSubtract = timeLeft || duration
 
           if (
-            timeLeft &&
-            (
-              timeLeft.format('HH:mm:ss.S') === '00:00:00.1' ||
-              timeLeft.format('HH:mm:ss.S') === '00:00:00.0'
+            timeLeft
+            && (
+              timeLeft.format('HH:mm:ss.S') === '00:00:00.1'
+              || timeLeft.format('HH:mm:ss.S') === '00:00:00.0'
             )
           )
             return Object.assign(

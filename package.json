@@ -2,7 +2,7 @@
   "name": "daily-task-tracker",
   "version": "1.0.0",
   "main": "index.js",
-  "repository": "https://github.com/chrisregner/daily-task-tracker",
+  "repository": "https://github.com/chrisregner/daily-routines-tracker",
   "author": "Chistopher Regner",
   "license": "MIT",
   "devDependencies": {

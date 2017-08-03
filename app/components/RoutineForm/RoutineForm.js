@@ -156,8 +156,8 @@ class RoutineForm extends React.Component {
               {hasInitValues ? 'Edit Task' : 'Add New Task'}
             </s.CenteredH2>
             {
-              hasInitValues &&
-              <div className='fr'>
+              hasInitValues
+              && <div className='fr'>
                 <Button
                   name='delete'
                   onClick={this.handleDelete}

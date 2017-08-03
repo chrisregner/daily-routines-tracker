@@ -1,7 +1,7 @@
 import webpack from 'webpack'
 import ExtractTextPlugin from 'extract-text-webpack-plugin'
 import HtmlWebpackPlugin from 'html-webpack-plugin'
-import CompressionPlugin from 'compression-webpack-plugin'
+// import CompressionPlugin from 'compression-webpack-plugin'
 import { BundleAnalyzerPlugin } from 'webpack-bundle-analyzer'
 import loadRc from 'rc-config-loader'
 import { resolve } from 'path'
@@ -45,7 +45,7 @@ export default {
     './main', // App's main entry point
   ],
   output: {
-    filename: '[name].js',
+    filename: isProd ? '[name].[chunkhash].js' : 'main.js',
     path: resolve(__dirname, '../public/dist'),
     publicPath: publicPathBase + '/dist/', // The URL of output.path from the view of the HTML page
   },
@@ -144,15 +144,17 @@ export default {
       'process.env.PUBLIC_URL': `'${publicPathBase}'`,
     }),
 
-    new HtmlWebpackPlugin({
-      template: resolve(__dirname, 'index.ejs'),
-      filename: resolve(__dirname, '../public/index.html'),
-    }),
-
     ...(isProd
       ? [
+        // Create HTML to automate the usage of correct files' urls/names
+        // We'll put it on /public/dist because we put the one for development on public's root
+        new HtmlWebpackPlugin({
+          template: resolve(__dirname, 'index.ejs'),
+          filename: resolve(__dirname, '../public/dist/index.html'),
+        }),
+
         // Extract CSS to a different file instead of inlining it with js
-        new ExtractTextPlugin('styles.css'),
+        new ExtractTextPlugin('styles.[chunkhash].css'),
 
         // Decrease script evaluation time
         // https://github.com/webpack/webpack/blob/master/examples/scope-hoisting/README.md
@@ -162,19 +164,26 @@ export default {
         new webpack.optimize.UglifyJsPlugin(),
 
         // Gzip it
-        new CompressionPlugin({
-          asset: '[path].gz[query]',
-          algorithm: 'gzip',
-          test: /\.js$|\.css$|\.html$/,
-          threshold: 10240,
-          minRatio: 0.8,
-        }),
+        // new CompressionPlugin({
+        //   asset: '[path].gz[query]',
+        //   algorithm: 'gzip',
+        //   test: /\.js$|\.css$|\.html$/,
+        //   threshold: 10240,
+        //   minRatio: 0.8,
+        // }),
 
         // Create a report of plugin sizes
         new BundleAnalyzerPlugin({
           analyzerMode: 'static',
         }),
       ]
-      : []),
+      : [
+        // Create HTML to automate the usage of correct files' urls/names
+        // We'll put it on /public/ because the HMR/local server will load it from there
+        new HtmlWebpackPlugin({
+          template: resolve(__dirname, 'index.ejs'),
+          filename: resolve(__dirname, '../public/index.html'),
+        }),
+      ]),
   ],
 }

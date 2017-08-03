@@ -44,8 +44,8 @@ describe('Component: ActionBar', () => {
     wrpr
       .find('.jsExportDataModal')
       .findWhere((_wrpr) => (
-        _wrpr.is(Alert) &&
-        _wrpr.prop('message').includes('Copied')
+        _wrpr.is(Alert)
+        && _wrpr.prop('message').includes('Copied')
       ))
   )
 
@@ -81,8 +81,8 @@ describe('Component: ActionBar', () => {
     it('should have a menu item that is a react-router Link to add new routine', () => {
       const wrapper = getMenu()
       const expectedComponent = wrapper.findWhere(wrpr => (
-        wrpr.is(Link) &&
-        wrpr.prop('to') === '/routines/new')
+        wrpr.is(Link)
+        && wrpr.prop('to') === '/routines/new')
       )
 
       expect(expectedComponent).to.have.lengthOf(1)

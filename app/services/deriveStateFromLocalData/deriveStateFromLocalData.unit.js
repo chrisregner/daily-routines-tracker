@@ -42,8 +42,8 @@ describe('deriveStateFromLocalData', () => {
   })
 
   it(
-    'should return a serialized version of the passed JSON string (first argument), where any ' +
-    'ISO8601 string is converted into moment',
+    'should return a serialized version of the passed JSON string (first argument), where any '
+    + 'ISO8601 string is converted into moment',
     () => {
       const sampleData = {
         routines: [
@@ -69,8 +69,8 @@ describe('deriveStateFromLocalData', () => {
   )
 
   context(
-    'when a tracker was running, some time is past (based on the second, ISO 8601 string ' +
-    'argument), but the routine shouldn\'t be complete yet',
+    'when a tracker was running, some time is past (based on the second, ISO 8601 string '
+    + 'argument), but the routine shouldn\'t be complete yet',
     () => {
       it('should reduce the timeLeft accordingly', () => {
         fakeClock = lolex.install({

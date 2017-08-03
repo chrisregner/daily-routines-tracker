@@ -87,8 +87,8 @@ class RoutineItem extends React.Component {
           </div>
 
           {
-            ((duration && (isTracking || timeLeft)) || isDone) &&
-            <div className='ml2'>
+            ((duration && (isTracking || timeLeft)) || isDone)
+            && <div className='ml2'>
               <button className={c('reset-tracker -btn-reset')} onClick={this.handleRoutineControls}>
                 <Icon type='reload' className='f3' />
               </button>
@@ -96,8 +96,8 @@ class RoutineItem extends React.Component {
           }
 
           {
-            (durationToShow && isDone !== true) &&
-            (
+            (durationToShow && isDone !== true)
+            && (
               isTracking ? (
                 <div className='ml2'>
                   <button className={c('stop-tracker -btn-reset')} onClick={this.handleRoutineControls}>
@@ -115,11 +115,11 @@ class RoutineItem extends React.Component {
           }
 
           {
-            (durationToShow) &&
-            <s.DurationDiv className='flex flex-column ml2 f6 lh-copy'>
+            (durationToShow)
+            && <s.DurationDiv className='flex flex-column ml2 f6 lh-copy'>
               {
-                durationToShow &&
-                <div className='flex items-center'>
+                durationToShow
+                && <div className='flex items-center'>
                   <Icon type='clock-circle-o' className='self-grow-1 tl' />
                   <div className='duration'>{durationToShow.format(durationFormat)}</div>
                 </div>

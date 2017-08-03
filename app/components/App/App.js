@@ -1,9 +1,11 @@
 import React from 'react'
 import styled from 'styled-components'
+import { Button } from 'antd'
 import {
   BrowserRouter,
   Route,
   Switch,
+  Link,
 } from 'react-router-dom'
 
 import HomePage from 'components/HomePage'
@@ -20,8 +22,8 @@ let s
 class App extends React.Component {
   render = () => (
     <BrowserRouter basename={process.env.PUBLIC_URL}>
-      <div className='bg-moon-gray vh-100 pa3-ns'>
-        <s.AppContainer className='relative center h-100'>
+      <s.MasterContainer className='bg-moon-gray vh-100'>
+        <s.Container className='center h-100'>
           <div className='w-100 h-100 bg-white overflow-auto'>
             <Switch>
               <Route exact path='/' component={HomePage} />
@@ -31,18 +33,59 @@ class App extends React.Component {
             </Switch>
             <DoneRoutinesNotifier />
             <DataPersistor />
-            <div className={'absolute left-0 bottom-1 pa3 bg-white-80 gray'}>
-              Created by <s.A className='gray underline' href='https://github.com/chrisregner/'>Chris Regner</s.A>
-            </div>
+            <s.Footer className='fixed bottom-0'>
+              <div className='relative flex items-center pa3 bg-white-80 gray'>
+                <div className='self-grow-1'>
+                  Created by <s.A className='gray underline' href='https://github.com/chrisregner/'>Chris Regner</s.A>
+                </div>
+                <div className='pa2 bg-white-80'>
+                  <s.AddNewRoutineBtnContainer>
+                    <Route exact path='/' render={() => (
+                      <Link to='/routines/new'>
+                        <Button type='primary' size='large' icon='plus' shape='circle' />
+                      </Link>
+                    )} />
+                  </s.AddNewRoutineBtnContainer>
+                </div>
+              </div>
+            </s.Footer>
           </div>
-        </s.AppContainer>
-      </div>
+        </s.Container>
+      </s.MasterContainer>
     </BrowserRouter>
   )
 }
 
 s = {
-  AppContainer: styled.div`
+  MasterContainer: styled.div`
+    @media screen and (min-width: 509px) {
+      padding-left: 1rem;
+      padding-right: 1rem;
+    }
+
+    @media screen and (min-width: 481px) {
+      padding-top: 1rem;
+      padding-bottom: 1rem;
+    }
+  `,
+  AddNewRoutineBtnContainer: styled.div`
+    min-height: 32px;
+    min-width: 1px;
+  `,
+  Footer: styled.footer`
+    left: 50%;
+    transform: translateX(-50%);
+
+    width: 100%;
+    min-width: 310px;
+    max-width: 480px;
+
+    @media screen and (min-width: 481px) {
+      padding-top: 1rem;
+      padding-bottom: 1rem;
+    }
+  `,
+  Container: styled.div`
     min-width: 310px;
     max-width: 480px;
   `,

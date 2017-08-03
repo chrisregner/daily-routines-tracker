@@ -64,10 +64,10 @@ export const startTracker = (routineId) => (dispatch, getState) => {
     dispatch(tickTracker())
 
     if (
-      timeLeft &&
-      (
-        timeLeft.format('HH:mm:ss.S') === '00:00:00.1' ||
-        timeLeft.format('HH:mm:ss.S') === '00:00:00.0'
+      timeLeft
+      && (
+        timeLeft.format('HH:mm:ss.S') === '00:00:00.1'
+        || timeLeft.format('HH:mm:ss.S') === '00:00:00.0'
         )
       )
       clearInterval(timer)

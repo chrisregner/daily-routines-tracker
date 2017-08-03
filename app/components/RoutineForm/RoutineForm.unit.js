@@ -497,11 +497,11 @@ describe('COMPONENT: RoutineForm', () => {
       const doesInclude = (text) => actualText.includes(text)
 
       expect(
-        doesInclude('404') ||
-        doesInclude('not found') ||
-        doesInclude('not exist') ||
-        doesInclude('doesn’t exist') ||
-        doesInclude('doesn&rsquo;t exist')
+        doesInclude('404')
+        || doesInclude('not found')
+        || doesInclude('not exist')
+        || doesInclude('doesn’t exist')
+        || doesInclude('doesn&rsquo;t exist')
       )
         .to.equal(true)
     })

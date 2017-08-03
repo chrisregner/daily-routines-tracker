@@ -137,8 +137,8 @@ describe('CONTAINER: DoneRoutinesNotifier', () => {
 
   describe('lifecycle componentDidUpdate()', () => {
     it(
-      'when the sound is loaded, one or more routines should notify, and the sound is not ' +
-      'playing yet, it should play the sound',
+      'when the sound is loaded, one or more routines should notify, and the sound is not '
+      + 'playing yet, it should play the sound',
       () => {
         const fakePlay = td.function()
         const wrapper = createUnconnectedWrapper({
@@ -165,8 +165,8 @@ describe('CONTAINER: DoneRoutinesNotifier', () => {
     )
 
     it(
-      'when the sound is loaded, one or more routines should notify, and the sound is not ' +
-      'playing yet, it should show a modal with the routineName of first routine that should notify',
+      'when the sound is loaded, one or more routines should notify, and the sound is not '
+      + 'playing yet, it should show a modal with the routineName of first routine that should notify',
       () => {
         const wrapper = createUnconnectedWrapper(
           {
@@ -194,8 +194,8 @@ describe('CONTAINER: DoneRoutinesNotifier', () => {
     )
 
     it(
-      'when the sound is loaded, one or more routines should notify, and the sound is not ' +
-      'playing yet, it should change the document title in an interval',
+      'when the sound is loaded, one or more routines should notify, and the sound is not '
+      + 'playing yet, it should change the document title in an interval',
       () => {
         const fakeClock = lolex.install()
         const wrapper = createUnconnectedWrapper(
@@ -245,10 +245,10 @@ describe('CONTAINER: DoneRoutinesNotifier', () => {
      * JSDOM because React (as used by AntD) has its own problems with fake DOM of JSDOM.
      */
     it.skip(
-      'when the sound is loaded, one or more routines should notify, and the sound is not ' +
-      'playing yet, it should show a modal that (1) calls the handleClearNotifs() prop, ' +
-      '(2) clears the page title change interval, and (3) restores the original page title when ' +
-      'its dismiss button is pressed',
+      'when the sound is loaded, one or more routines should notify, and the sound is not '
+      + 'playing yet, it should show a modal that (1) calls the handleClearNotifs() prop, '
+      + '(2) clears the page title change interval, and (3) restores the original page title when '
+      + 'its dismiss button is pressed',
       () => {
         const getDismissButton = () => {
           const buttonEls = Object.values(document.getElementsByTagName('button'))
@@ -285,8 +285,8 @@ describe('CONTAINER: DoneRoutinesNotifier', () => {
     )
 
     it(
-      'when the sound is loaded, one or more routines should notify, and the sound is playing ' +
-      'already, it should NOT play the sound again',
+      'when the sound is loaded, one or more routines should notify, and the sound is playing '
+      + 'already, it should NOT play the sound again',
       () => {
         const fakePlay = td.function()
         const wrapper = createUnconnectedWrapper({

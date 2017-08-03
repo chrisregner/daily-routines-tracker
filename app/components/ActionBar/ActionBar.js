@@ -135,8 +135,8 @@ class ActionBar extends React.Component {
         )}
       >
         {
-          this.state.hasCopied &&
-          <Alert
+          this.state.hasCopied
+          && <Alert
             className='mb2'
             message='Copied to clipboard'
             type='success'
@@ -161,8 +161,8 @@ class ActionBar extends React.Component {
         cancelText='Dismiss'
       >
         {
-          this.state.importState === 'success' &&
-          <Alert
+          this.state.importState === 'success'
+          && <Alert
             className='mb2'
             message='Data import success'
             type='success'
@@ -170,8 +170,8 @@ class ActionBar extends React.Component {
           />
         }
         {
-          this.state.importState === 'error' &&
-          <Alert
+          this.state.importState === 'error'
+          && <Alert
             className='mb2'
             message='Data import failed. Please ensure that the export data is copied properly'
             type='error'

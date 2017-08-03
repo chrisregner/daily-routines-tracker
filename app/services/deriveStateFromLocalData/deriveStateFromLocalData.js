@@ -32,10 +32,10 @@ export default (localStateJson, timeLastTrackedJson) => {
             let shouldTrackerHaveFinished
 
             if (
-              timeLeftIfKeptTracking.format('YYYY-MM-DD') !== timeLeft.format('YYYY-MM-DD') ||
-              (
-                timeLeftIfKeptTracking.format('YYYY-MM-DD HH:mm:ss.SSS') ===
-                `${timeLeft.format('YYYY-MM-DD')} 00:00:00.000`
+              timeLeftIfKeptTracking.format('YYYY-MM-DD') !== timeLeft.format('YYYY-MM-DD')
+              || (
+                timeLeftIfKeptTracking.format('YYYY-MM-DD HH:mm:ss.SSS')
+                === `${timeLeft.format('YYYY-MM-DD')} 00:00:00.000`
                 )
               )
               shouldTrackerHaveFinished = true

@@ -174,8 +174,8 @@ describe('CONTAINER: ActionBar', () => {
       describe('handleImportData()', () => {
         context('if the passed JSON string passes the scheme validation', () => {
           it(
-            'should call dispatch() with setRoutines()\'s result when called with ' +
-            'handleImportData()\'s JSON-serialized first argument',
+            'should call dispatch() with setRoutines()\'s result when called with '
+            + 'handleImportData()\'s JSON-serialized first argument',
             () => {
               const setRoutines = td.function()
               td.replace('duck/actions', { setRoutines })
