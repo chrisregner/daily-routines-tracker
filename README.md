@@ -6,7 +6,7 @@ A small app that...
 1. lets you manage (add, edit, delete, sort) a list of routines (so, another to do app?);
 2. lets you specify how much time you want to work on each routine;
 3. lets you track the time for that routine; and...
-4. notifies you when you've tracked the specified amount of time.
+4. notifies you when you've tracked the specified amount of time for a routine.
 
 You can also import/export data (routines), and the data will persist as long as you don’t clear the [local storage](https://developer.mozilla.org/en/docs/Web/API/Window/localStorage).
 
@@ -18,7 +18,7 @@ You can also import/export data (routines), and the data will persist as long as
 - [React-Router](https://reacttraining.com/react-router/)
 - [Webpack](https://webpack.js.org/)
 - [Ant Design](https://ant.design/) (UI library)
-- [Tachyons](http://tachyons.io/) (Functional CSS framework. Try it, it’s fun!)
+- [Tachyons](http://tachyons.io/) (functional CSS framework. Try it, it’s fun!)
 
 
 ## Attributions
