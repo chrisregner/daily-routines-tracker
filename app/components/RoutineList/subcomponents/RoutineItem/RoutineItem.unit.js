@@ -13,6 +13,7 @@ describe('COMPONENT: RoutineList/RoutineItem', () => {
     {
       id: '123',
       routineName: 'Fallback Routine Name',
+      isSorting: false,
       handleResetTracker: () => {},
       handleStartTracker: () => {},
       handleStopTracker: () => {},

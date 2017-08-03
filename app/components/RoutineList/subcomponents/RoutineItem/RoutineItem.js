@@ -17,6 +17,7 @@ class RoutineItem extends React.Component {
     timeLeft: PropTypes.instanceOf(moment),
     isDone: PropTypes.bool,
     isTracking: PropTypes.bool,
+    isSorting: PropTypes.bool.isRequired,
     handleMarkDone: PropTypes.func.isRequired,
     handleStartTracker: PropTypes.func.isRequired,
     handleStopTracker: PropTypes.func.isRequired,
@@ -28,13 +29,23 @@ class RoutineItem extends React.Component {
     }).isRequired,
   }
 
+  handleRoutineItemInnerClick = () => {
+    const { id, history, isSorting } = this.props
+
+    if (isSorting) return
+
+    history.push(`/routines/${id}`)
+  }
+
   handleRoutineControls = (e) => {
     e.preventDefault()
     e.stopPropagation()
 
+    if (this.props.isSorting) return
+
     const {
       handleStartTracker, handleStopTracker, handleResetTracker, handleMarkDone,
-      id, isDone,
+      id, isDone, isSorting
     } = this.props
     const btnClassName = e.currentTarget.className
 
@@ -54,8 +65,7 @@ class RoutineItem extends React.Component {
 
   render = () => {
     const {
-      history, id, routineName,
-      duration, timeLeft, isTracking, isDone,
+      routineName, duration, timeLeft, isTracking, isDone,
     } = this.props
     const durationToShow = timeLeft || duration
 
@@ -69,7 +79,7 @@ class RoutineItem extends React.Component {
         )}
       >
         <div
-          onClick={() => { history.push(`/routines/${id}`) }}
+          onClick={this.handleRoutineItemInnerClick}
           className={c(
             'flex items-center h-100 f4 lh-title pointer edit-routine bg-white'
           )}

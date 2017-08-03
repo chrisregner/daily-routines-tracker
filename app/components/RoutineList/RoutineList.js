@@ -8,18 +8,24 @@ import RoutineItem from './subcomponents/RoutineItem'
 import { SortableContainer, SortableElement, arrayMove } from 'react-sortable-hoc'
 
 class RoutineList extends React.Component {
-  SortableItem = SortableElement(({ routineData }) => (
+  SortableItem = SortableElement(({ routineData, isSorting }) => (
     <RoutineItem
+      isSorting={isSorting}
       {...routineData}
       {...this.props.handlers}
     />
   ))
 
-  SortableList = SortableContainer(({ routines }) => {
+  SortableList = SortableContainer(({ routines, isSorting }) => {
     return (
       <div role='list' className='mb3 mh3 bg-lighter-gray'>
         {routines.map((routineData, index) => (
-          <this.SortableItem key={`item-${index}`} index={index} routineData={routineData} />
+          <this.SortableItem
+            key={`item-${index}`}
+            index={index}
+            routineData={routineData}
+            isSorting={isSorting}
+          />
         ))}
       </div>
     )
@@ -41,7 +47,12 @@ class RoutineList extends React.Component {
           (routines && routines.length)
           ? (
             <div>
-              <this.SortableList routines={routines} onSortEnd={this.handleSortEnd} useDragHandle={!isSorting} />
+              <this.SortableList
+                isSorting={isSorting}
+                routines={routines}
+                onSortEnd={this.handleSortEnd}
+                useDragHandle={!isSorting}
+              />
             </div>
           )
           : (
