@@ -1,9 +1,9 @@
 Daily Routine Tracker
 ========================================
 
-Working app [here](https://chrisregner.github.io/daily-routines-tracker)
+Working app [here](https://chrisregner.github.io/daily-routines-tracker).
 
-A small app that...
+It is a simple app that...
 
 1. lets you manage (add, edit, delete, sort) a list of routines (so, another to do app?);
 2. lets you specify how much time you want to work on each routine;
