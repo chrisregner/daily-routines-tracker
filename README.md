@@ -14,7 +14,7 @@ You can also import/export data (routines), and the data should persist&ast; as 
 
 &ast;*Data persistence is actually buggy depending on how a browser handles the `onbeforeunload` event.*
 
-## Tools/Libraries used:
+## Main tools/libraries used:
 
 - [React](https://facebook.github.io/react/)
 - [Redux](http://redux.js.org/)
