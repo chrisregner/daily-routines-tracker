@@ -22,6 +22,7 @@ You can also import/export data (routines), and the data should persist&ast; as 
 - [Webpack](https://webpack.js.org/)
 - [Ant Design](https://ant.design/) (UI library)
 - [Tachyons](http://tachyons.io/) (functional CSS framework. Try it, it’s fun!)
+- [Mocha](https://mochajs.org/), [Chai](http://chaijs.com/api/bdd/), [Enzyme](http://airbnb.io/enzyme/) and [Testdouble](https://github.com/testdouble/testdouble.js/) (for unit-tests)
 
 
 ## Attributions
