@@ -10,8 +10,9 @@ It is a simple app that...
 3. lets you track the time for that routine; and...
 4. notifies you when you've tracked the specified amount of time for a routine.
 
-You can also import/export data (routines), and the data will persist as long as you don’t clear the [local storage](https://developer.mozilla.org/en/docs/Web/API/Window/localStorage).
+You can also import/export data (routines), and the data should persist&ast; as long as you don’t clear the [local storage](https://developer.mozilla.org/en/docs/Web/API/Window/localStorage).
 
+&ast;*Data persistence is actually buggy depending on how a browser handles the `onbeforeunload` event.*
 
 ## Tools/Libraries used:
 
