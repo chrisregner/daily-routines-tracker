@@ -12,7 +12,7 @@ It is a simple app that...
 
 You can also import/export data (routines), and the data should persist&ast; as long as you don’t clear the [local storage](https://developer.mozilla.org/en/docs/Web/API/Window/localStorage).
 
-&ast;*Data persistence is actually buggy depending on how a browser handles the `onbeforeunload` event.*
+&ast;*Data persistence is actually buggy depending on how a browser handles the `onbeforeunload` event. I wanted to try implementing it myself rather than using a library.*
 
 ## Main tools/libraries used:
 
